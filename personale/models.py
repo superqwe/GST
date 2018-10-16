@@ -31,3 +31,7 @@ class Lavoratore(models.Model):
 
     rir = models.DateField(null=True, blank=True)
     rspp = models.DateField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Lavorattore'
+        verbose_name_plural = 'Lavorattori'
