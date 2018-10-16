@@ -27,7 +27,7 @@ class Lavoratore(models.Model):
     gru = models.DateField(null=True, blank=True)
     imbracatore = models.DateField(null=True, blank=True)
 
-    spazi_confinati = models.DateField(null=True, blank=True, verbose_name='Spezi Confinati')
+    spazi_confinati = models.DateField(null=True, blank=True, verbose_name='Spazi Confinati')
 
     rir = models.DateField(null=True, blank=True, verbose_name='RIR')
     rspp = models.DateField(null=True, blank=True, verbose_name='RSPP')
