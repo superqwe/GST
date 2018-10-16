@@ -9,8 +9,8 @@ class Lavoratore(models.Model):
     nome = models.CharField(max_length=50)
     codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
 
-    rait = models.DateField(null=True, blank=True, verbose_name='Scadenza RAIT')
-    ci = models.DateField(null=True, blank=True, verbose_name="Documento d'Identità")
+    rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
+    ci = models.DateField(null=True, blank=True, verbose_name="CI")
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
 

@@ -68,7 +68,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             scadenza = datetime.date(anno, int(mese), int(giorno))
                             lavoratore.unilav = scadenza
 
-                        elif tipo == 'art.37':
+                        elif tipo in ('art37', 'art.37'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -77,7 +77,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'primosoccorso':
+                        elif tipo in ('primosoccorso', 'primo.soccorso'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -104,7 +104,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'h2s.safety':
+                        elif tipo in ('h2s.safety', 'h2s'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -122,7 +122,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'carrelli':
+                        elif tipo in ('carrelli', 'sollevatore'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -140,7 +140,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'autogru':
+                        elif tipo in ('autogru', 'gru'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -158,7 +158,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'spazio':
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -167,7 +167,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
                             except IndexError:
                                 print('+++', documento)
 
-                        elif tipo == 'altro':
+                        elif tipo in ('altro', 'rir'):
                             try:
                                 giorno, mese, anno = re_dma.findall(documento)[0].split('.')
                                 anno = int(anno) if len(anno) == 4 else int(anno) + 2000
