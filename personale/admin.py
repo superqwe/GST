@@ -68,164 +68,80 @@ def aggiorna_attestati(modeladmin, request, queryset):
                         #     print(documento, '-->', tipo)
 
                         if tipo == 'doc':
-                            mese, anno = scadenza.split('.')
-                            ci = datetime.date(int(anno), int(mese), 1)
-                            lavoratore.ci = ci
-                            salva = True
+                            scadenza = scadenza2date(documento)
+                            lavoratore.ci = scadenza
 
                         elif tipo == 'idoneità':
-                            mese, anno = scadenza.split('.')
-                            scadenza = datetime.date(int(anno), int(mese), 1)
+                            scadenza = scadenza2date(documento)
                             lavoratore.idoneita = scadenza
-                            salva = True
 
                         elif tipo == 'unilav':
-                            giorno, mese, anno = scadenza.split('.')
-                            anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                            scadenza = datetime.date(anno, int(mese), int(giorno))
+                            scadenza = scadenza2date(documento)
                             lavoratore.unilav = scadenza
-                            salva = True
-
 
                         elif tipo in ('art37', 'art.37'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.art37 = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.art37 = scadenza
 
                         elif tipo in ('primosoccorso', 'primo.soccorso'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.primo_soccorso = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.primo_soccorso = scadenza
 
                         elif tipo == 'antincendio':
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.antincendio = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.antincendio = scadenza
 
                         elif tipo == 'preposto':
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.preposto = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.preposto = scadenza
 
                         elif tipo in ('h2s.safety', 'h2s'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.h2s = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.h2s = scadenza
 
                         elif tipo == 'dpi':
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.dpi3 = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.dpi3 = scadenza
 
                         elif tipo in ('carrelli', 'sollevatore'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.carrello = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.carrello = scadenza
 
                         elif tipo == 'ple':
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.ple = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.ple = scadenza
 
                         elif tipo in ('autogru', 'gru'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.gru = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.gru = scadenza
 
                         elif tipo == 'imbracatore':
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.imbracatore = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.imbracatore = scadenza
 
                         elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.spazi_confinati = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.spazi_confinati = scadenza
 
                         elif tipo in ('altro', 'rir'):
-                            try:
-                                giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-                                anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-                                scadenza = datetime.date(anno, int(mese), int(giorno))
-                                lavoratore.rir = scadenza
-                                salva = True
-                            except IndexError:
-                                print('+++', documento)
+                            scadenza = scadenza2date(documento)
+                            lavoratore.rir = scadenza
 
                         elif tipo == 'rspp':
                             scadenza = scadenza2date(documento)
                             lavoratore.rspp = scadenza
-                            if scadenza:  salva = True
 
                         else:
                             print('***', tipo, '+++', documento)
 
-                if salva:
-                    lavoratore.save()
+                lavoratore.save()
 
             except ValueError:
                 pass
 
-        # print()
-
 
 aggiorna_lavoratori.short_description = "Aggiorna Lavoratori"
-aggiorna_attestati.short_description = "Aggiorna Attestati"
+aggiorna_attestati.short_description = "Aggiorna Documenti"
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
