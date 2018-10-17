@@ -6,6 +6,8 @@ from django.contrib import admin
 
 from .models import Lavoratore
 
+import pandas as pd
+
 
 def scadenza2date(documento):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
@@ -140,12 +142,20 @@ def aggiorna_attestati(modeladmin, request, queryset):
                 pass
 
 
+def aggiorna_gst(modeladmin, request, queryset):
+    fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\lavoratore.csv'
+    csv = pd.read_csv(fin, sep=';', skiprows=1,
+                      names=('cf', 'nome', 'cognome', 'punteggio', 'sospeso', 'data', 'situazione'))
+    print(csv)
+
+
 aggiorna_lavoratori.short_description = "Aggiorna Lavoratori"
 aggiorna_attestati.short_description = "Aggiorna Documenti"
+aggiorna_gst.short_description = "Aggiorna GST"
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati]
+    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst]
     list_display = ('cognome', 'nome',
                     'in_cantiere',
                     'rait', 'ci', 'idoneita', 'unilav',

@@ -3,11 +3,18 @@ from django.db import models
 
 # Create your models here.
 class Lavoratore(models.Model):
+    SITUAZIONE_GST = (('v', 'Verde'),
+                      ('g', 'Giallo'),
+                      ('r', 'Rosso'))
+
     in_cantiere = models.BooleanField(default=True, verbose_name='In Cantiere')
 
     cognome = models.CharField(max_length=50)
     nome = models.CharField(max_length=50)
     codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
+
+    situazione = models.CharField(null=True, blank=True, max_length=1, choices=SITUAZIONE_GST)
+    gst = models.DateField(null=True, blank=True, verbose_name='GST')
 
     rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
