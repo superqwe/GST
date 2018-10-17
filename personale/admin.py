@@ -11,12 +11,12 @@ from .models import Lavoratore
 # from pprint import pprint as pp
 
 
-def scadenza2date(documento):
+def scadenza2date(documento, durata=5):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
     try:
         giorno, mese, anno = re_dma.findall(documento)[0].split('.')
         anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-        scadenza = datetime.date(anno, int(mese), int(giorno))
+        scadenza = datetime.date(anno+durata, int(mese), int(giorno))
         return scadenza
     except IndexError:
         print('+++', documento)
@@ -69,15 +69,15 @@ def aggiorna_attestati(modeladmin, request, queryset):
                         tipo, scadenza = documento.split()[:2]
 
                         if tipo == 'doc':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento,0)
                             lavoratore.ci = scadenza
 
                         elif tipo == 'idoneità':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento,0)
                             lavoratore.idoneita = scadenza
 
                         elif tipo == 'unilav':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento,0)
                             lavoratore.unilav = scadenza
 
                         elif tipo in ('art37', 'art.37'):
@@ -85,11 +85,11 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             lavoratore.art37 = scadenza
 
                         elif tipo in ('primosoccorso', 'primo.soccorso'):
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento,3)
                             lavoratore.primo_soccorso = scadenza
 
                         elif tipo == 'antincendio':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento,0)
                             lavoratore.antincendio = scadenza
 
                         elif tipo == 'preposto':

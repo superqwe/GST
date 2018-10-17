@@ -1,3 +1,5 @@
+import datetime
+
 from django.http import HttpResponse
 from django.template import loader
 
@@ -11,9 +13,13 @@ def index(request):
 def globale(request):
     lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
 
+    oggi = datetime.date.today()
+    # print(lavoratori[17].gst < oggi)
+
     template = loader.get_template('personale/index.html')
     context = {
         'lavoratori': lavoratori,
+        'oggi': oggi,
     }
     return HttpResponse(template.render(context, request))
 
