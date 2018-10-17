@@ -8,6 +8,8 @@ from .models import Lavoratore
 
 import pandas as pd
 
+from pprint import pprint as pp
+
 
 def scadenza2date(documento):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
@@ -146,7 +148,19 @@ def aggiorna_gst(modeladmin, request, queryset):
     fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\lavoratore.csv'
     csv = pd.read_csv(fin, sep=';', skiprows=1,
                       names=('cf', 'nome', 'cognome', 'punteggio', 'sospeso', 'data', 'situazione'))
-    print(csv)
+
+    for row in csv.iterrows():
+        cf, nome, cognome, punteggio, sospeso, data, situazione = row[1]
+
+        res = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome.title())
+
+        if res:
+            res[0].cf = cf
+            res[0].gst = datetime.datetime.strptime(data, '%d-%m-%Y')
+            res[0].situazione = situazione.lower()[0]
+            res[0].save()
+
+
 
 
 aggiorna_lavoratori.short_description = "Aggiorna Lavoratori"
@@ -158,6 +172,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst]
     list_display = ('cognome', 'nome',
                     'in_cantiere',
+                    'situazione', 'gst',
                     'rait', 'ci', 'idoneita', 'unilav',
                     'art37', 'primo_soccorso', 'antincendio', 'preposto',
                     'h2s', 'dpi3',
