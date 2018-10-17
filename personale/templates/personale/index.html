@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th>Stato</th>
+        <th>Cognome</th>
+        <th>Nome</th>
+        <th>Situazione GST</th>
+        <th>Data GST</th>
+        <th>Rait</th>
+        <th>Documento</th>
+        <th>Idoneità</th>
+        <th>UNILAV</th>
+        <th>art37</th>
+        <th>Primo Soccorso</th>
+        <th>Antincendio</th>
+        <th>Preposto</th>
+        <th>H2S</th>
+        <th>DPI3</th>
+        <th>Muletto</th>
+        <th>PLE</th>
+        <th>Gru</th>
+        <th>Imbracatore</th>
+        <th>Spazi Confinati</th>
+        <th>RIR</th>
+        <th>RSPP</th>
+    </tr>
+    {% for lavoratore in lavoratori %}
+    <tr>
+        <td></td>
+        <td>{{lavoratore.cognome}}</td>
+        <td>{{lavoratore.nome}}</td>
+        <td>{{lavoratore.situazione|default_if_none:""}}</td>
+        <td>{{lavoratore.gst|default_if_none:""}}</td>
+        <td>{{lavoratore.rait|default_if_none:""}}</td>
+        <td>{{lavoratore.ci|default_if_none:""}}</td>
+        <td>{{lavoratore.idoneita|default_if_none:""}}</td>
+        <td>{{lavoratore.unilav|default_if_none:""}}</td>
+        <td>{{lavoratore.art37|default_if_none:""}}</td>
+        <td>{{lavoratore.primo_soccorso|default_if_none:""}}</td>
+        <td>{{lavoratore.antincendio|default_if_none:""}}</td>
+        <td>{{lavoratore.preposto|default_if_none:""}}</td>
+        <td>{{lavoratore.h2s|default_if_none:""}}</td>
+        <td>{{lavoratore.dpi3|default_if_none:""}}</td>
+        <td>{{lavoratore.carrello|default_if_none:""}}</td>
+        <td>{{lavoratore.ple|default_if_none:""}}</td>
+        <td>{{lavoratore.gru|default_if_none:""}}</td>
+        <td>{{lavoratore.imbracatore|default_if_none:""}}</td>
+        <td>{{lavoratore.spazi_confinati|default_if_none:""}}</td>
+        <td>{{lavoratore.rir|default_if_none:""}}</td>
+        <td>{{lavoratore.rspp|default_if_none:""}}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+</body>
+</html>
