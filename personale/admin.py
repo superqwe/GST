@@ -2,13 +2,13 @@ import datetime
 import os
 import re
 
+import pandas as pd
 from django.contrib import admin
 
 from .models import Lavoratore
 
-import pandas as pd
 
-from pprint import pprint as pp
+# from pprint import pprint as pp
 
 
 def scadenza2date(documento):
@@ -67,9 +67,6 @@ def aggiorna_attestati(modeladmin, request, queryset):
 
                     if documento.endswith('.pdf'):
                         tipo, scadenza = documento.split()[:2]
-
-                        # if cognome == 'Clemente' and nome == 'Mario':
-                        #     print(documento, '-->', tipo)
 
                         if tipo == 'doc':
                             scadenza = scadenza2date(documento)
@@ -161,15 +158,27 @@ def aggiorna_gst(modeladmin, request, queryset):
             res[0].save()
 
 
+def aggiorna_rait(modeladmin, request, queryset):
+    fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\rait.xlsx'
+    xlsx = pd.read_excel(fin, header=0)
+
+    for row in xlsx.iterrows():
+        cognome, nome, data = row[1]
+        res = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome.title())
+
+        if res and not pd.isnull(data):
+            res[0].rait = data
+            res[0].save()
 
 
-aggiorna_lavoratori.short_description = "Aggiorna Lavoratori"
-aggiorna_attestati.short_description = "Aggiorna Documenti"
+aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
 aggiorna_gst.short_description = "Aggiorna GST"
+aggiorna_rait.short_description = "Aggiorna RAIT"
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst]
+    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait]
     list_display = ('cognome', 'nome',
                     'in_cantiere',
                     'situazione', 'gst',
