@@ -172,6 +172,8 @@ def aggiorna_rait(modeladmin, request, queryset):
 
 
 def aggiorna_stato(modeladmin, request, queryset):
+    campi = Lavoratore._meta.get_fields()[7:]
+
     lavoratori = Lavoratore.objects.all()
 
     for lavoratore in lavoratori:
@@ -187,27 +189,26 @@ def aggiorna_stato(modeladmin, request, queryset):
             lavoratore.save()
             continue
 
-        for campo in Lavoratore._meta.get_fields()[7:]:
+        for campo in campi:
 
             try:
                 if getattr(lavoratore, campo.name) < OGGI:
-                    lavoratore.stato = 'r'
-                    lavoratore.save()
+                    stato = 'r'
                     break
 
             except TypeError:
                 pass
 
+        if stato == 'r':
+            lavoratore.save()
+            continue
+
+        # todo: da fare stato giallo
         if lavoratore.situazione in ('g', None):
             stato = 'g'
 
         lavoratore.stato = stato
         lavoratore.save()
-
-        # print(getattr(lavoratore, 'nome'))
-
-    # pp(dir(Lavoratore._meta.get_fields()[3]))
-    # pp(Lavoratore._meta.get_fields()[3].name)
 
 
 aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
