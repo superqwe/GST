@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+from pprint import pprint as pp
 
 import pandas as pd
 from django.contrib import admin
@@ -8,15 +9,12 @@ from django.contrib import admin
 from .models import Lavoratore
 
 
-# from pprint import pprint as pp
-
-
 def scadenza2date(documento, durata=5):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
     try:
         giorno, mese, anno = re_dma.findall(documento)[0].split('.')
         anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-        scadenza = datetime.date(anno+durata, int(mese), int(giorno))
+        scadenza = datetime.date(anno + durata, int(mese), int(giorno))
         return scadenza
     except IndexError:
         print('+++', documento)
@@ -69,15 +67,15 @@ def aggiorna_attestati(modeladmin, request, queryset):
                         tipo, scadenza = documento.split()[:2]
 
                         if tipo == 'doc':
-                            scadenza = scadenza2date(documento,0)
+                            scadenza = scadenza2date(documento, 0)
                             lavoratore.ci = scadenza
 
                         elif tipo == 'idoneità':
-                            scadenza = scadenza2date(documento,0)
+                            scadenza = scadenza2date(documento, 0)
                             lavoratore.idoneita = scadenza
 
                         elif tipo == 'unilav':
-                            scadenza = scadenza2date(documento,0)
+                            scadenza = scadenza2date(documento, 0)
                             lavoratore.unilav = scadenza
 
                         elif tipo in ('art37', 'art.37'):
@@ -85,11 +83,11 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             lavoratore.art37 = scadenza
 
                         elif tipo in ('primosoccorso', 'primo.soccorso'):
-                            scadenza = scadenza2date(documento,3)
+                            scadenza = scadenza2date(documento, 3)
                             lavoratore.primo_soccorso = scadenza
 
                         elif tipo == 'antincendio':
-                            scadenza = scadenza2date(documento,0)
+                            scadenza = scadenza2date(documento, 0)
                             lavoratore.antincendio = scadenza
 
                         elif tipo == 'preposto':
@@ -171,22 +169,47 @@ def aggiorna_rait(modeladmin, request, queryset):
             res[0].save()
 
 
+def aggiorna_stato(modeladmin, request, queryset):
+    lavoratori = Lavoratore.objects.all()
+
+    for lavoratore in lavoratori:
+
+
+        break
+
+
 aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
 aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
 aggiorna_gst.short_description = "Aggiorna GST"
 aggiorna_rait.short_description = "Aggiorna RAIT"
+aggiorna_stato.short_description = "Aggiorna Stato"
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait]
+    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait, aggiorna_stato]
+    fieldsets = ((None, {'fields': ('cognome', 'nome', 'stato', 'in_cantiere')}),
+                 ('GST', {'fields': ('situazione', 'gst', 'rait'),
+                          'classes': ('collapse',)}),
+                 ('Documenti Base', {'fields': ('ci', 'idoneita', 'unilav'),
+                                     'classes': ('collapse',)}),
+                 ('Preposti/Addetti Emergenza', {'fields': ('primo_soccorso', 'antincendio', 'preposto',),
+                                                 'classes': ('collapse',)}),
+                 ('Base e Specialistici', {'fields': ('art37', 'h2s', 'dpi3', 'spazi_confinati',),
+                                           'classes': ('collapse',)}),
+                 ('Mezzi', {'fields': ('carrello', 'ple', 'gru', 'imbracatore',),
+                            'classes': ('collapse',)}),
+                 ('Vari', {'fields': ('rir', 'rspp'),
+                           'classes': ('collapse',)}),
+                 # ('', {'fields': (),
+                 #       'classes': ('collapse',)}),
+                 )
     list_display = ('cognome', 'nome',
-                    'in_cantiere',
-                    'situazione', 'gst',
-                    'rait', 'ci', 'idoneita', 'unilav',
-                    'art37', 'primo_soccorso', 'antincendio', 'preposto',
-                    'h2s', 'dpi3',
+                    'stato', 'in_cantiere',
+                    'situazione', 'gst', 'rait',
+                    'ci', 'idoneita', 'unilav',
+                    'primo_soccorso', 'antincendio', 'preposto',
+                    'art37', 'h2s', 'dpi3', 'spazi_confinati',
                     'carrello', 'ple', 'gru', 'imbracatore',
-                    'spazi_confinati',
                     'rir', 'rspp')
 
     ordering = ['cognome', 'nome']
