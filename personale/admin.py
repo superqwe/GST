@@ -8,6 +8,8 @@ from django.contrib import admin
 
 from .models import Lavoratore
 
+OGGI = datetime.date.today()
+
 
 def scadenza2date(documento, durata=5):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
@@ -173,9 +175,39 @@ def aggiorna_stato(modeladmin, request, queryset):
     lavoratori = Lavoratore.objects.all()
 
     for lavoratore in lavoratori:
+        stato = 'v'
 
+        if not lavoratore.in_cantiere:
+            lavoratore.stato = 'c'
+            lavoratore.save()
+            continue
 
-        break
+        if lavoratore.situazione in ('r', None):
+            lavoratore.stato = 'r'
+            lavoratore.save()
+            continue
+
+        for campo in Lavoratore._meta.get_fields()[7:]:
+
+            try:
+                if getattr(lavoratore, campo.name) < OGGI:
+                    lavoratore.stato = 'r'
+                    lavoratore.save()
+                    break
+
+            except TypeError:
+                pass
+
+        if lavoratore.situazione in ('g', None):
+            stato = 'g'
+
+        lavoratore.stato = stato
+        lavoratore.save()
+
+        # print(getattr(lavoratore, 'nome'))
+
+    # pp(dir(Lavoratore._meta.get_fields()[3]))
+    # pp(Lavoratore._meta.get_fields()[3].name)
 
 
 aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"

@@ -41,7 +41,7 @@
     </tr>
     {% for lavoratore in lavoratori %}
     <tr>
-        <td></td>
+        <td>{{lavoratore.stato}}</td>
         <td>{{lavoratore.cognome}}</td>
         <td>{{lavoratore.nome}}</td>
         <td>{{lavoratore.situazione|default_if_none:""}}</td>
