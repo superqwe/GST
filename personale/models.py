@@ -28,7 +28,7 @@ class Lavoratore(models.Model):
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
 
-    art37 = models.DateField(null=True, blank=True)
+    art37 = models.DateField(null=True, blank=True, verbose_name='Art.37')
     primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
     antincendio = models.DateField(null=True, blank=True)
     preposto = models.DateField(null=True, blank=True)

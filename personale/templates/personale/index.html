@@ -6,6 +6,8 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'personale/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'personale/css/style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
     <title>Document</title>
 </head>
@@ -32,7 +34,7 @@
                 <th>DPI3</th>
                 <th>Muletto</th>
                 <th>PLE</th>
-                <th>Gru</th>
+                <th>Gru</th>{{lavoratore.situazione|default_if_none:""}}
                 <th>Imbracatore</th>
                 <th>Spazi Confinati</th>
                 <th>RIR</th>
@@ -42,10 +44,10 @@
 
         {% for lavoratore in lavoratori %}
             <tr>
-                <td>{{lavoratore.stato}}</td>
+                <td><i class="fas fa-circle {{lavoratore.stato}}"></i></td>
                 <th scope="row">{{lavoratore.cognome}}</th>
                 <th scope="row">{{lavoratore.nome}}</th>
-                <td>{{lavoratore.situazione|default_if_none:""}}</td>
+                <td><i class="fas fa-circle {{lavoratore.situazione|default_if_none:"c"}}"></i></td>
                 <td {% if lavoratore.gst < oggi %} style="color:red" {% endif %}> {{lavoratore.gst|default_if_none:""}}</td>
                 <td {% if lavoratore.rait < oggi %} style="color:red" {% endif %}> {{lavoratore.rait|default_if_none:""}}</td>
                 <td {% if lavoratore.ci < oggi %} style="color:red" {% endif %}> {{lavoratore.ci|default_if_none:""}}</td>
