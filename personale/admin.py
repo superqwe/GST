@@ -9,6 +9,8 @@ from django.contrib import admin
 from .models import Lavoratore
 
 OGGI = datetime.date.today()
+DT = datetime.timedelta(30)
+AVVISO_SCADENZA = OGGI + DT
 
 
 def scadenza2date(documento, durata=5):
@@ -195,6 +197,8 @@ def aggiorna_stato(modeladmin, request, queryset):
                 if getattr(lavoratore, campo.name) < OGGI:
                     stato = 'r'
                     break
+                elif getattr(lavoratore, campo.name) < AVVISO_SCADENZA:
+                    stato = 'g'
 
             except TypeError:
                 pass
