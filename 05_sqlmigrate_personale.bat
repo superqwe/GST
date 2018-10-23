@@ -1,0 +1,1 @@
+py manage.py sqlmigrate personale 0001
