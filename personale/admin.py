@@ -75,7 +75,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
 
         if not path.startswith('z ') and not 'scaduti' in root:
             try:
-                cognome, nome = path.title().split('\\')[0].split()
+                cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
                 print('\n', cognome, nome)
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
 
@@ -89,7 +89,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             scadenza = scadenza2date(documento, 0)
                             lavoratore.ci = scadenza
 
-                        elif tipo == in ('idoneità', 'idoneita'):
+                        elif tipo in ('idoneità', 'idoneita'):
                             scadenza = scadenza2date(documento, 0)
                             lavoratore.idoneita = scadenza
 
