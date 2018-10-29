@@ -11,10 +11,27 @@ from .models import Lavoratore
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
 AVVISO_SCADENZA = OGGI + DT
+PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 
 def scadenza2date(documento, durata=5):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
+
+    if not re_dma.findall(documento):
+        print('--->', documento)
+        re_dma = re.compile(r'\d{6,8}')
+
+        try:
+            data = re_dma.findall(documento)[0]
+
+            giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
+            anno = anno if anno > 2000 else anno + 2000
+            scadenza = datetime.date(anno + durata, mese, giorno)
+            return scadenza
+        except IndexError:
+            print('+++', documento)
+            return None
+
     try:
         giorno, mese, anno = re_dma.findall(documento)[0].split('.')
         anno = int(anno) if len(anno) == 4 else int(anno) + 2000
@@ -26,7 +43,7 @@ def scadenza2date(documento, durata=5):
 
 
 def aggiorna_lavoratori(modeladmin, request, queryset):
-    path_base = r'C:\Users\HP\Desktop\Sicurezza2\Personale'
+    path_base = PATH_BASE
 
     print('*' * 450)
 
@@ -51,7 +68,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
 
 
 def aggiorna_attestati(modeladmin, request, queryset):
-    path_base = r'C:\Users\HP\Desktop\Sicurezza2\Personale'
+    path_base = PATH_BASE
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
 
     for root, dirs, files in os.walk(path_base):

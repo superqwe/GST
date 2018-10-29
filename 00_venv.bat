@@ -1,1 +1,1 @@
-..\env\documenti\Scripts\activate
+..\env\gst\Scripts\activate
