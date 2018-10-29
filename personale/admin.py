@@ -18,7 +18,6 @@ def scadenza2date(documento, durata=5):
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
 
     if not re_dma.findall(documento):
-        print('--->', documento)
         re_dma = re.compile(r'\d{6,8}')
 
         try:
@@ -51,7 +50,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
     for root, dirs, files in os.walk(path_base):
 
         for lavoratore in dirs:
-            lavoratore = lavoratore.strip().title().split()
+            lavoratore = lavoratore.strip().title().split(maxsplit=1)
 
             if lavoratore[0] != 'Z':
                 if primo_ciclo:
@@ -80,7 +79,6 @@ def aggiorna_attestati(modeladmin, request, queryset):
                 print('\n', cognome, nome)
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
 
-                salva = False
                 for documento in files:
                     documento = documento.lower()
 
@@ -91,7 +89,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             scadenza = scadenza2date(documento, 0)
                             lavoratore.ci = scadenza
 
-                        elif tipo == 'idoneità':
+                        elif tipo == in ('idoneità', 'idoneita'):
                             scadenza = scadenza2date(documento, 0)
                             lavoratore.idoneita = scadenza
 
