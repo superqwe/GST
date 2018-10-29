@@ -121,7 +121,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             scadenza = scadenza2date(documento)
                             lavoratore.dpi3 = scadenza
 
-                        elif tipo in ('carrelli', 'sollevatore'):
+                        elif tipo in ('carrelli', 'carrello', 'sollevatore'):
                             scadenza = scadenza2date(documento)
                             lavoratore.carrello = scadenza
 
@@ -155,7 +155,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                 lavoratore.save()
 
             except ValueError:
-                pass
+                print('*** Errore in ', path)
 
 
 def aggiorna_gst(modeladmin, request, queryset):
