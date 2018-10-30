@@ -117,7 +117,7 @@
                         <td {% if lavoratore.unilav < oggi %} style="color:red" {% endif %}> {{lavoratore.unilav|default_if_none:""}}</td>
                         <td {% if lavoratore.art37 < oggi %} style="color:red" {% endif %}>   {{lavoratore.art37|default_if_none:""}}</td>
                         <td {% if lavoratore.primo_soccorso < oggi %} style="color:red" {% endif %}> {{lavoratore.primo_soccorso|default_if_none:""}}</td>
-                        <td {% if lavoratore.antincendio < oggi %} style="color:red" {% endif %}> {{lavoratore.antincendio|default_if_none:""}}</td>
+                        <td> {{lavoratore.antincendio|default_if_none:""}}</td>
                         <td {% if lavoratore.preposto < oggi %} style="color:red" {% endif %}> {{lavoratore.preposto|default_if_none:""}}</td>
                         <td {% if lavoratore.h2s < oggi %} style="color:red" {% endif %}> {{lavoratore.h2s|default_if_none:""}}</td>
                         <td {% if lavoratore.dpi3 < oggi %} style="color:red" {% endif %}> {{lavoratore.dpi3|default_if_none:""}}</td>
