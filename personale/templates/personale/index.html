@@ -110,25 +110,79 @@
                         <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
                         <th scope="row" class="text-left">{{lavoratore.nome}}</th>
                         <td><i class="fas fa-circle {{lavoratore.situazione|default_if_none:"c"}}"></i></td>
-                        <td {% if lavoratore.gst < oggi %} style="color:red" {% endif %}> {{lavoratore.gst|default_if_none:""}}</td>
-                        <td {% if lavoratore.rait < oggi %} style="color:red" {% endif %}> {{lavoratore.rait|default_if_none:""}}</td>
-                        <td {% if lavoratore.ci < oggi %} style="color:red" {% endif %}> {{lavoratore.ci|default_if_none:""}}</td>
-                        <td {% if lavoratore.idoneita < oggi %} style="color:red" {% endif %}> {{lavoratore.idoneita|default_if_none:""}}</td>
-                        <td {% if lavoratore.unilav < oggi %} style="color:red" {% endif %}> {{lavoratore.unilav|default_if_none:""}}</td>
-                        <td {% if lavoratore.art37 < oggi %} style="color:red" {% endif %}>   {{lavoratore.art37|default_if_none:""}}</td>
-                        <td {% if lavoratore.primo_soccorso < oggi %} style="color:red" {% endif %}> {{lavoratore.primo_soccorso|default_if_none:""}}</td>
+                        <td {% if lavoratore.gst < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.gst < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.gst < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.gst|default_if_none:""}}</td>
+                        <td {% if lavoratore.rait < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.rait < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.rait < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.rait|default_if_none:""}}</td>
+                        <td {% if lavoratore.ci < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.ci < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.ci < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.ci|default_if_none:""}}</td>
+                        <td {% if lavoratore.idoneita < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.idoneita < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.idoneita < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.idoneita|default_if_none:""}}</td>
+                        <td {% if lavoratore.unilav < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.unilav < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.unilav < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.unilav|default_if_none:""}}</td>
+                        <td {% if lavoratore.art37 < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.art37|default_if_none:""}}</td>
+                        <td {% if lavoratore.primo_soccorso < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.primo_soccorso < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.primo_soccorso < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.primo_soccorso|default_if_none:""}}</td>
                         <td> {{lavoratore.antincendio|default_if_none:""}}</td>
-                        <td {% if lavoratore.preposto < oggi %} style="color:red" {% endif %}> {{lavoratore.preposto|default_if_none:""}}</td>
-                        <td {% if lavoratore.h2s < oggi %} style="color:red" {% endif %}> {{lavoratore.h2s|default_if_none:""}}</td>
-                        <td {% if lavoratore.dpi3 < oggi %} style="color:red" {% endif %}> {{lavoratore.dpi3|default_if_none:""}}</td>
-                        <td {% if lavoratore.carrello < oggi %} style="color:red" {% endif %}> {{lavoratore.carrello|default_if_none:""}}</td>
-                        <td {% if lavoratore.ple < oggi %} style="color:red" {% endif %}> {{lavoratore.ple|default_if_none:""}}</td>
-                        <td {% if lavoratore.gru < oggi %} style="color:red" {% endif %}> {{lavoratore.gru|default_if_none:""}}</td>
-                        <td {% if lavoratore.imbracatore < oggi %} style="color:red" {% endif %}> {{lavoratore.imbracatore|default_if_none:""}}</td>
-                        <td {% if lavoratore.spazi_confinati < oggi %} style="color:red" {% endif %}> {{lavoratore.spazi_confinati|default_if_none:""}}</td>
-                        <td {% if lavoratore.rir < oggi %} style="color:red" {% endif %}> {{lavoratore.rir|default_if_none:""}}</td>
-                        <td {% if lavoratore.rls < oggi %} style="color:red" {% endif %}> {{lavoratore.rls|default_if_none:""}}</td>
-                        <td {% if lavoratore.rspp < oggi %} style="color:red" {% endif %}> {{lavoratore.rspp|default_if_none:""}}</td>
+                        <td {% if lavoratore.preposto < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.preposto < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.preposto < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.preposto|default_if_none:""}}</td>
+                        <td {% if lavoratore.h2s < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.h2s < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.h2s < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.h2s|default_if_none:""}}</td>
+                        <td {% if lavoratore.dpi3 < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.dpi3 < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.dpi3 < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.dpi3|default_if_none:""}}</td>
+                        <td {% if lavoratore.carrello < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.carrello < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.carrello < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.carrello|default_if_none:""}}</td>
+                        <td {% if lavoratore.ple < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.ple < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.ple < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.ple|default_if_none:""}}</td>
+                        <td {% if lavoratore.gru < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.gru < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.gru < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}>{{lavoratore.gru|default_if_none:""}}</td>
+                        <td {% if lavoratore.imbracatore < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.imbracatore < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.imbracatore < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.imbracatore|default_if_none:""}}</td>
+                        <td {% if lavoratore.spazi_confinati < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.spazi_confinati < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.spazi_confinati < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.spazi_confinati|default_if_none:""}}</td>
+                        <td {% if lavoratore.rir < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.rir < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.rir < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.rir|default_if_none:""}}</td>
+                        <td {% if lavoratore.rls < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.rls < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.rls < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.rls|default_if_none:""}}</td>
+                        <td {% if lavoratore.rspp < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.rspp < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.rspp < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.rspp|default_if_none:""}}</td>
                     </tr>
                 {% endfor %}
 
