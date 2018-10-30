@@ -101,7 +101,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             scadenza = scadenza2date(documento)
                             lavoratore.art37 = scadenza
 
-                        elif tipo in ('primosoccorso', 'primo.soccorso'):
+                        elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
                             scadenza = scadenza2date(documento, 3)
                             lavoratore.primo_soccorso = scadenza
 
@@ -144,6 +144,10 @@ def aggiorna_attestati(modeladmin, request, queryset):
                         elif tipo in ('altro', 'rir'):
                             scadenza = scadenza2date(documento)
                             lavoratore.rir = scadenza
+
+                        elif tipo == 'rls':
+                            scadenza = scadenza2date(documento)
+                            lavoratore.rls = scadenza
 
                         elif tipo == 'rspp':
                             scadenza = scadenza2date(documento)
@@ -250,7 +254,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                                            'classes': ('collapse',)}),
                  ('Mezzi', {'fields': ('carrello', 'ple', 'gru', 'imbracatore',),
                             'classes': ('collapse',)}),
-                 ('Vari', {'fields': ('rir', 'rspp'),
+                 ('Vari', {'fields': ('rir', 'rls', 'rspp'),
                            'classes': ('collapse',)}),
                  # ('', {'fields': (),
                  #       'classes': ('collapse',)}),
@@ -262,7 +266,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                     'primo_soccorso', 'antincendio', 'preposto',
                     'art37', 'h2s', 'dpi3', 'spazi_confinati',
                     'carrello', 'ple', 'gru', 'imbracatore',
-                    'rir', 'rspp')
+                    'rir', 'rls', 'rspp')
 
     ordering = ['cognome', 'nome']
 

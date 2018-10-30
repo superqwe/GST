@@ -99,6 +99,7 @@
                         <th>Imbracatore</th>
                         <th>Spazi Confinati</th>
                         <th>RIR</th>
+                        <th>RLS</th>
                         <th>RSPP</th>
                     </tr>
                 </thead>
@@ -126,6 +127,7 @@
                         <td {% if lavoratore.imbracatore < oggi %} style="color:red" {% endif %}> {{lavoratore.imbracatore|default_if_none:""}}</td>
                         <td {% if lavoratore.spazi_confinati < oggi %} style="color:red" {% endif %}> {{lavoratore.spazi_confinati|default_if_none:""}}</td>
                         <td {% if lavoratore.rir < oggi %} style="color:red" {% endif %}> {{lavoratore.rir|default_if_none:""}}</td>
+                        <td {% if lavoratore.rls < oggi %} style="color:red" {% endif %}> {{lavoratore.rls|default_if_none:""}}</td>
                         <td {% if lavoratore.rspp < oggi %} style="color:red" {% endif %}> {{lavoratore.rspp|default_if_none:""}}</td>
                     </tr>
                 {% endfor %}

@@ -44,6 +44,7 @@ class Lavoratore(models.Model):
     spazi_confinati = models.DateField(null=True, blank=True, verbose_name='Spazi Confinati')
 
     rir = models.DateField(null=True, blank=True, verbose_name='RIR')
+    rls = models.DateField(null=True, blank=True, verbose_name='RLS')
     rspp = models.DateField(null=True, blank=True, verbose_name='RSPP')
 
     def __str__(self):
