@@ -41,6 +41,7 @@ class Lavoratore(models.Model):
     gru = models.DateField(null=True, blank=True)
     imbracatore = models.DateField(null=True, blank=True)
 
+    ponteggi = models.DateField(null=True, blank=True, verbose_name='Ponteggi')
     spazi_confinati = models.DateField(null=True, blank=True, verbose_name='Spazi Confinati')
 
     rir = models.DateField(null=True, blank=True, verbose_name='RIR')

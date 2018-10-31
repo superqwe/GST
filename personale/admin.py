@@ -153,6 +153,10 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             scadenza = scadenza2date(documento)
                             lavoratore.rspp = scadenza
 
+                        elif tipo == 'ponteggi':
+                            scadenza = scadenza2date(documento)
+                            lavoratore.ponteggi = scadenza
+
                         else:
                             print('***', tipo, '+++', documento)
 
@@ -251,7 +255,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                  ('Preposti/Addetti Emergenza/Sicurezza',
                   {'fields': ('primo_soccorso', 'antincendio', 'preposto', 'rls', 'rspp'),
                    'classes': ('collapse',)}),
-                 ('Base e Specialistici', {'fields': ('art37', 'h2s', 'dpi3', 'spazi_confinati',),
+                 ('Base e Specialistici', {'fields': ('art37', 'h2s', 'dpi3', 'spazi_confinati', 'ponteggi'),
                                            'classes': ('collapse',)}),
                  ('Mezzi', {'fields': ('carrello', 'ple', 'gru', 'imbracatore',),
                             'classes': ('collapse',)}),
@@ -265,7 +269,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                     'situazione', 'gst', 'rait',
                     'ci', 'idoneita', 'unilav',
                     'primo_soccorso', 'antincendio', 'preposto',
-                    'art37', 'h2s', 'dpi3', 'spazi_confinati',
+                    'art37', 'h2s', 'dpi3', 'spazi_confinati', 'ponteggi',
                     'carrello', 'ple', 'gru', 'imbracatore',
                     'rir', 'rls', 'rspp')
 

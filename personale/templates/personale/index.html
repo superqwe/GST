@@ -98,6 +98,7 @@
                         <th>Gru</th>{{lavoratore.situazione|default_if_none:""}}
                         <th>Imbracatore</th>
                         <th>Spazi Confinati</th>
+                        <th>Ponteggi</th>
                         <th>RIR</th>
                         <th>RLS</th>
                         <th>RSPP</th>
@@ -171,6 +172,10 @@
                             {% elif lavoratore.spazi_confinati < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.spazi_confinati < mesi12 %} class="alert alert-info" role="alert"
                             {% endif %}> {{lavoratore.spazi_confinati|default_if_none:""}}</td>
+                        <td {% if lavoratore.ponteggi < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.ponteggi < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.ponteggi < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.ponteggi|default_if_none:""}}</td>
                         <td {% if lavoratore.rir < oggi %} class="alert alert-danger" role="alert"
                             {% elif lavoratore.rir < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.rir < mesi12 %} class="alert alert-info" role="alert"
