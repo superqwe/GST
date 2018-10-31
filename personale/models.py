@@ -13,6 +13,8 @@ class Lavoratore(models.Model):
                       ('r', 'Rosso'))
 
     stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO)
+    stato_formazione = models.CharField(null=True, blank=True, max_length=1, choices=STATO,
+                                        verbose_name='Stato Formazione')
     in_cantiere = models.BooleanField(default=True, verbose_name='In Cantiere')
 
     cognome = models.CharField(max_length=50)

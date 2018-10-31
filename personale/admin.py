@@ -247,7 +247,7 @@ aggiorna_stato.short_description = "Aggiorna Stato"
 
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait, aggiorna_stato]
-    fieldsets = ((None, {'fields': ('cognome', 'nome', 'stato', 'in_cantiere')}),
+    fieldsets = ((None, {'fields': ('cognome', 'nome', 'stato', 'stato_formazione', 'in_cantiere')}),
                  ('GST', {'fields': ('situazione', 'gst', 'rait'),
                           'classes': ('collapse',)}),
                  ('Documenti Base', {'fields': ('ci', 'idoneita', 'unilav'),
@@ -265,7 +265,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                  #       'classes': ('collapse',)}),
                  )
     list_display = ('cognome', 'nome',
-                    'stato', 'in_cantiere',
+                    'stato', 'stato_formazione', 'in_cantiere',
                     'situazione', 'gst', 'rait',
                     'ci', 'idoneita', 'unilav',
                     'primo_soccorso', 'antincendio', 'preposto',
