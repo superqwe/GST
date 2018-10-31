@@ -1,80 +1,22 @@
-<!doctype html>
-<html lang="it">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends "personale/base.html" %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'personale/css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'personale/css/style.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+{% load static %}
 
-    <title>Elenco Personale</title>
-</head>
-<body>
-
-<div class="container-fluid">
-
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'personale/img/modomec-logo-32.png' %}" alt="MODOMEC">
-            </a>
-
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="/admin/">Admin <span class="sr-only">(current)</span></a>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Personale
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Elenco</a>
-                  <a class="dropdown-item" href="#">In Scadenza/Scaduti</a>
-                </div>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Mezzi
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Elenco</a>
-                  <a class="dropdown-item" href="#">In Scadenza/Scaduti</a>
-                </div>
-              </li>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Azioni
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <div class="dropdown-item disabled" >Aggiorna Lavoratori</div>
-                        <a class="dropdown-item" href="#">Elenco</a>
-                        <a class="dropdown-item" href="#">Documenti</a>
-                        <a class="dropdown-item" href="#">GST</a>
-                        <a class="dropdown-item" href="#">Rait</a>
-                        <a class="dropdown-item" href="#">Stato</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item disabled" >Aggiorna Mezzi</div>
-                        <a class="dropdown-item" href="#">Aggiorna Tutto</a>
-
-                </div>
-              </li>
-            </ul>
+{% block title %}
+Elenco Personale
+{% endblock %}
 
 
-        </nav>
-    </div>
+{% block menu %}
+{% include "personale/menu.html" %}
+{% endblock %}
 
 
-    <div class="corpo">
 
-        <h1>Elenco personale</h1>
+{% block corpo %}
+    <h1>Elenco personale</h1>
 
-        <div class="table-responsive">
+    <div class="table-responsive">
             <table class="table table-striped table-sm text-center ">
                 <thead class="thead-light">
                     <tr>
@@ -166,12 +108,4 @@
 
             </table>
         </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="{% static 'personale/js/bootstrap.min.js' %}" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-</body>
-</html>
+{% endblock %}

@@ -14,13 +14,12 @@ def completo(request):
     lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
 
     oggi = datetime.date.today()
-    # print(lavoratori[17].gst < oggi)
     mesi1 = oggi + datetime.timedelta(days=30)
     mesi2 = oggi + datetime.timedelta(days=60)
     mesi6 = oggi + datetime.timedelta(days=366 / 2)
     mesi12 = oggi + datetime.timedelta(days=365)
 
-    template = loader.get_template('personale/index.html')
+    template = loader.get_template('personale/completo.html')
     context = {
         'lavoratori': lavoratori,
         'oggi': oggi,
@@ -36,7 +35,6 @@ def formazione(request):
     lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
 
     oggi = datetime.date.today()
-    # print(lavoratori[17].gst < oggi)
     mesi1 = oggi + datetime.timedelta(days=30)
     mesi2 = oggi + datetime.timedelta(days=60)
     mesi6 = oggi + datetime.timedelta(days=366 / 2)
