@@ -10,7 +10,7 @@ def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
 
-def globale(request):
+def completo(request):
     lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
 
     oggi = datetime.date.today()

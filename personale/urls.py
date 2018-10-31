@@ -5,10 +5,13 @@ from . import views
 urlpatterns = [
     # /personale/
     path('', views.index, name='index'),
-    # /personale/globale/
-    path('globale/', views.globale, name='globale'),
-    # /personale/scadenza/
-    path('scadenza/', views.scadenza, name='scadenza'),
+
+    # /personale/completo/
+    path('completo/', views.completo, name='completo'),
+
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),
+
+    # /personale/scadenza/
+    path('scadenza/', views.scadenza, name='scadenza'),
 ]
