@@ -6,7 +6,8 @@ from pprint import pprint as pp
 import pandas as pd
 from django.contrib import admin
 
-from .models import Lavoratore
+from personale.models import Anagrafica, Formazione, Lavoratore
+from personale.templates import admin_actions
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -42,128 +43,11 @@ def scadenza2date(documento, durata=5):
 
 
 def aggiorna_lavoratori(modeladmin, request, queryset):
-    path_base = PATH_BASE
-
-    print('*' * 450)
-
-    primo_ciclo = True
-    for root, dirs, files in os.walk(path_base):
-
-        for lavoratore in dirs:
-            lavoratore = lavoratore.strip().title().split(maxsplit=1)
-
-            if lavoratore[0] != 'Z':
-                if primo_ciclo:
-                    print(lavoratore)
-                    cognome, nome = lavoratore
-
-                    try:
-                        res = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
-                    except IndexError:
-                        lavoratore = Lavoratore(cognome=cognome, nome=nome)
-                        lavoratore.save()
-
-        primo_ciclo = False
+    admin_actions.aggiorna_lavoratori()
 
 
 def aggiorna_attestati(modeladmin, request, queryset):
-    path_base = PATH_BASE
-    re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
-
-    for root, dirs, files in os.walk(path_base):
-        path = root[len(path_base) + 1:].lower()
-
-        if not path.startswith('z ') and not 'scaduti' in root:
-            try:
-                cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
-                print('\n', cognome, nome)
-                lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
-
-                for documento in files:
-                    documento = documento.lower()
-
-                    if documento.endswith('.pdf'):
-                        tipo, scadenza = documento.split()[:2]
-
-                        if tipo == 'doc':
-                            scadenza = scadenza2date(documento, 0)
-                            lavoratore.ci = scadenza
-
-                        elif tipo in ('idoneità', 'idoneita'):
-                            scadenza = scadenza2date(documento, 0)
-                            lavoratore.idoneita = scadenza
-
-                        elif tipo == 'unilav':
-                            scadenza = scadenza2date(documento, 0)
-                            lavoratore.unilav = scadenza
-
-                        elif tipo in ('art37', 'art.37'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.art37 = scadenza
-
-                        elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
-                            scadenza = scadenza2date(documento, 3)
-                            lavoratore.primo_soccorso = scadenza
-
-                        elif tipo == 'antincendio':
-                            scadenza = scadenza2date(documento, 0)
-                            lavoratore.antincendio = scadenza
-
-                        elif tipo == 'preposto':
-                            scadenza = scadenza2date(documento)
-                            lavoratore.preposto = scadenza
-
-                        elif tipo in ('h2s.safety', 'h2s'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.h2s = scadenza
-
-                        elif tipo == 'dpi':
-                            scadenza = scadenza2date(documento)
-                            lavoratore.dpi3 = scadenza
-
-                        elif tipo in ('carrelli', 'carrello', 'sollevatore'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.carrello = scadenza
-
-                        elif tipo == 'ple':
-                            scadenza = scadenza2date(documento)
-                            lavoratore.ple = scadenza
-
-                        elif tipo in ('autogru', 'gru'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.gru = scadenza
-
-                        elif tipo == 'imbracatore':
-                            scadenza = scadenza2date(documento)
-                            lavoratore.imbracatore = scadenza
-
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.spazi_confinati = scadenza
-
-                        elif tipo in ('altro', 'rir'):
-                            scadenza = scadenza2date(documento)
-                            lavoratore.rir = scadenza
-
-                        elif tipo == 'rls':
-                            scadenza = scadenza2date(documento, 1)
-                            lavoratore.rls = scadenza
-
-                        elif tipo == 'rspp':
-                            scadenza = scadenza2date(documento)
-                            lavoratore.rspp = scadenza
-
-                        elif tipo == 'ponteggi':
-                            scadenza = scadenza2date(documento, 4)
-                            lavoratore.ponteggi = scadenza
-
-                        else:
-                            print('***', tipo, '+++', documento)
-
-                lavoratore.save()
-
-            except ValueError:
-                print('*** Errore in ', path)
+    admin_actions.aggiorna_attestati()
 
 
 def aggiorna_gst(modeladmin, request, queryset):
@@ -245,35 +129,29 @@ aggiorna_rait.short_description = "Aggiorna RAIT"
 aggiorna_stato.short_description = "Aggiorna Stato"
 
 
+class FormazioneAdmin(admin.ModelAdmin):
+    actions = [aggiorna_lavoratori, aggiorna_attestati]
+    list_display = ('lavoratore', 'stato_formazione',
+                    'art37',
+                    'preposto', 'primo_soccorso', 'antincendio',
+                    'dpi3', 'ponteggi',
+                    'carrello', 'ple', 'gru', 'imbracatore',
+                    'spazi_confinati', 'h2s',
+                    'rir', 'rls', 'rspp')
+    ordering = ['lavoratore']
+
+
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait, aggiorna_stato]
-    fieldsets = ((None, {'fields': ('cognome', 'nome', 'stato', 'stato_formazione', 'in_cantiere')}),
-                 ('GST', {'fields': ('situazione', 'gst', 'rait'),
-                          'classes': ('collapse',)}),
-                 ('Documenti Base', {'fields': ('ci', 'idoneita', 'unilav'),
-                                     'classes': ('collapse',)}),
-                 ('Preposti/Addetti Emergenza/Sicurezza',
-                  {'fields': ('primo_soccorso', 'antincendio', 'preposto', 'rls', 'rspp'),
-                   'classes': ('collapse',)}),
-                 ('Base e Specialistici', {'fields': ('art37', 'h2s', 'dpi3', 'spazi_confinati', 'ponteggi'),
-                                           'classes': ('collapse',)}),
-                 ('Mezzi', {'fields': ('carrello', 'ple', 'gru', 'imbracatore',),
-                            'classes': ('collapse',)}),
-                 ('Vari', {'fields': ('rir',),
-                           'classes': ('collapse',)}),
-                 # ('', {'fields': (),
-                 #       'classes': ('collapse',)}),
-                 )
-    list_display = ('cognome', 'nome',
-                    'stato', 'stato_formazione', 'in_cantiere',
-                    'situazione', 'gst', 'rait',
-                    'ci', 'idoneita', 'unilav',
-                    'primo_soccorso', 'antincendio', 'preposto',
-                    'art37', 'h2s', 'dpi3', 'spazi_confinati', 'ponteggi',
-                    'carrello', 'ple', 'gru', 'imbracatore',
-                    'rir', 'rls', 'rspp')
+
+    list_display = ('cognome', 'nome')
+    #                 'stato', 'stato_formazione', 'in_cantiere',
+    #                 'situazione', 'gst', 'rait',
+    #                 'ci', 'idoneita', 'unilav',
 
     ordering = ['cognome', 'nome']
 
 
+admin.site.register(Anagrafica, )
+admin.site.register(Formazione, FormazioneAdmin)
 admin.site.register(Lavoratore, LavoratoreAdmin)
