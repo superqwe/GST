@@ -1,13 +1,11 @@
 import datetime
-import os
 import re
-from pprint import pprint as pp
 
 import pandas as pd
 from django.contrib import admin
 
 from personale.models import Anagrafica, Formazione, Lavoratore
-from personale.templates import admin_actions
+from personale import admin_actions
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)

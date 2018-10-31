@@ -44,8 +44,8 @@ Elenco Personale
                 {% for lavoratore in lavoratori %}
                     <tr>
                         <td><i class="fas fa-circle {{lavoratore.stato_formazione}}"></i></td>
-                        <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
-                        <th scope="row" class="text-left">{{lavoratore.nome}}</th>
+                        <th scope="row" class="text-left">{{lavoratore.lavoratore.cognome}}</th>
+                        <th scope="row" class="text-left">{{lavoratore.lavoratore.nome}}</th>
                         <td {% if lavoratore.art37 < oggi %} class="alert alert-danger" role="alert"
                             {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"

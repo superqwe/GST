@@ -3,7 +3,7 @@ import datetime
 from django.http import HttpResponse
 from django.template import loader
 
-from personale.models import Lavoratore
+from personale.models import Lavoratore, Formazione
 
 
 def index(request):
@@ -32,7 +32,7 @@ def completo(request):
 
 
 def formazione(request):
-    lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
+    lavoratori = Formazione.objects.order_by('lavoratore')
 
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
