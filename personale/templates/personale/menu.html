@@ -1,0 +1,61 @@
+{% load static %}
+{% block menu %}
+
+<div class="menu">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'personale/img/modomec-logo-32.png' %}" alt="MODOMEC">
+            </a>
+
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/admin/">Admin <span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Personale
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/personale/globale">Elenco Completo</a>
+                  <a class="dropdown-item" href="/personale/formazione">Formazione</a>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Mezzi
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Elenco</a>
+                  <a class="dropdown-item" href="#">In Scadenza/Scaduti</a>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Azioni
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-item disabled" >Aggiorna Lavoratori</div>
+                        <a class="dropdown-item" href="#">Elenco</a>
+                        <a class="dropdown-item" href="#">Documenti</a>
+                        <a class="dropdown-item" href="#">GST</a>
+                        <a class="dropdown-item" href="#">Rait</a>
+                        <a class="dropdown-item" href="#">Stato</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item disabled" >Aggiorna Mezzi</div>
+                        <a class="dropdown-item" href="#">Aggiorna Tutto</a>
+
+                </div>
+              </li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+{% endblock %}
+
+
+
