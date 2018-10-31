@@ -146,7 +146,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             lavoratore.rir = scadenza
 
                         elif tipo == 'rls':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento, 1)
                             lavoratore.rls = scadenza
 
                         elif tipo == 'rspp':
