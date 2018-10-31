@@ -154,7 +154,7 @@ def aggiorna_attestati(modeladmin, request, queryset):
                             lavoratore.rspp = scadenza
 
                         elif tipo == 'ponteggi':
-                            scadenza = scadenza2date(documento)
+                            scadenza = scadenza2date(documento, 4)
                             lavoratore.ponteggi = scadenza
 
                         else:
