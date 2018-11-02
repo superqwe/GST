@@ -13,39 +13,16 @@ AVVISO_SCADENZA = OGGI + DT
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 
-def scadenza2date(documento, durata=5):
-    re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
-
-    if not re_dma.findall(documento):
-        re_dma = re.compile(r'\d{6,8}')
-
-        try:
-            data = re_dma.findall(documento)[0]
-
-            giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
-            anno = anno if anno > 2000 else anno + 2000
-            scadenza = datetime.date(anno + durata, mese, giorno)
-            return scadenza
-        except IndexError:
-            print('+++', documento)
-            return None
-
-    try:
-        giorno, mese, anno = re_dma.findall(documento)[0].split('.')
-        anno = int(anno) if len(anno) == 4 else int(anno) + 2000
-        scadenza = datetime.date(anno + durata, int(mese), int(giorno))
-        return scadenza
-    except IndexError:
-        print('+++', documento)
-        return None
-
-
 def aggiorna_lavoratori(modeladmin, request, queryset):
     admin_actions.aggiorna_lavoratori()
 
 
 def aggiorna_attestati(modeladmin, request, queryset):
     admin_actions.aggiorna_attestati()
+
+
+def rinomina_attestati(modeladmin, request, queryset):
+    admin_actions.rinomina_attestati()
 
 
 def aggiorna_gst(modeladmin, request, queryset):
@@ -122,13 +99,15 @@ def aggiorna_stato(modeladmin, request, queryset):
 
 aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
 aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
+rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
+
 aggiorna_gst.short_description = "Aggiorna GST"
 aggiorna_rait.short_description = "Aggiorna RAIT"
 aggiorna_stato.short_description = "Aggiorna Stato"
 
 
 class FormazioneAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati]
+    actions = [aggiorna_lavoratori, aggiorna_attestati, rinomina_attestati]
     list_display = ('lavoratore', 'stato_formazione',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',

@@ -94,7 +94,6 @@ def aggiorna_attestati():
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
                 formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
 
-
                 for documento in files:
                     documento = documento.lower()
 
@@ -153,7 +152,7 @@ def aggiorna_attestati():
                             scadenza = scadenza2date(documento)
                             formazione.imbracatore = scadenza
 
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinati'):
                             scadenza = scadenza2date(documento)
                             formazione.spazi_confinati = scadenza
 
@@ -177,6 +176,135 @@ def aggiorna_attestati():
                             print('***', tipo, '+++', documento)
 
                 formazione.save()
+
+            except ValueError:
+                print('*** Errore in ', path)
+
+
+def m_d_y2mdy(scadenza):
+    re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
+
+    if not re_dma.findall(scadenza):
+        re_dma = re.compile(r'\d{6,8}')
+
+        try:
+            data = re_dma.findall(scadenza)[0]
+
+            giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
+            anno = anno - 2000 if anno > 2000 else anno
+            scadenza = '%2i%i2%2i' % (giorno, mese, anno)
+            return scadenza
+        except IndexError:
+            print('+++', scadenza)
+            return None
+
+    try:
+        giorno, mese, anno = re_dma.findall(scadenza)[0].split('.')
+        anno = int(anno) - 2000 if len(anno) == 4 else int(anno)
+        scadenza = '%s%s%2i' % (giorno, mese, anno)
+        return scadenza
+    except IndexError:
+        print('+++', scadenza)
+        return None
+
+
+def rinomina_attestati():
+    path_base = PATH_BASE
+    print('*'*400)
+
+    for root, dirs, files in os.walk(path_base):
+        path = root[len(path_base) + 1:].lower()
+
+        if not path.startswith('z ') and not 'scaduti' in root:
+            try:
+                cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
+                print('\n', cognome, nome)
+                lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
+                formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
+
+                for documento in files:
+                    documento = documento.lower()
+
+                    if documento.endswith('.pdf'):
+                        tipo, data = documento.split()[:2]
+
+                        if tipo == 'doc':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'doc'
+
+                        elif tipo in ('idoneità', 'idoneita'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'idoneità'
+
+                        elif tipo == 'unilav':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'unilav'
+
+                        elif tipo in ('art37', 'art.37'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'art37'
+
+                        elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'primo.soccorso'
+
+                        elif tipo == 'antincendio':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'antincendio'
+
+                        elif tipo == 'preposto':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'preposto'
+
+                        elif tipo in ('h2s.safety', 'h2s'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'h2s'
+
+                        elif tipo == 'dpi':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'dpi'
+
+                        elif tipo in ('carrelli', 'carrello', 'sollevatore'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'carrelli'
+
+                        elif tipo == 'ple':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'ple'
+
+                        elif tipo in ('autogru', 'gru'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'autogru'
+
+                        elif tipo == 'imbracatore':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'imbracatore'
+
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'spazi.confinati'
+
+                        elif tipo in ('altro', 'rir'):
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'rir'
+
+                        elif tipo == 'rls':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'rls'
+
+                        elif tipo == 'rspp':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'rspp'
+
+                        elif tipo == 'ponteggi':
+                            scadenza = m_d_y2mdy(data)
+                            tipo = 'ponteggi'
+
+                        else:
+                            print('***', tipo, '+++', documento)
+
+                    print(tipo, scadenza)
+
 
             except ValueError:
                 print('*** Errore in ', path)
