@@ -152,7 +152,7 @@ def aggiorna_attestati():
                             scadenza = scadenza2date(documento)
                             formazione.imbracatore = scadenza
 
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinati'):
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato', 'spazi.confinati'):
                             scadenza = scadenza2date(documento)
                             formazione.spazi_confinati = scadenza
 
@@ -181,7 +181,10 @@ def aggiorna_attestati():
                 print('*** Errore in ', path)
 
 
-def m_d_y2mdy(scadenza):
+def m_d_y2mdy(scadenza, tipo=None):
+    if tipo:
+        print('+' * 30, scadenza)
+
     re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
 
     if not re_dma.findall(scadenza):
@@ -192,7 +195,7 @@ def m_d_y2mdy(scadenza):
 
             giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
             anno = anno - 2000 if anno > 2000 else anno
-            scadenza = '%2i%i2%2i' % (giorno, mese, anno)
+            scadenza = '%02i%02i%02i' % (giorno, mese, anno)
             return scadenza
         except IndexError:
             print('+++', scadenza)
@@ -201,7 +204,7 @@ def m_d_y2mdy(scadenza):
     try:
         giorno, mese, anno = re_dma.findall(scadenza)[0].split('.')
         anno = int(anno) - 2000 if len(anno) == 4 else int(anno)
-        scadenza = '%s%s%2i' % (giorno, mese, anno)
+        scadenza = '%s%s%02i' % (giorno, mese, anno)
         return scadenza
     except IndexError:
         print('+++', scadenza)
@@ -230,85 +233,89 @@ def rinomina_attestati():
                         scadenza = None
 
                         if tipo == 'doc':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'doc'
 
                         elif tipo in ('idoneità', 'idoneita'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'idoneità'
 
                         elif tipo == 'unilav':
                             if data.split('.')[0] == 'indeterminato':
                                 scadenza = 'indeterminato'
                             else:
-                                scadenza = m_d_y2mdy(data)
+                                scadenza = m_d_y2mdy(documento)
 
                             tipo = 'unilav'
 
                         elif tipo in ('art37', 'art.37'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'art37'
 
                         elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'primo.soccorso'
 
                         elif tipo == 'antincendio':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'antincendio'
 
                         elif tipo == 'preposto':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'preposto'
 
                         elif tipo in ('h2s.safety', 'h2s'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'h2s'
 
                         elif tipo == 'dpi':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'dpi'
 
                         elif tipo in ('carrelli', 'carrello', 'sollevatore'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'carrelli'
 
                         elif tipo == 'ple':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'ple'
 
                         elif tipo in ('autogru', 'gru'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'autogru'
 
                         elif tipo == 'imbracatore':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'imbracatore'
 
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato'):
-                            scadenza = m_d_y2mdy(data)
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato', 'spazi.confinati'):
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'spazi.confinati'
 
                         elif tipo in ('altro', 'rir'):
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'rir'
 
                         elif tipo == 'rls':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'rls'
 
                         elif tipo == 'rspp':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'rspp'
 
                         elif tipo == 'ponteggi':
-                            scadenza = m_d_y2mdy(data)
+                            scadenza = m_d_y2mdy(documento)
                             tipo = 'ponteggi'
 
                         else:
                             print('***', tipo, '+++', documento)
 
-                    print(documento, '---->', tipo, scadenza)
+                    if scadenza:
+                        da = os.path.join(PATH_BASE,path, documento)
+                        a = os.path.join(PATH_BASE,path, '%s %s.pdf' % (tipo, scadenza))
+                        os.rename(da, a)
+
 
 
             except ValueError:
