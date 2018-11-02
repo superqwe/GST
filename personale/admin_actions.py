@@ -210,7 +210,7 @@ def m_d_y2mdy(scadenza):
 
 def rinomina_attestati():
     path_base = PATH_BASE
-    print('*'*400)
+    print('*' * 400)
 
     for root, dirs, files in os.walk(path_base):
         path = root[len(path_base) + 1:].lower()
@@ -227,6 +227,7 @@ def rinomina_attestati():
 
                     if documento.endswith('.pdf'):
                         tipo, data = documento.split()[:2]
+                        scadenza = None
 
                         if tipo == 'doc':
                             scadenza = m_d_y2mdy(data)
@@ -237,7 +238,11 @@ def rinomina_attestati():
                             tipo = 'idoneità'
 
                         elif tipo == 'unilav':
-                            scadenza = m_d_y2mdy(data)
+                            if data.split('.')[0] == 'indeterminato':
+                                scadenza = 'indeterminato'
+                            else:
+                                scadenza = m_d_y2mdy(data)
+
                             tipo = 'unilav'
 
                         elif tipo in ('art37', 'art.37'):
@@ -280,7 +285,7 @@ def rinomina_attestati():
                             scadenza = m_d_y2mdy(data)
                             tipo = 'imbracatore'
 
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato'):
+                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato'):
                             scadenza = m_d_y2mdy(data)
                             tipo = 'spazi.confinati'
 
@@ -303,7 +308,7 @@ def rinomina_attestati():
                         else:
                             print('***', tipo, '+++', documento)
 
-                    print(tipo, scadenza)
+                    print(documento, '---->', tipo, scadenza)
 
 
             except ValueError:
