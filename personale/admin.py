@@ -106,6 +106,15 @@ aggiorna_rait.short_description = "Aggiorna RAIT"
 aggiorna_stato.short_description = "Aggiorna Stato"
 
 
+class AnagraficaAdmin(admin.ModelAdmin):
+    actions = [aggiorna_lavoratori, aggiorna_attestati, rinomina_attestati]
+    list_display = ('lavoratore',
+                    'stato', 'cantiere', 'mansione',
+                    'idoneita', 'unilav')
+    ordering = ['lavoratore']
+    search_fields = ['lavoratore__cognome',]
+
+
 class FormazioneAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori, aggiorna_attestati, rinomina_attestati]
     list_display = ('lavoratore', 'stato_formazione',
@@ -129,6 +138,6 @@ class LavoratoreAdmin(admin.ModelAdmin):
     ordering = ['cognome', 'nome']
 
 
-admin.site.register(Anagrafica, )
+admin.site.register(Anagrafica, AnagraficaAdmin)
 admin.site.register(Formazione, FormazioneAdmin)
 admin.site.register(Lavoratore, LavoratoreAdmin)

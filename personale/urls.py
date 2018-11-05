@@ -6,6 +6,9 @@ urlpatterns = [
     # /personale/
     path('', views.index, name='index'),
 
+    # /personale/anagrafica/
+    path('anagrafica/', views.anagrafica, name='anagrafica'),
+
     # /personale/completo/
     path('completo/', views.completo, name='completo'),
 

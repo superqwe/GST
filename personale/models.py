@@ -57,25 +57,29 @@ class Anagrafica(models.Model):
     SITUAZIONE_GST = (('v', 'Verde'),
                       ('g', 'Giallo'),
                       ('r', 'Rosso'))
+    CANTIERE = (('sede', 'Massafra'),
+                ('ilva_ta', 'Ilva'),
+                ('eni_ta', 'Raffineria'))
 
     lavoratore = models.ForeignKey(Lavoratore, on_delete=models.CASCADE)
+
     stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO)
-
-    in_cantiere = models.BooleanField(default=True, verbose_name='In Cantiere')
-
-    codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
-
     situazione = models.CharField(null=True, blank=True, max_length=1, choices=SITUAZIONE_GST,
                                   verbose_name='Situazione GST')
-    gst = models.DateField(null=True, blank=True, verbose_name='GST')
+    cantiere = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
+    mansione = models.CharField(max_length=20, null=True, blank=True, verbose_name='Mansione')
 
-    rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
+    codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
 
-    # def __str__(self):
-    #     return '%s %s' % (self.cognome, self.nome)
+    gst = models.DateField(null=True, blank=True, verbose_name='GST')
+
+    rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
+
+    def __str__(self):
+        return '%s ' % self.lavoratore
 
     class Meta:
         verbose_name = 'Anagrafica'

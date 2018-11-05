@@ -80,6 +80,19 @@ def aggiorna_lavoratori():
             formazione.save()
             print('Nuova Formazione: ', lavoratore)
 
+    # crea anagrafica per ogni lavoratore
+    lavoratori = Lavoratore.objects.all()
+
+    for lavoratore in lavoratori:
+        res = Anagrafica.objects.filter(lavoratore__id=lavoratore.id)
+
+        # break
+
+        if len(res) == 0:
+            anagrafica = Anagrafica(lavoratore=lavoratore)
+            anagrafica.save()
+            print('Nuova Anagrafica: ', lavoratore)
+
 
 def aggiorna_attestati():
     path_base = PATH_BASE
