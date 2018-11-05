@@ -15,6 +15,7 @@ class Lavoratore(models.Model):
         return '%s %s' % (self.cognome, self.nome)
 
     class Meta:
+        ordering = ['cognome', 'nome']
         verbose_name = 'Lavoratore'
         verbose_name_plural = 'Lavoratori'
 
@@ -37,6 +38,7 @@ class Formazione(models.Model):
     imbracatore = models.DateField(null=True, blank=True)
 
     ponteggi = models.DateField(null=True, blank=True, verbose_name='Ponteggi')
+    lavori_quota = models.DateField(null=True, blank=True, verbose_name='Lavori in Quota')
     spazi_confinati = models.DateField(null=True, blank=True, verbose_name='Spazi Confinati')
 
     rir = models.DateField(null=True, blank=True, verbose_name='RIR')

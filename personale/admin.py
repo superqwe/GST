@@ -111,7 +111,7 @@ class FormazioneAdmin(admin.ModelAdmin):
     list_display = ('lavoratore', 'stato_formazione',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',
-                    'dpi3', 'ponteggi',
+                    'dpi3', 'ponteggi', 'lavori_quota',
                     'carrello', 'ple', 'gru', 'imbracatore',
                     'spazi_confinati', 'h2s',
                     'rir', 'rls', 'rspp')

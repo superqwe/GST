@@ -87,6 +87,10 @@ Elenco Personale
                             {% elif lavoratore.spazi_confinati < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.spazi_confinati < mesi12 %} class="alert alert-info" role="alert"
                             {% endif %}> {{lavoratore.spazi_confinati|default_if_none:""}}</td>
+                        <td {% if lavoratore.lavori_quota < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.ponteggi < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.ponteggi < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.lavori_quota|default_if_none:""}}</td>
                         <td {% if lavoratore.ponteggi < oggi %} class="alert alert-danger" role="alert"
                             {% elif lavoratore.ponteggi < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.ponteggi < mesi12 %} class="alert alert-info" role="alert"

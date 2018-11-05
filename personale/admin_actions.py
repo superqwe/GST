@@ -172,6 +172,10 @@ def aggiorna_attestati():
                             scadenza = scadenza2date(documento, 4)
                             formazione.ponteggi = scadenza
 
+                        elif tipo == 'lavori.quota':
+                            scadenza = scadenza2date(documento, 5)
+                            formazione.lavori_quota = scadenza
+
                         else:
                             print('***', tipo, '+++', documento)
 
@@ -308,15 +312,17 @@ def rinomina_attestati():
                             scadenza = m_d_y2mdy(documento)
                             tipo = 'ponteggi'
 
+                        elif tipo == 'lavori.quota':
+                            scadenza = m_d_y2mdy(documento)
+                            tipo = 'lavori.quota'
+
                         else:
                             print('***', tipo, '+++', documento)
 
                     if scadenza:
-                        da = os.path.join(PATH_BASE,path, documento)
-                        a = os.path.join(PATH_BASE,path, '%s %s.pdf' % (tipo, scadenza))
+                        da = os.path.join(PATH_BASE, path, documento)
+                        a = os.path.join(PATH_BASE, path, '%s %s.pdf' % (tipo, scadenza))
                         os.rename(da, a)
-
-
 
             except ValueError:
                 print('*** Errore in ', path)
