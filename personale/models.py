@@ -59,7 +59,9 @@ class Anagrafica(models.Model):
                       ('r', 'Rosso'))
     CANTIERE = (('sede', 'Massafra'),
                 ('ilva_ta', 'Ilva'),
-                ('eni_ta', 'Raffineria'))
+                ('eni_ta', 'Raffineria'),
+                (None, '-') # non in forza
+                )
 
     lavoratore = models.ForeignKey(Lavoratore, on_delete=models.CASCADE)
 

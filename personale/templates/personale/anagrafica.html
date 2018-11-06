@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Formazione
+Anagrafica
 {% endblock %}
 
 
@@ -40,7 +40,10 @@ Formazione
                             {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
                             {% endif %}> {{lavoratore.get_cantiere_display|default_if_none:""}}</td>
-                        <td></td>
+                        <td>{% if lavoratore.mansione < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
+                            {% endif %} {{lavoratore.mansione|default_if_none:""}}</td>
                         <td></td>
                         <td></td>
 
