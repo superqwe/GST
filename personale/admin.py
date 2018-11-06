@@ -34,6 +34,27 @@ def in_sede(modeladmin, request, queryset):
 in_sede.short_description = "In Sede"
 
 
+def in_ilva(modeladmin, request, queryset):
+    admin_actions.in_ilva(queryset)
+
+
+in_ilva.short_description = "In Ilva"
+
+
+def no_cantiere(modeladmin, request, queryset):
+    admin_actions.no_cantiere(queryset)
+
+
+no_cantiere.short_description = "Nessun cantiere"
+
+
+def aggiorna_anagrafica(modeladmin, request, queryset):
+    admin_actions.aggiorna_anagrafica()
+
+
+no_cantiere.aggiorna_anagrafica = "Nessun cantiere"
+
+
 # azioni obsolete
 
 def aggiorna_gst(modeladmin, request, queryset):
@@ -119,7 +140,10 @@ aggiorna_stato.short_description = "Aggiorna Stato"
 
 class AnagraficaAdmin(admin.ModelAdmin):
     actions = [in_sede,
-               aggiorna_lavoratori]
+               in_ilva,
+               no_cantiere,
+               aggiorna_lavoratori,
+               aggiorna_anagrafica]
     list_display = ('lavoratore',
                     'stato', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
@@ -139,6 +163,7 @@ class FormazioneAdmin(admin.ModelAdmin):
                     'spazi_confinati', 'h2s',
                     'rir', 'rls', 'rspp')
     ordering = ['lavoratore']
+    search_fields = ['lavoratore__cognome', ]
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
@@ -155,6 +180,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
     #                 'ci', 'idoneita', 'unilav',
 
     ordering = ['cognome', 'nome']
+    search_fields = ['cognome', 'nome']
 
 
 admin.site.register(Anagrafica, AnagraficaAdmin)

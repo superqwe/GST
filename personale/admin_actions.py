@@ -106,6 +106,7 @@ def aggiorna_attestati():
                 print('\n', cognome, nome)
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
                 formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
+                anagrafica = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
 
                 for documento in files:
                     documento = documento.lower()
@@ -119,7 +120,7 @@ def aggiorna_attestati():
 
                         elif tipo in ('idoneità', 'idoneita'):
                             scadenza = scadenza2date(documento, 0)
-                            formazione.idoneita = scadenza
+                            anagrafica.idoneita = scadenza
 
                         elif tipo == 'unilav':
                             scadenza = scadenza2date(documento, 0)
@@ -193,9 +194,14 @@ def aggiorna_attestati():
                             print('***', tipo, '+++', documento)
 
                 formazione.save()
+                anagrafica.save()
 
             except ValueError:
                 print('*** Errore in ', path)
+
+
+def aggiorna_anagrafica():
+    pass
 
 
 def m_d_y2mdy(scadenza, tipo=None):
@@ -340,7 +346,20 @@ def rinomina_attestati():
             except ValueError:
                 print('*** Errore in ', path)
 
+
 def in_sede(queryset):
     for lavoratore in queryset:
         lavoratore.cantiere = 'sede'
+        lavoratore.save()
+
+
+def in_ilva(queryset):
+    for lavoratore in queryset:
+        lavoratore.cantiere = 'ilva_ta'
+        lavoratore.save()
+
+
+def no_cantiere(queryset):
+    for lavoratore in queryset:
+        lavoratore.cantiere = None
         lavoratore.save()

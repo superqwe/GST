@@ -59,7 +59,9 @@ def completo(request):
 
 def formazione(request):
     lavoratori = Formazione.objects.order_by('lavoratore')
+    res = Formazione.objects.order_by('lavoratore')
 
+    pp(res)
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
     mesi2 = oggi + datetime.timedelta(days=60)
