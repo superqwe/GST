@@ -339,3 +339,8 @@ def rinomina_attestati():
 
             except ValueError:
                 print('*** Errore in ', path)
+
+def in_sede(queryset):
+    for lavoratore in queryset:
+        lavoratore.cantiere = 'sede'
+        lavoratore.save()

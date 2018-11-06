@@ -17,6 +17,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
     admin_actions.aggiorna_lavoratori()
 
 
+# azioni formazione
 def aggiorna_attestati(modeladmin, request, queryset):
     admin_actions.aggiorna_attestati()
 
@@ -24,6 +25,16 @@ def aggiorna_attestati(modeladmin, request, queryset):
 def rinomina_attestati(modeladmin, request, queryset):
     admin_actions.rinomina_attestati()
 
+
+# azioni anagrafica
+def in_sede(modeladmin, request, queryset):
+    admin_actions.in_sede(queryset)
+
+
+in_sede.short_description = "In Sede"
+
+
+# azioni obsolete
 
 def aggiorna_gst(modeladmin, request, queryset):
     fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\lavoratore.csv'
@@ -107,16 +118,19 @@ aggiorna_stato.short_description = "Aggiorna Stato"
 
 
 class AnagraficaAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati, rinomina_attestati]
+    actions = [in_sede,
+               aggiorna_lavoratori]
     list_display = ('lavoratore',
                     'stato', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
     ordering = ['lavoratore']
-    search_fields = ['lavoratore__cognome',]
+    search_fields = ['lavoratore__cognome', ]
 
 
 class FormazioneAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati, rinomina_attestati]
+    actions = [aggiorna_lavoratori,
+               aggiorna_attestati,
+               rinomina_attestati]
     list_display = ('lavoratore', 'stato_formazione',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',
@@ -128,7 +142,12 @@ class FormazioneAdmin(admin.ModelAdmin):
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori, aggiorna_attestati, aggiorna_gst, aggiorna_rait, aggiorna_stato]
+    actions = [aggiorna_lavoratori,
+               aggiorna_attestati,
+               rinomina_attestati,
+               aggiorna_gst,
+               aggiorna_rait,
+               aggiorna_stato]
 
     list_display = ('cognome', 'nome')
     #                 'stato', 'stato_formazione', 'in_cantiere',

@@ -17,7 +17,7 @@ Anagrafica
     <h1>Elenco personale (Anagrafica)</h1>
 
     {% for cantiere, lavoratori in lavoratori_per_cantiere %}
-    <h2>{{ cantiere }}</h2>
+    <h2>{{ cantiere }} ({{ lavoratori.count }})</h2>
 
     <div class="table-responsive">
         <table class="table table-striped table-sm text-center ">
@@ -26,7 +26,6 @@ Anagrafica
                     <th scope="col">Stato</th>
                     <th>Cognome</th>
                     <th>Nome</th>
-                    <th>Cantiere</th>
                     <th>Mansione</th>
                     <th>UNILAV</th>
                     <th>Idoneità</th>
@@ -39,11 +38,7 @@ Anagrafica
                     <td><i class="fas fa-circle {{lavoratore.stato_formazione}}"></i></td>
                     <th scope="row" class="text-left">{{lavoratore.lavoratore.cognome}}</th>
                     <th scope="row" class="text-left">{{lavoratore.lavoratore.nome}}</th>
-                    <td {% if lavoratore.cantiere < oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{lavoratore.get_cantiere_display|default_if_none:""}}</td>
-                    <td>{% if lavoratore.mansione < oggi %} class="alert alert-danger" role="alert"
+                    <td >{% if lavoratore.mansione < oggi %} class="alert alert-danger" role="alert"
                         {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
                         {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
                         {% endif %} {{lavoratore.mansione|default_if_none:""}}</td>
