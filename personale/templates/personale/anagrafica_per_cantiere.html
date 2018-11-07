@@ -44,8 +44,8 @@ Anagrafica
                         {% endif %} {{lavoratore.mansione|default_if_none:""}}</td>
                     <td></td>
                     <td{% if lavoratore.idoneita < oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.idoneita < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.idoneita < mesi12 %} class="alert alert-info" role="alert"
+                        {% elif lavoratore.idoneita < mesi1 %} class="alert alert-warning" role="alert"
+                        {% elif lavoratore.idoneita < mesi2 %} class="alert alert-info" role="alert"
                         {% endif %}> {{lavoratore.idoneita|default_if_none:""}}</td>
 
                 </tr>
