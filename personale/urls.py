@@ -17,4 +17,11 @@ urlpatterns = [
 
     # /personale/scadenza/
     path('scadenza/', views.scadenza, name='scadenza'),
+
+    # /personale/estri_dati/
+    path('estrai_dati/', views.estrai_dati, name='estrai_dati'),
+
+    # /personale/interroga/
+    path('estrai_dati/', views.interroga, name='interroga'),
+
 ]

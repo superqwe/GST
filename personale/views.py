@@ -1,4 +1,7 @@
 import datetime
+import glob
+import os
+import shutil
 
 from django.http import HttpResponse
 from django.template import loader
@@ -7,6 +10,7 @@ from personale.models import Lavoratore, Formazione, Anagrafica
 from personale.views_util import date_scadenza
 
 from pprint import pprint as pp
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -21,7 +25,6 @@ def anagrafica(request):
         lavoratori = Anagrafica.objects.filter(cantiere=cantiere[0]).order_by('lavoratore')
 
         dati.append((cantiere[1], lavoratori))
-
 
     template = loader.get_template('personale/anagrafica_per_cantiere.html')
     context = {
@@ -81,4 +84,42 @@ def formazione(request):
 
 
 def scadenza(request):
+    return HttpResponse("Hello, world. You're at the ''personale'' index.")
+
+
+def estrai_dati(request):
+    path = r'C:\Users\leonardo.masi\Documents\Personale'
+    path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
+    FIN = 'elenco_ilva.csv'
+
+    with open(os.path.join(path, FIN)) as fin:
+        for row in fin:
+            cognome, nome = row.split(';')
+            cartella_lavoratore = '%s %s' % (cognome, nome)
+
+            path_idoneita = os.path.join(path, cartella_lavoratore.strip())
+            path_attestati = os.path.join(path, cartella_lavoratore.strip(), 'attestati')
+
+            # idoneità
+            pi = os.path.abspath(path_idoneita)
+            os.chdir(pi)
+            nfile = glob.glob('idon*')[0]
+            da_i = os.path.join(pi, nfile)
+            a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'idoneità sanitaria.pdf'))
+
+            # print(da_i, '-->', a_i)
+            shutil.copy(da_i, a_i)
+
+            # attestati
+            os.chdir(path_attestati)
+            nfile = glob.glob('art*')[0]
+            da_i = os.path.join(path_attestati, nfile)
+            a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'formazione accordo stato-regione.pdf'))
+
+            # print(da_i, '-->', a_i)
+            shutil.copy(da_i, a_i)
+
+    return HttpResponse("Dati estratti")
+
+def interroga(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
