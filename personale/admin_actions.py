@@ -363,3 +363,10 @@ def no_cantiere(queryset):
     for lavoratore in queryset:
         lavoratore.cantiere = None
         lavoratore.save()
+
+
+def in_forza(queryset):
+    print('ciao')
+    for lavoratore in queryset:
+        lavoratore.in_forza = True
+        lavoratore.save()

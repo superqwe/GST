@@ -27,6 +27,12 @@ def rinomina_attestati(modeladmin, request, queryset):
 
 
 # azioni anagrafica
+def in_forza(modeladmin, request, queryset):
+    admin_actions.in_forza(queryset)
+
+
+in_forza.short_description = "In Forza"
+
 def in_sede(modeladmin, request, queryset):
     admin_actions.in_sede(queryset)
 
@@ -139,14 +145,18 @@ aggiorna_stato.short_description = "Aggiorna Stato"
 
 
 class AnagraficaAdmin(admin.ModelAdmin):
-    actions = [in_sede,
-               in_ilva,
-               no_cantiere,
-               aggiorna_lavoratori,
-               aggiorna_anagrafica]
-    list_display = ('lavoratore',
-                    'stato', 'cantiere', 'mansione',
+    actions = [
+        # in_sede,
+        # in_ilva,
+        # no_cantiere,
+        in_forza,
+        aggiorna_lavoratori,
+        aggiorna_anagrafica
+    ]
+    list_display = ('lavoratore', 'stato',
+                    'in_forza', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
+    list_filter = ['in_forza', 'cantiere']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 
