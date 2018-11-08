@@ -40,7 +40,10 @@ Anagrafica
                         <td> {% if lavoratore.in_forza %} x {% else%}  {% endif %} </td>
                         <td> {{lavoratore.get_azienda_display|default_if_none:""}}</td>
                         <td> {{lavoratore.mansione|default_if_none:""}}</td>
-                        <td></td>
+                        <td {% if lavoratore.unilav < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.unilav < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.unilav < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.unilav|default_if_none:""}}</td>
                         <td {% if lavoratore.idoneita < oggi %} class="alert alert-danger" role="alert"
                             {% elif lavoratore.idoneita < mesi1 %} class="alert alert-warning" role="alert"
                             {% elif lavoratore.idoneita < mesi2 %} class="alert alert-info" role="alert"

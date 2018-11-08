@@ -136,41 +136,48 @@ def estrai_dati(request):
     return HttpResponse("Dati estratti")
 
 
-def azione(request):
+def leggi_contrattideterminati(request):
     path = r'C:\Users\leonardo.masi\Documents\Personale'
     FIN = r'C:\Users\leonardo.masi\Documents\Personale\CONTRATTIDETERMINATI.xlsx'
     xls = pd.ExcelFile(FIN)
-    df = xls.parse("CARPENT.")
 
-    for row in df.iterrows():
+    ciclo = (('CARPENT.', 'm'),
+             ('RIMEC', 'r'),
+             ('WELDING', 'w'),
+             ('SOMMINISTRATI', 'm'))
 
-        if not pd.isnull(row[0]):
-            cognome = row[1][0].title().strip().replace(' ', '_').replace("o'", 'ò').replace("e’", 'è')
-            nome = row[1][1].title().strip()
-            qualifica = row[1][3].title().strip()
-            unilav = row[1][5]
+    for foglio, azienda in ciclo:
+        df = xls.parse(foglio)
 
-            cartella = os.path.join(path, '%s %s' % (cognome.upper(), nome))
-            if not os.path.exists(cartella):
-                os.mkdir(cartella)
+        for row in df.iterrows():
 
-            # cartella2 = os.path.join(path, '%s %s' % (cognome, nome))
-            # os.rename(cartella2, cartella)
+            if not pd.isnull(row[0]):
+                cognome = row[1][0].title().strip().replace(' ', '_').replace("o'", 'ò').replace("e’", 'è')
+                nome = row[1][1].title().strip()
+                qualifica = row[1][3].title().strip()
+                unilav = row[1][5]
 
-            if not pd.isnull(cognome):
-                try:
-                    lavoratore = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome)[0]
-                    res = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
+                cartella = os.path.join(path, '%s %s' % (cognome.upper(), nome))
+                if not os.path.exists(cartella):
+                    os.mkdir(cartella)
 
-                    res.in_forza = True
-                    res.azienda = 'm'
-                    res.mansione =qualifica
-                    res.unilav= unilav
+                # cartella2 = os.path.join(path, '%s %s' % (cognome, nome))
+                # os.rename(cartella2, cartella)
 
-                    res.save()
+                if not pd.isnull(cognome):
+                    try:
+                        lavoratore = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome)[0]
+                        res = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
 
-                except IndexError:
-                    print('*** errore ----> ', cognome, nome)
+                        res.in_forza = True
+                        res.azienda = azienda
+                        res.mansione = qualifica
+                        res.unilav = unilav
+
+                        res.save()
+
+                    except IndexError:
+                        print('*** errore ----> ', cognome, nome)
 
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">Hello, world. You're at the ''azione'' index.</h1>
