@@ -18,6 +18,23 @@ def index(request):
 
 def anagrafica(request):
     lavoratori = Anagrafica.objects.order_by('lavoratore')
+    # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+
+    template = loader.get_template('personale/anagrafica.html')
+    context = {
+        'lavoratori': lavoratori,
+        # 'lavoratori_per_cantiere': dati,
+        'oggi': date_scadenza()['oggi'],
+        'mesi1': date_scadenza()['mesi1'],
+        'mesi2': date_scadenza()['mesi2'],
+        'mesi6': date_scadenza()['mesi6'],
+        'mesi12': date_scadenza()['mesi12'],
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def anagrafica_per_cantiere(request):
+    lavoratori = Anagrafica.objects.order_by('lavoratore')
     cantieri = Anagrafica.CANTIERE
 
     dati = []
@@ -62,9 +79,7 @@ def completo(request):
 
 def formazione(request):
     lavoratori = Formazione.objects.order_by('lavoratore')
-    res = Formazione.objects.order_by('lavoratore')
 
-    pp(res)
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
     mesi2 = oggi + datetime.timedelta(days=60)
@@ -120,6 +135,7 @@ def estrai_dati(request):
             shutil.copy(da_i, a_i)
 
     return HttpResponse("Dati estratti")
+
 
 def interroga(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")

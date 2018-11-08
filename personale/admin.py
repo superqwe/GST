@@ -17,7 +17,11 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
     admin_actions.aggiorna_lavoratori()
 
 
+aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+
+
 # azioni formazione
+
 def aggiorna_attestati(modeladmin, request, queryset):
     admin_actions.aggiorna_attestati()
 
@@ -26,38 +30,40 @@ def rinomina_attestati(modeladmin, request, queryset):
     admin_actions.rinomina_attestati()
 
 
+aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
+rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
+
+
 # azioni anagrafica
+
+def azienda(modeladmin, request, queryset):
+    admin_actions.azienda(queryset)
+
+
 def in_forza(modeladmin, request, queryset):
     admin_actions.in_forza(queryset)
 
 
-in_forza.short_description = "In Forza"
-
 def in_sede(modeladmin, request, queryset):
     admin_actions.in_sede(queryset)
-
-
-in_sede.short_description = "In Sede"
 
 
 def in_ilva(modeladmin, request, queryset):
     admin_actions.in_ilva(queryset)
 
 
-in_ilva.short_description = "In Ilva"
-
-
 def no_cantiere(modeladmin, request, queryset):
     admin_actions.no_cantiere(queryset)
-
-
-no_cantiere.short_description = "Nessun cantiere"
 
 
 def aggiorna_anagrafica(modeladmin, request, queryset):
     admin_actions.aggiorna_anagrafica()
 
 
+in_forza.short_description = "In Forza"
+in_sede.short_description = "In Sede"
+in_ilva.short_description = "In Ilva"
+no_cantiere.short_description = "Nessun cantiere"
 no_cantiere.aggiorna_anagrafica = "Nessun cantiere"
 
 
@@ -135,10 +141,6 @@ def aggiorna_stato(modeladmin, request, queryset):
         lavoratore.save()
 
 
-aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
-aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
-rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
-
 aggiorna_gst.short_description = "Aggiorna GST"
 aggiorna_rait.short_description = "Aggiorna RAIT"
 aggiorna_stato.short_description = "Aggiorna Stato"
@@ -149,14 +151,15 @@ class AnagraficaAdmin(admin.ModelAdmin):
         # in_sede,
         # in_ilva,
         # no_cantiere,
-        in_forza,
+        azienda,
+        # in_forza,
         aggiorna_lavoratori,
         aggiorna_anagrafica
     ]
     list_display = ('lavoratore', 'stato',
-                    'in_forza', 'cantiere', 'mansione',
+                    'in_forza', 'azienda', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
-    list_filter = ['in_forza', 'cantiere']
+    list_filter = ['in_forza', 'azienda', 'cantiere']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 

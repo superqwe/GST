@@ -62,12 +62,20 @@ class Anagrafica(models.Model):
                 ('eni_ta', 'Raffineria'),
                 (None, '-')  # non in forza
                 )
+    AZIENDA = (('b', 'B'),
+               ('m', 'M'),
+               ('r', 'R'),
+               ('w', 'W'),
+               (None, '-')
+               )
 
     lavoratore = models.ForeignKey(Lavoratore, on_delete=models.CASCADE)
 
     stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO)
 
     in_forza = models.BooleanField(default=False, verbose_name='In Forza')
+    azienda = models.CharField(null=True, blank=True, max_length=2, choices=AZIENDA)
+
     cantiere = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
     mansione = models.CharField(max_length=20, null=True, blank=True, verbose_name='Mansione')
 

@@ -14,21 +14,22 @@ Anagrafica
 
 
 {% block corpo %}
-    <h1>Elenco personale (Anagrafica)</h1>
+    <h1>Elenco personale (Anagrafica) ({{ lavoratori.count }})</h1>
 
     <div class="table-responsive">
             <table class="table table-striped table-sm text-center ">
                 <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Stato</th>
-                        <th>Cognome</th>
-                        <th>Nome</th>
-                        <th>Cantiere</th>
-                        <th>Mansione</th>
-                        <th>UNILAV</th>
-                        <th>Idoneità</th>
+                <tr>
+                    <th scope="col">Stato</th>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>In Forza</th>
+                    <th>Azienda</th>
+                    <th>Mansione</th>
+                    <th>UNILAV</th>
+                    <th>Idoneità</th>
 
-                    </tr>
+                </tr>
                 </thead>
 
                 {% for lavoratore in lavoratori %}
@@ -36,17 +37,14 @@ Anagrafica
                         <td><i class="fas fa-circle {{lavoratore.stato_formazione}}"></i></td>
                         <th scope="row" class="text-left">{{lavoratore.lavoratore.cognome}}</th>
                         <th scope="row" class="text-left">{{lavoratore.lavoratore.nome}}</th>
-                        <td {% if lavoratore.cantiere < oggi %} class="alert alert-danger" role="alert"
-                            {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
-                            {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
-                            {% endif %}> {{lavoratore.get_cantiere_display|default_if_none:""}}</td>
-                        <td>{% if lavoratore.mansione < oggi %} class="alert alert-danger" role="alert"
-                            {% elif lavoratore.art37 < mesi6 %} class="alert alert-warning" role="alert"
-                            {% elif lavoratore.art37 < mesi12 %} class="alert alert-info" role="alert"
-                            {% endif %} {{lavoratore.mansione|default_if_none:""}}</td>
+                        <td> {% if lavoratore.in_forza %} x {% else%}  {% endif %} </td>
+                        <td> {{lavoratore.get_azienda_display|default_if_none:""}}</td>
+                        <td> {{lavoratore.mansione|default_if_none:""}}</td>
                         <td></td>
-                        <td></td>
-
+                        <td {% if lavoratore.idoneita < oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.idoneita < mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.idoneita < mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}> {{lavoratore.idoneita|default_if_none:""}}</td>
                     </tr>
                 {% endfor %}
 
