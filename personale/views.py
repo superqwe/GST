@@ -56,7 +56,13 @@ def anagrafica_per_cantiere(request):
 
 
 def completo(request):
+    dati = []
     lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
+
+    for lavoratore in lavoratori:
+        anagrafica = Anagrafica.objects.get(lavoratore=lavoratore)
+        formazione = Formazione.objects.get(lavoratore=lavoratore)
+        dati.append((lavoratore, anagrafica, formazione))
 
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
@@ -67,6 +73,7 @@ def completo(request):
     template = loader.get_template('personale/completo.html')
     context = {
         'lavoratori': lavoratori,
+        'dati': dati,
         'oggi': oggi,
         'mesi1': mesi1,
         'mesi2': mesi2,
