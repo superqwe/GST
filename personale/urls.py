@@ -24,7 +24,7 @@ urlpatterns = [
     # /personale/estri_dati/
     path('estrai_dati/', views.estrai_dati, name='estrai_dati'),
 
-    # /personale/interroga/
-    path('estrai_dati/', views.interroga, name='interroga'),
+    # /personale/azione/
+    path('azione/', views.azione, name='azione'),
 
 ]

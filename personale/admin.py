@@ -183,9 +183,10 @@ class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
                aggiorna_attestati,
                rinomina_attestati,
-               aggiorna_gst,
-               aggiorna_rait,
-               aggiorna_stato]
+               # aggiorna_gst,
+               # aggiorna_rait,
+               # aggiorna_stato
+               ]
 
     list_display = ('cognome', 'nome')
     #                 'stato', 'stato_formazione', 'in_cantiere',

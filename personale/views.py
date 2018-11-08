@@ -3,13 +3,12 @@ import glob
 import os
 import shutil
 
+import pandas as pd
 from django.http import HttpResponse
 from django.template import loader
 
 from personale.models import Lavoratore, Formazione, Anagrafica
 from personale.views_util import date_scadenza
-
-from pprint import pprint as pp
 
 
 def index(request):
@@ -137,5 +136,42 @@ def estrai_dati(request):
     return HttpResponse("Dati estratti")
 
 
-def interroga(request):
-    return HttpResponse("Hello, world. You're at the ''personale'' index.")
+def azione(request):
+    path = r'C:\Users\leonardo.masi\Documents\Personale'
+    FIN = r'C:\Users\leonardo.masi\Documents\Personale\CONTRATTIDETERMINATI.xlsx'
+    xls = pd.ExcelFile(FIN)
+    df = xls.parse("CARPENT.")
+
+    for row in df.iterrows():
+
+        if not pd.isnull(row[0]):
+            cognome = row[1][0].title().strip().replace(' ', '_').replace("o'", 'ò').replace("e’", 'è')
+            nome = row[1][1].title().strip()
+            qualifica = row[1][3].title().strip()
+            unilav = row[1][5]
+
+            cartella = os.path.join(path, '%s %s' % (cognome.upper(), nome))
+            if not os.path.exists(cartella):
+                os.mkdir(cartella)
+
+            # cartella2 = os.path.join(path, '%s %s' % (cognome, nome))
+            # os.rename(cartella2, cartella)
+
+            if not pd.isnull(cognome):
+                try:
+                    lavoratore = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome)[0]
+                    res = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
+
+                    res.in_forza = True
+                    res.azienda = 'm'
+                    res.mansione =qualifica
+                    res.unilav= unilav
+
+                    res.save()
+
+                except IndexError:
+                    print('*** errore ----> ', cognome, nome)
+
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">Hello, world. You're at the ''azione'' index.</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
