@@ -63,7 +63,10 @@ def completo(request, filtro=False):
         anagrafica = Anagrafica.objects.get(lavoratore=lavoratore)
         formazione = Formazione.objects.get(lavoratore=lavoratore)
 
-        if filtro == 'in_forza' and anagrafica.in_forza:
+        if filtro == 'in_forza' :
+            if anagrafica.in_forza:
+                dati.append((lavoratore, anagrafica, formazione))
+        else:
             dati.append((lavoratore, anagrafica, formazione))
 
     nlavoratori = len(dati)
