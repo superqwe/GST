@@ -80,7 +80,7 @@ def completo(request, filtro=False):
     template = loader.get_template('personale/completo.html')
     context = {
         'dati': dati,
-        'n:': nlavoratori,
+        'nlavoratori': nlavoratori,
         'oggi': oggi,
         'mesi1': mesi1,
         'mesi2': mesi2,
