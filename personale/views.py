@@ -19,10 +19,12 @@ def anagrafica(request):
     lavoratori = Anagrafica.objects.order_by('lavoratore')
     # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
 
+    nlavoratori = len(lavoratori)
     template = loader.get_template('personale/anagrafica.html')
     context = {
         'lavoratori': lavoratori,
         # 'lavoratori_per_cantiere': dati,
+        'nlavoratori': nlavoratori,
         'oggi': date_scadenza()['oggi'],
         'mesi1': date_scadenza()['mesi1'],
         'mesi2': date_scadenza()['mesi2'],
