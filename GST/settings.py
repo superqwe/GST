@@ -123,9 +123,5 @@ FORMAT_MODULE_PATH = [
 STATIC_URL = '/static/'
 
 # aggiunto
-STATICFILES_DIRS=[
-    r'C:\Users\leonardo.masi\Documents\Personale'
-]
-
-
-
+STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale']
+STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'

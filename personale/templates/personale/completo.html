@@ -69,7 +69,7 @@ Elenco Personale
                 <td {% if formazione.art37 < oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.art37 < mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.art37 < mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}> <a href="{% static ''%}{{formazione.lavoratore}}/ art37 {{formazione.art37}}.pdf">{{formazione.art37|default_if_none:""}}</a></td>
+                    {% endif %}> <a href="{% static ''%}{{formazione.lavoratore}}/attestati/art37 180315.pdf" target="_blank">{{formazione.art37|default_if_none:""}}</a></td>
                 <td {% if formazione.primo_soccorso < oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.primo_soccorso < mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.primo_soccorso < mesi12 %} class="alert alert-info" role="alert"
