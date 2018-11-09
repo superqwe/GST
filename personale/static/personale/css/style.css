@@ -13,3 +13,8 @@
 .c  {
     color: grey;
 }
+
+body { height: 1000px; }
+thead{
+    background-color:white;
+}
