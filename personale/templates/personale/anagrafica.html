@@ -28,11 +28,10 @@ Anagrafica
             <th>Cantiere</th>
             <th>UNILAV</th>
             <th>Idoneità</th>
-
         </tr>
         </thead>
-
-        {% for lavoratore in lavoratori %}
+        <tbody></tbody>
+            {% for lavoratore in lavoratori %}
             <tr>
                 <td>{% if lavoratore.in_forza %} <i class="fas fa-circle {{lavoratore.stato_formazione}}"></i>
                     {% else%} <i class="far fa-circle {{lavoratore.stato_formazione}}"></i>
@@ -51,7 +50,8 @@ Anagrafica
                     {% elif lavoratore.idoneita < mesi2 %} class="alert alert-info" role="alert"
                     {% endif %}> {{lavoratore.idoneita|default_if_none:""}}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        </tbody>
     </table>
     <div id="bottom_anchor"></div>
 </div>

@@ -65,7 +65,7 @@ def completo(request, filtro=False):
         anagrafica = Anagrafica.objects.get(lavoratore=lavoratore)
         formazione = Formazione.objects.get(lavoratore=lavoratore)
 
-        if filtro == 'in_forza' :
+        if filtro == 'in_forza':
             if anagrafica.in_forza:
                 dati.append((lavoratore, anagrafica, formazione))
         else:
@@ -73,21 +73,15 @@ def completo(request, filtro=False):
 
     nlavoratori = len(dati)
 
-    oggi = datetime.date.today()
-    mesi1 = oggi + datetime.timedelta(days=30)
-    mesi2 = oggi + datetime.timedelta(days=60)
-    mesi6 = oggi + datetime.timedelta(days=366 / 2)
-    mesi12 = oggi + datetime.timedelta(days=365)
-
     template = loader.get_template('personale/completo.html')
     context = {
         'dati': dati,
         'nlavoratori': nlavoratori,
-        'oggi': oggi,
-        'mesi1': mesi1,
-        'mesi2': mesi2,
-        'mesi6': mesi6,
-        'mesi12': mesi12,
+        'oggi': date_scadenza()['oggi'],
+        'mesi1': date_scadenza()['mesi1'],
+        'mesi2': date_scadenza()['mesi2'],
+        'mesi6': date_scadenza()['mesi6'],
+        'mesi12': date_scadenza()['mesi12'],
     }
     return HttpResponse(template.render(context, request))
 

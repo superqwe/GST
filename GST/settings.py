@@ -24,7 +24,10 @@ SECRET_KEY = 'm7pc=48vv%gxxr_%7&!s09e3%nme%jsxsu$8ff$2jzb2oysl3g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# da commentare per togliere la barra di debug
+# INTERNAL_IPS = '127.0.0.1'
+
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217']
 
 # Application definition
 
@@ -119,7 +122,10 @@ FORMAT_MODULE_PATH = [
 
 STATIC_URL = '/static/'
 
-# da settare per la barra di debug
-# INTERNAL_IPS = '127.0.0.1'
+# aggiunto
+STATICFILES_DIRS=[
+    r'C:\Users\leonardo.masi\Documents\Personale'
+]
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217']
+
+
