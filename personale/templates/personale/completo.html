@@ -14,110 +14,118 @@ Elenco Personale
 
 
 {% block corpo %}
-    <h1>Elenco personale ({{ dati.count }})</h1>
+ <h1>Elenco personale  </h1>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-sm text-center ">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Stato</th>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>Idoneità</th>
-                    <th>UNILAV</th>
-                    <th>Art.37</th>
-                    <th>Primo Soccorso</th>
-                    <th>Antincendio</th>
-                    <th>Preposto</th>
-                    <th>H2S</th>
-                    <th>DPI3</th>
-                    <th>Muletto</th>
-                    <th>PLE</th>
-                    <th>Gru</th>
-                    <th>Imbracatore</th>
-                    <th>Spazi Confinati</th>
-                    <th>Ponteggi</th>
-                    <th>RIR</th>
-                    <th>RLS</th>
-                    <th>RSPP</th>
-                </tr>
-            </thead>
+<div class="table-responsive">
+    <table class="table table-striped table-sm text-center ">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Stato</th>
+                <th>Azienda</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Mansione</th>
+                <th>Cantiere</th>
+                <th>Idoneità</th>
+                <th>UNILAV</th>
+                <th>Art.37</th>
+                <th>Primo Soccorso</th>
+                <th>Antincendio</th>
+                <th>Preposto</th>
+                <th>H2S</th>
+                <th>DPI3</th>
+                <th>Muletto</th>
+                <th>PLE</th>
+                <th>Gru</th>
+                <th>Imbracatore</th>
+                <th>Spazi Confinati</th>
+                <th>Ponteggi</th>
+                <th>RIR</th>
+                <th>RLS</th>
+                <th>RSPP</th>
+            </tr>
+        </thead>
 
-            {% for lavoratore, anagrafica, formazione in dati %}
+        {% for lavoratore, anagrafica, formazione in dati %}
 
-                <tr>
-                    <td><i class="fas fa-circle {{lavoratore.stato}}"></i></td>
-                    <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
-                    <th scope="row" class="text-left">{{lavoratore.nome}}</th>
-                    <td {% if anagrafica.idoneita < oggi %} class="alert alert-danger" role="alert"
-                        {% elif anagrafica.idoneita < mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif anagrafica.idoneita < mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{anagrafica.idoneita|default_if_none:""}}</td>
-                    <td {% if lavoratore.unilav < oggi %} class="alert alert-danger" role="alert"
-                        {% elif anagrafica.unilav < mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif anagrafica.unilav < mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{anagrafica.unilav|default_if_none:""}}</td>
-                    <td {% if formazione.art37 < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.art37 < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.art37 < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.art37|default_if_none:""}}</td>
-                    <td {% if formazione.primo_soccorso < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.primo_soccorso < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.primo_soccorso < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.primo_soccorso|default_if_none:""}}</td>
-                    <td> {{formazione.antincendio|default_if_none:""}}</td>
-                    <td {% if formazione.preposto < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.preposto < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.preposto < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.preposto|default_if_none:""}}</td>
-                    <td {% if formazione.h2s < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.h2s < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.h2s < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.h2s|default_if_none:""}}</td>
-                    <td {% if formazione.dpi3 < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.dpi3 < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.dpi3 < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.dpi3|default_if_none:""}}</td>
-                    <td {% if formazione.carrello < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.carrello < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.carrello < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.carrello|default_if_none:""}}</td>
-                    <td {% if formazione.ple < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.ple < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.ple < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.ple|default_if_none:""}}</td>
-                    <td {% if formazione.gru < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.gru < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.gru < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}>{{formazione.gru|default_if_none:""}}</td>
-                    <td {% if formazione.imbracatore < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.imbracatore < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.imbracatore < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.imbracatore|default_if_none:""}}</td>
-                    <td {% if formazione.spazi_confinati < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.spazi_confinati < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.spazi_confinati < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.spazi_confinati|default_if_none:""}}</td>
-                    <td {% if formazione.ponteggi < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.ponteggi < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.ponteggi < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.ponteggi|default_if_none:""}}</td>
-                    <td {% if formazione.rir < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.rir < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.rir < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.rir|default_if_none:""}}</td>
-                    <td {% if formazione.rls < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.rls < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.rls < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.rls|default_if_none:""}}</td>
-                    <td {% if formazione.rspp < oggi %} class="alert alert-danger" role="alert"
-                        {% elif formazione.rspp < mesi6 %} class="alert alert-warning" role="alert"
-                        {% elif formazione.rspp < mesi12 %} class="alert alert-info" role="alert"
-                        {% endif %}> {{formazione.rspp|default_if_none:""}}</td>
-                </tr>
+            <tr>
+                <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
+                    {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
+                    {% endif %}</td>
+                <td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>
+                <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
+                <th scope="row" class="text-left">{{lavoratore.nome}}</th>
+                <td class="text-left"> {{anagrafica.mansione|default_if_none:""}}</td>
+                <td> {{anagrafica.get_cantiere_display|default_if_none:""}}</td>
+                <td {% if anagrafica.idoneita < oggi %} class="alert alert-danger" role="alert"
+                    {% elif anagrafica.idoneita < mesi1 %} class="alert alert-warning" role="alert"
+                    {% elif anagrafica.idoneita < mesi2 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{anagrafica.idoneita|default_if_none:""}}</td>
+                <td {% if lavoratore.unilav < oggi %} class="alert alert-danger" role="alert"
+                    {% elif anagrafica.unilav < mesi1 %} class="alert alert-warning" role="alert"
+                    {% elif anagrafica.unilav < mesi2 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{anagrafica.unilav|default_if_none:""}}</td>
+                <td {% if formazione.art37 < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.art37 < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.art37 < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.art37|default_if_none:""}}</td>
+                <td {% if formazione.primo_soccorso < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.primo_soccorso < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.primo_soccorso < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.primo_soccorso|default_if_none:""}}</td>
+                <td> {{formazione.antincendio|default_if_none:""}}</td>
+                <td {% if formazione.preposto < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.preposto < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.preposto < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.preposto|default_if_none:""}}</td>
+                <td {% if formazione.h2s < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.h2s < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.h2s < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.h2s|default_if_none:""}}</td>
+                <td {% if formazione.dpi3 < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.dpi3 < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.dpi3 < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.dpi3|default_if_none:""}}</td>
+                <td {% if formazione.carrello < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.carrello < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.carrello < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.carrello|default_if_none:""}}</td>
+                <td {% if formazione.ple < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.ple < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.ple < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.ple|default_if_none:""}}</td>
+                <td {% if formazione.gru < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.gru < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.gru < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}>{{formazione.gru|default_if_none:""}}</td>
+                <td {% if formazione.imbracatore < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.imbracatore < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.imbracatore < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.imbracatore|default_if_none:""}}</td>
+                <td {% if formazione.spazi_confinati < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.spazi_confinati < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.spazi_confinati < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.spazi_confinati|default_if_none:""}}</td>
+                <td {% if formazione.ponteggi < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.ponteggi < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.ponteggi < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.ponteggi|default_if_none:""}}</td>
+                <td {% if formazione.rir < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.rir < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.rir < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.rir|default_if_none:""}}</td>
+                <td {% if formazione.rls < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.rls < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.rls < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.rls|default_if_none:""}}</td>
+                <td {% if formazione.rspp < oggi %} class="alert alert-danger" role="alert"
+                    {% elif formazione.rspp < mesi6 %} class="alert alert-warning" role="alert"
+                    {% elif formazione.rspp < mesi12 %} class="alert alert-info" role="alert"
+                    {% endif %}> {{formazione.rspp|default_if_none:""}}</td>
+            </tr>
 
-            {% endfor %}
+        {% endfor %}
 
-        </table>
-    </div>
+    </table>
+</div>
 {% endblock %}

@@ -8,12 +8,13 @@ urlpatterns = [
 
     # /personale/anagrafica/
     path('anagrafica/', views.anagrafica, name='anagrafica'),
-
     # /personale/anagrafica_per_cantiere/
     path('anagrafica_per_cantiere/', views.anagrafica_per_cantiere, name='anagrafica_per_cantiere'),
 
     # /personale/completo/
     path('completo/', views.completo, name='completo'),
+    # /personale/in_forza/
+    path('completo/<str:filtro>/', views.completo, name='completo'),
 
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),
