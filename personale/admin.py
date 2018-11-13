@@ -157,7 +157,7 @@ class AnagraficaAdmin(admin.ModelAdmin):
         # no_cantiere,
         # in_forza,
         aggiorna_lavoratori,
-        aggiorna_anagrafica
+        aggiorna_anagrafica,
         azienda_nessuna,
     ]
     list_display = ('lavoratore', 'stato',

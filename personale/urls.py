@@ -15,6 +15,8 @@ urlpatterns = [
     path('completo/', views.completo, name='completo'),
     # /personale/in_forza/
     path('completo/<str:filtro>/', views.completo, name='completo'),
+    # /personale/in_forza/[a/s/c]/ a: alfabetico  s: azienda  c: cantiere
+    path('completo/<str:filtro>/<str:ordinamento>', views.completo, name='completo'),
 
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),

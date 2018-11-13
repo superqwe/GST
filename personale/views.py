@@ -57,19 +57,26 @@ def anagrafica_per_cantiere(request):
     return HttpResponse(template.render(context, request))
 
 
-def completo(request, filtro=False):
+def completo(request, filtro=False, ordinamento='a'):
     dati = []
-    lavoratori = Lavoratore.objects.order_by('cognome', 'nome')
+
+    if ordinamento == 'ca':
+        lavoratori = Lavoratore.objects.order_by('cantiere', 'cognome', 'nome')
+    elif ordinamento == 'sa':
+        lavoratori = Lavoratore.objects.order_by('azienda', 'cognome', 'nome')
+    else:
+        lavoratori = Anagrafica.objects.order_by('lavoratore')
+
 
     for lavoratore in lavoratori:
-        anagrafica = Anagrafica.objects.get(lavoratore=lavoratore)
-        formazione = Formazione.objects.get(lavoratore=lavoratore)
+        anagrafica = lavoratore
+        formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
 
         if filtro == 'in_forza':
             if anagrafica.in_forza:
-                dati.append((lavoratore, anagrafica, formazione))
+                dati.append((anagrafica.lavoratore, anagrafica, formazione))
         else:
-            dati.append((lavoratore, anagrafica, formazione))
+            dati.append((anagrafica.lavoratore, anagrafica, formazione))
 
     nlavoratori = len(dati)
 
