@@ -57,16 +57,15 @@ def anagrafica_per_cantiere(request):
     return HttpResponse(template.render(context, request))
 
 
-def completo(request, filtro=False, ordinamento='a'):
+def completo(request, filtro=False, ordinamento=None):
     dati = []
 
-    if ordinamento == 'ca':
-        lavoratori = Lavoratore.objects.order_by('cantiere', 'cognome', 'nome')
-    elif ordinamento == 'sa':
-        lavoratori = Lavoratore.objects.order_by('azienda', 'cognome', 'nome')
+    if ordinamento == 'c':
+        lavoratori = Anagrafica.objects.order_by('-cantiere', 'lavoratore')
+    elif ordinamento == 'a':
+        lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore')
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
-
 
     for lavoratore in lavoratori:
         anagrafica = lavoratore
