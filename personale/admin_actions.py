@@ -1,10 +1,6 @@
 import datetime
 import os
 import re
-from pprint import pprint as pp
-
-import pandas as pd
-from django.contrib import admin
 
 from personale.models import Anagrafica, Formazione, Lavoratore
 
@@ -370,7 +366,14 @@ def in_forza(queryset):
         lavoratore.in_forza = True
         lavoratore.save()
 
-def azienda(queryset):
+
+def azienda_m(queryset):
     for lavoratore in queryset:
         lavoratore.azienda = 'm'
+        lavoratore.save()
+
+
+def azienda_nessuna(queryset):
+    for lavoratore in queryset:
+        lavoratore.azienda = None
         lavoratore.save()

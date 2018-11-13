@@ -17,7 +17,7 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
     admin_actions.aggiorna_lavoratori()
 
 
-aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+aggiorna_lavoratori.short_description = "Aggiorna elenco lavoratori"
 
 
 # azioni formazione
@@ -37,7 +37,10 @@ rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
 # azioni anagrafica
 
 def azienda(modeladmin, request, queryset):
-    admin_actions.azienda(queryset)
+    admin_actions.azienda_m(queryset)
+
+def azienda_nessuna(modeladmin, request, queryset):
+    admin_actions.azienda_nessuna(queryset)
 
 
 def in_forza(modeladmin, request, queryset):
@@ -60,6 +63,7 @@ def aggiorna_anagrafica(modeladmin, request, queryset):
     admin_actions.aggiorna_anagrafica()
 
 
+azienda_nessuna.short_description = "Nessuna azienda"
 in_forza.short_description = "In Forza"
 in_sede.short_description = "In Sede"
 in_ilva.short_description = "In Ilva"
@@ -151,10 +155,10 @@ class AnagraficaAdmin(admin.ModelAdmin):
         # in_sede,
         # in_ilva,
         # no_cantiere,
-        azienda,
         # in_forza,
         aggiorna_lavoratori,
         aggiorna_anagrafica
+        azienda_nessuna,
     ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
