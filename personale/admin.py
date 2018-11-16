@@ -153,7 +153,7 @@ aggiorna_stato.short_description = "Aggiorna Stato"
 class AnagraficaAdmin(admin.ModelAdmin):
     actions = [
         # in_sede,
-        # in_ilva,
+        in_ilva,
         # no_cantiere,
         # in_forza,
         aggiorna_lavoratori,

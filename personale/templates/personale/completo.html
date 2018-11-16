@@ -19,10 +19,10 @@ Elenco Personale
     <div class="col"><h1>Elenco personale  <span class="badge badge-dark">{{nlavoratori}}</span></h1></div>
     <div class="col text-right align-items-center ">
         <nav class="nav nav-pills justify-content-end">
-            <a class="nav-link " href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>
-            <a class="nav-link active" href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
-            <a class="nav-link" href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
-            <a class="nav-link" href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>
+            <a class="nav-link {% if pagina_attiva == 'in_forza' %}active{% endif %}" href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>
+            <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}" href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
+            <a class="nav-link {% if pagina_attiva == 'cantiere' %}active{% endif %}" href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
+            <a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}" href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>
         </nav>
 
     </div>
@@ -76,7 +76,7 @@ Elenco Personale
                     {% endif %}>
                     <a href="{% static ''%}{{lavoratore}}/idoneità {{anagrafica.idoneita|date:"dmy"}}.pdf" target="_blank">
                         {{anagrafica.idoneita|default_if_none:""}}</a></td>
-                <td {% if lavoratore.unilav < oggi %} class="alert alert-danger" role="alert"
+                <td {% if anagrafica.unilav < oggi %} class="alert alert-danger" role="alert"
                     {% elif anagrafica.unilav < mesi1 %} class="alert alert-warning" role="alert"
                     {% elif anagrafica.unilav < mesi2 %} class="alert alert-info" role="alert"
                     {% endif %}> {{anagrafica.unilav|default_if_none:""}}</td>

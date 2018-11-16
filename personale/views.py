@@ -59,11 +59,14 @@ def anagrafica_per_cantiere(request):
 
 def completo(request, filtro=False, ordinamento=None):
     dati = []
+    pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
 
     if ordinamento == 'c':
         lavoratori = Anagrafica.objects.order_by('-cantiere', 'lavoratore')
+        pagina_attiva = 'cantiere'
     elif ordinamento == 'a':
         lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore')
+        pagina_attiva = 'azienda'
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
 
@@ -83,6 +86,7 @@ def completo(request, filtro=False, ordinamento=None):
     context = {
         'dati': dati,
         'nlavoratori': nlavoratori,
+        'pagina_attiva': pagina_attiva,
         'oggi': date_scadenza()['oggi'],
         'mesi1': date_scadenza()['mesi1'],
         'mesi2': date_scadenza()['mesi2'],
