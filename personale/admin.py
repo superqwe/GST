@@ -67,8 +67,8 @@ def no_cantiere(modeladmin, request, queryset):
     admin_actions.no_cantiere(queryset)
 
 
-def aggiorna_anagrafica(modeladmin, request, queryset):
-    admin_actions.aggiorna_anagrafica()
+def aggiorna_stato_anagrafica(modeladmin, request, queryset):
+    admin_actions.aggiorna_stato_anagrafica()
 
 
 azienda_nessuna.short_description = "Nessuna azienda"
@@ -122,13 +122,13 @@ class AnagraficaAdmin(admin.ModelAdmin):
         # no_cantiere,
         # in_forza,
         aggiorna_lavoratori,
-        aggiorna_anagrafica,
+        aggiorna_stato_anagrafica,
         azienda_nessuna,
     ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
-    list_filter = ['in_forza', 'azienda', 'cantiere']
+    list_filter = ['in_forza','stato', 'azienda', 'cantiere']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 

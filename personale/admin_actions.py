@@ -196,8 +196,20 @@ def aggiorna_attestati():
                 print('*** Errore in ', path)
 
 
-def aggiorna_anagrafica():
-    pass
+def aggiorna_stato_anagrafica():
+    lavoratori = Anagrafica.objects.filter(in_forza=True)
+
+    for lavoratore in lavoratori:
+        stato = 'v'
+
+        if lavoratore.idoneita and lavoratore.idoneita < AVVISO_SCADENZA or lavoratore.unilav and lavoratore.unilav < AVVISO_SCADENZA:
+           stato = 'g'
+
+        if lavoratore.idoneita and lavoratore.idoneita < OGGI or lavoratore.unilav and lavoratore.unilav < OGGI:
+            stato = 'r'
+
+        lavoratore.stato = stato
+        lavoratore.save()
 
 
 def m_d_y2mdy(scadenza, tipo=None):
@@ -377,6 +389,7 @@ def azienda_nessuna(queryset):
     for lavoratore in queryset:
         lavoratore.azienda = None
         lavoratore.save()
+
 
 def aggiorna_stato_formazione():
     campi = Formazione._meta.get_fields()[3:]

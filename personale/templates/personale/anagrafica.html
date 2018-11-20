@@ -33,8 +33,8 @@ Anagrafica
         <tbody></tbody>
             {% for lavoratore in lavoratori %}
             <tr>
-                <td>{% if lavoratore.in_forza %} <i class="fas fa-circle {{lavoratore.stato_formazione}}"></i>
-                    {% else%} <i class="far fa-circle {{lavoratore.stato_formazione}}"></i>
+                <td>{% if lavoratore.in_forza %}<i class="fas fa-circle {{lavoratore.stato}}"></i>
+                    {% else%} <i class="far fa-circle {{lavoratore.stato}}"></i>
                     {% endif %}</td>
                 <th scope="row" class="text-left">{{lavoratore.lavoratore.cognome}}</th>
                 <th scope="row" class="text-left">{{lavoratore.lavoratore.nome}}</th>
