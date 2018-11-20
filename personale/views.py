@@ -76,9 +76,17 @@ def completo(request, filtro=False, ordinamento=None):
 
         if filtro == 'in_forza':
             if anagrafica.in_forza:
-                dati.append((anagrafica.lavoratore, anagrafica, formazione))
+                stati = (anagrafica.stato, formazione.stato_formazione)
+
+                stato = 'v'
+                if 'g' in stati:
+                    stato = 'g'
+                if 'r' in stati:
+                    stato = 'r'
+
+                dati.append((anagrafica.lavoratore, anagrafica, formazione, stato))
         else:
-            dati.append((anagrafica.lavoratore, anagrafica, formazione))
+            dati.append((anagrafica.lavoratore, anagrafica, formazione, None))
 
     nlavoratori = len(dati)
 
