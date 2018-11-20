@@ -377,3 +377,31 @@ def azienda_nessuna(queryset):
     for lavoratore in queryset:
         lavoratore.azienda = None
         lavoratore.save()
+
+def aggiorna_stato_formazione():
+    campi = Formazione._meta.get_fields()[3:]
+
+    lavoratori = Anagrafica.objects.filter(in_forza=True)
+
+    for lavoratore in lavoratori:
+        lavoratore = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+
+        stato = 'v'
+
+        for campo in campi:
+
+            if campo.name != 'antincendio':
+
+                try:
+                    if getattr(lavoratore, campo.name) < OGGI:
+                        print(campo.name, getattr(lavoratore, campo.name))
+                        stato = 'r'
+                        break
+                    elif getattr(lavoratore, campo.name) < AVVISO_SCADENZA_ATTESTATI:
+                        stato = 'g'
+
+                except TypeError:
+                    pass
+
+        lavoratore.stato_formazione = stato
+        lavoratore.save()
