@@ -1,15 +1,17 @@
 import datetime
-import re
+from pprint import pprint as pp
 
 import pandas as pd
 from django.contrib import admin
 
-from personale.models import Anagrafica, Formazione, Lavoratore
 from personale import admin_actions
+from personale.models import Anagrafica, Formazione, Lavoratore
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
+DT_6_MESI = datetime.timedelta(30 * 6)
 AVVISO_SCADENZA = OGGI + DT
+AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 
@@ -38,6 +40,7 @@ rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
 
 def azienda(modeladmin, request, queryset):
     admin_actions.azienda_m(queryset)
+
 
 def azienda_nessuna(modeladmin, request, queryset):
     admin_actions.azienda_nessuna(queryset)
@@ -104,44 +107,31 @@ def aggiorna_rait(modeladmin, request, queryset):
 
 
 def aggiorna_stato(modeladmin, request, queryset):
-    campi = Lavoratore._meta.get_fields()[7:]
+    campi = Formazione._meta.get_fields()[3:]
 
-    lavoratori = Lavoratore.objects.all()
+    lavoratori = Anagrafica.objects.filter(in_forza=True)
 
     for lavoratore in lavoratori:
+        lavoratore = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+
         stato = 'v'
-
-        if not lavoratore.in_cantiere:
-            lavoratore.stato = 'c'
-            lavoratore.save()
-            continue
-
-        if lavoratore.situazione in ('r', None):
-            lavoratore.stato = 'r'
-            lavoratore.save()
-            continue
 
         for campo in campi:
 
-            try:
-                if getattr(lavoratore, campo.name) < OGGI:
-                    stato = 'r'
-                    break
-                elif getattr(lavoratore, campo.name) < AVVISO_SCADENZA:
-                    stato = 'g'
+            if campo.name != 'antincendio':
 
-            except TypeError:
-                pass
+                try:
+                    if getattr(lavoratore, campo.name) < OGGI:
+                        print(campo.name, getattr(lavoratore, campo.name))
+                        stato = 'r'
+                        break
+                    elif getattr(lavoratore, campo.name) < AVVISO_SCADENZA_ATTESTATI:
+                        stato = 'g'
 
-        if stato == 'r':
-            lavoratore.save()
-            continue
+                except TypeError:
+                    pass
 
-        # todo: da fare stato giallo
-        if lavoratore.situazione in ('g', None):
-            stato = 'g'
-
-        lavoratore.stato = stato
+        lavoratore.stato_formazione = stato
         lavoratore.save()
 
 
@@ -171,7 +161,8 @@ class AnagraficaAdmin(admin.ModelAdmin):
 class FormazioneAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
                aggiorna_attestati,
-               rinomina_attestati]
+               rinomina_attestati,
+               aggiorna_stato]
     list_display = ('lavoratore', 'stato_formazione',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',
