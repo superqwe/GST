@@ -203,9 +203,9 @@ def aggiorna_stato_anagrafica():
         stato = 'v'
 
         if lavoratore.idoneita and lavoratore.idoneita < AVVISO_SCADENZA or lavoratore.unilav and lavoratore.unilav < AVVISO_SCADENZA:
-           stato = 'g'
+            stato = 'g'
 
-        if lavoratore.idoneita and lavoratore.idoneita < OGGI or lavoratore.unilav and lavoratore.unilav < OGGI:
+        if not lavoratore.idoneita or lavoratore.idoneita and lavoratore.idoneita < OGGI or lavoratore.unilav and lavoratore.unilav < OGGI:
             stato = 'r'
 
         lavoratore.stato = stato
