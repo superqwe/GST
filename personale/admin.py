@@ -145,6 +145,7 @@ class FormazioneAdmin(admin.ModelAdmin):
                     'carrello', 'ple', 'gru', 'imbracatore',
                     'spazi_confinati', 'h2s',
                     'rir', 'rls', 'rspp')
+    list_filter = ['stato_formazione',]
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 
