@@ -34,3 +34,8 @@ if settings.DEBUG:
         # url(r'^__debug__/', include(debug_toolbar.urls)),
 
     ] + urlpatterns
+
+
+admin.site.site_header = 'GST MODOMEC'
+admin.site.site_title = 'GST MODOMEC'
+# admin.site.index_title = 'Benvenuto in GST MODOMEC'

@@ -58,7 +58,7 @@ ROOT_URLCONF = 'GST.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,5 +123,7 @@ FORMAT_MODULE_PATH = [
 STATIC_URL = '/static/'
 
 # aggiunto
-STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale']
+STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale', os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'
+
+print(STATICFILES_DIRS)
