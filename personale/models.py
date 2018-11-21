@@ -11,6 +11,9 @@ class Lavoratore(models.Model):
     cognome = models.CharField(max_length=50)
     nome = models.CharField(max_length=50)
 
+    def stato(self):
+        return None
+
     def __str__(self):
         return '%s %s' % (self.cognome, self.nome)
 

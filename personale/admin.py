@@ -128,7 +128,7 @@ class AnagraficaAdmin(admin.ModelAdmin):
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
-    list_filter = ['in_forza','stato', 'azienda', 'cantiere']
+    list_filter = ['in_forza', 'stato', 'azienda', 'cantiere']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 
@@ -145,7 +145,7 @@ class FormazioneAdmin(admin.ModelAdmin):
                     'carrello', 'ple', 'gru', 'imbracatore',
                     'spazi_confinati', 'h2s',
                     'rir', 'rls', 'rspp')
-    list_filter = ['stato_formazione',]
+    list_filter = ['stato_formazione', ]
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 
@@ -159,11 +159,8 @@ class LavoratoreAdmin(admin.ModelAdmin):
                # aggiorna_stato
                ]
 
-    list_display = ('cognome', 'nome')
-    #                 'stato', 'stato_formazione', 'in_cantiere',
-    #                 'situazione', 'gst', 'rait',
-    #                 'ci', 'idoneita', 'unilav',
-
+    list_display = ('cognome', 'nome', 'stato')
+    # list_filter = ['stato', ]
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
 

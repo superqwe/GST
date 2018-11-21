@@ -125,5 +125,3 @@ STATIC_URL = '/static/'
 # aggiunto
 STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale', os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'
-
-print(STATICFILES_DIRS)
