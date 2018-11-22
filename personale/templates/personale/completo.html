@@ -86,7 +86,12 @@ Elenco Personale
                 <td {% if anagrafica.unilav < oggi %} class="alert alert-danger" role="alert"
                     {% elif anagrafica.unilav < mesi1 %} class="alert alert-warning" role="alert"
                     {% elif anagrafica.unilav < mesi2 %} class="alert alert-info" role="alert"
-                    {% endif %}> {{anagrafica.unilav|default_if_none:""}} {% if  anagrafica.indeterminato %} IND {% endif %}
+                    {% endif %}>
+                    <a href="{% static ''%}{{lavoratore}}/unilav {{anagrafica.unilav|date:"dmy"}}.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} </a>
+                    {% if  anagrafica.indeterminato %}
+                        <a href="{% static ''%}{{lavoratore}}/unilav ind.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
                 </td>
                 <td {% if formazione.art37 < oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.art37 < mesi6 %} class="alert alert-warning" role="alert"
