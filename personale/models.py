@@ -12,6 +12,7 @@ class Lavoratore(models.Model):
     nome = models.CharField(max_length=50)
 
     def stato(self):
+        # stato_anagrafica
         return None
 
     def __str__(self):
@@ -85,11 +86,12 @@ class Anagrafica(models.Model):
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
     codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
+    indeterminato = models.BooleanField(default=False, verbose_name='Inderminato')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
 
-    gst = models.DateField(null=True, blank=True, verbose_name='GST')
-
-    rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
+    # gst = models.DateField(null=True, blank=True, verbose_name='GST')
+    #
+    # rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
 
     def __str__(self):
         return '%s ' % self.lavoratore

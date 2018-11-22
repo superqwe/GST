@@ -119,8 +119,12 @@ def aggiorna_attestati():
                             anagrafica.idoneita = scadenza
 
                         elif tipo == 'unilav':
-                            scadenza = scadenza2date(documento, 0)
-                            formazione.unilav = scadenza
+                            if scadenza == 'ind.pdf':
+                                anagrafica.indeterminato = True
+                                anagrafica.unilav = None
+                            else:
+                                scadenza = scadenza2date(documento, 0)
+                                anagrafica.unilav = scadenza
 
                         elif tipo in ('art37', 'art.37'):
                             scadenza = scadenza2date(documento)
@@ -187,7 +191,7 @@ def aggiorna_attestati():
                             formazione.lavori_quota = scadenza
 
                         else:
-                            print('***', tipo, '+++', documento)
+                            print('***', tipo, '+++', cognome, nome, documento)
 
                 formazione.save()
                 anagrafica.save()
@@ -350,6 +354,8 @@ def rinomina_attestati():
                         da = os.path.join(PATH_BASE, path, documento)
                         a = os.path.join(PATH_BASE, path, '%s %s.pdf' % (tipo, scadenza))
                         os.rename(da, a)
+                    else:
+                        print(cognome, nome)
 
             except ValueError:
                 print('*** Errore in ', path)
