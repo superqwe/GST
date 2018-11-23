@@ -66,10 +66,10 @@ Elenco Personale
             </tr>
         </thead>
         <tbody>
-        {% for lavoratore, anagrafica, formazione, stato in dati %}
+        {% for lavoratore, anagrafica, formazione in dati %}
 
             <tr>
-                <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{lavoratore.stato}} {{stato}}"></i>
+                <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
                     {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
                     {% endif %}</td>
                 <td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>
