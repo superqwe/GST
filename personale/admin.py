@@ -138,14 +138,14 @@ class FormazioneAdmin(admin.ModelAdmin):
                aggiorna_attestati,
                rinomina_attestati,
                aggiorna_stato_formazione]
-    list_display = ('lavoratore', 'stato_formazione',
+    list_display = ('lavoratore', 'stato',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',
                     'dpi3', 'ponteggi', 'lavori_quota',
                     'carrello', 'ple', 'gru', 'imbracatore',
                     'spazi_confinati', 'h2s',
                     'rir', 'rls', 'rspp')
-    list_filter = ['stato_formazione', ]
+    list_filter = ['stato', ]
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 

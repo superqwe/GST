@@ -4,6 +4,7 @@ import os
 import shutil
 
 import pandas as pd
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template import loader
 
@@ -67,6 +68,9 @@ def completo(request, filtro=False, ordinamento=None):
     elif ordinamento == 'a':
         lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore')
         pagina_attiva = 'azienda'
+    elif ordinamento == 's':
+        lavoratori = Anagrafica.objects.order_by('lavoratore').filter(Q(stato='r') | Q(stato='g'))
+        pagina_attiva = 'scadenza'
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
 

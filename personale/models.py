@@ -18,7 +18,7 @@ class Lavoratore(models.Model):
             return '-'
 
         stato_anagrafica = anagrafica.stato
-        stato_formazione = Formazione.objects.get(lavoratore=self).stato_formazione
+        stato_formazione = Formazione.objects.get(lavoratore=self).stato
         stati = (stato_anagrafica, stato_formazione)
 
         stato = 'v'
@@ -40,8 +40,8 @@ class Lavoratore(models.Model):
 
 class Formazione(models.Model):
     lavoratore = models.ForeignKey(Lavoratore, on_delete=models.CASCADE)
-    stato_formazione = models.CharField(null=True, blank=True, max_length=1, choices=STATO,
-                                        verbose_name='Stato Formazione')
+    stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO,
+                             verbose_name='Stato Formazione')
     art37 = models.DateField(null=True, blank=True, verbose_name='Art.37')
     primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
     antincendio = models.DateField(null=True, blank=True)

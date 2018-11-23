@@ -6,7 +6,9 @@ from personale.models import Anagrafica, Formazione, Lavoratore
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
+DT_6_MESI = datetime.timedelta(30 * 6)
 AVVISO_SCADENZA = OGGI + DT
+AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 
