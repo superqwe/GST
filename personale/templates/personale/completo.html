@@ -66,15 +66,15 @@ Elenco Personale
             </tr>
         </thead>
         <tbody>
-        {% for lavoratore, anagrafica, formazione in dati %}
+        {% for anagrafica, formazione in dati %}
 
             <tr>
-                <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
-                    {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
+                <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{anagrafica.lavoratore.stato}}"></i>
+                    {% else %} <i class="far fa-circle {{anagrafica.lavoratore.stato}}"></i>
                     {% endif %}</td>
                 <td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>
-                <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
-                <th scope="row" class="text-left">{{lavoratore.nome}}</th>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.cognome}}</th>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
                 <td class="text-left"> {{anagrafica.mansione|default_if_none:""}}</td>
                 <td> {{anagrafica.get_cantiere_display|default_if_none:""}}</td>
                 <td {% if anagrafica.idoneita < oggi %} class="alert alert-danger" role="alert"

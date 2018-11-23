@@ -12,14 +12,13 @@ class Lavoratore(models.Model):
     nome = models.CharField(max_length=50)
 
     def stato(self):
-        anagrafica= Anagrafica.objects.get(lavoratore=self)
+        anagrafica = Anagrafica.objects.get(lavoratore=self)
 
         if not anagrafica.in_forza:
             return '-'
 
         stato_anagrafica = anagrafica.stato
         stato_formazione = Formazione.objects.get(lavoratore=self).stato_formazione
-
         stati = (stato_anagrafica, stato_formazione)
 
         stato = 'v'
