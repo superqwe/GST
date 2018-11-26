@@ -4,6 +4,8 @@ import re
 
 from personale.models import Anagrafica, Formazione, Lavoratore
 
+import pandas as pd
+
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
 DT_6_MESI = datetime.timedelta(30 * 6)
@@ -426,3 +428,28 @@ def aggiorna_stato_formazione():
 
         lavoratore.stato_formazione = stato
         lavoratore.save()
+
+
+def esporta_mansioni():
+    lavoratori = Anagrafica.objects.all().order_by('lavoratore')
+
+    dati = []
+    for lavoratore in lavoratori:
+        rigo = (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome, lavoratore.mansione)
+        dati.append(rigo)
+
+    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione'))
+
+    dati.to_excel('mansioni.xlsx', sheet_name='mansioni')
+    print('\n*** Mansioni esportate\n')
+
+
+def importa_mansioni():
+    xlsx = pd.ExcelFile('mansioni.xlsx')
+    df = pd.read_excel(xlsx, 'mansioni')
+
+    for n, cognome, nome, mansione in df.itertuples():
+        if type(mansione) == str:
+            lavoratore = Anagrafica.objects.get(lavoratore__cognome=cognome, lavoratore__nome=nome)
+            lavoratore.mansione = mansione
+            lavoratore.save()

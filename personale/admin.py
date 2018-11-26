@@ -71,12 +71,22 @@ def aggiorna_stato_anagrafica(modeladmin, request, queryset):
     admin_actions.aggiorna_stato_anagrafica()
 
 
+def esporta_mansioni(modeladmin, request, queryset):
+    admin_actions.esporta_mansioni()
+
+
+def importa_mansioni(modeladmin, request, queryset):
+    admin_actions.importa_mansioni()
+
+
 azienda_nessuna.short_description = "Nessuna azienda"
 in_forza.short_description = "In Forza"
 in_sede.short_description = "In Sede"
 in_ilva.short_description = "In Ilva"
 no_cantiere.short_description = "Nessun cantiere"
 no_cantiere.aggiorna_anagrafica = "Nessun cantiere"
+esporta_mansioni.short_description = "Esporta Mansioni"
+importa_mansioni.short_description = "Importa Mansioni"
 
 
 # azioni obsolete
@@ -118,12 +128,14 @@ aggiorna_rait.short_description = "Aggiorna RAIT"
 class AnagraficaAdmin(admin.ModelAdmin):
     actions = [
         # in_sede,
-        in_ilva,
+        # in_ilva,
         # no_cantiere,
         # in_forza,
         aggiorna_lavoratori,
         aggiorna_stato_anagrafica,
-        azienda_nessuna,
+        # azienda_nessuna,
+        esporta_mansioni,
+        importa_mansioni,
     ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
@@ -154,6 +166,8 @@ class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
                aggiorna_attestati,
                rinomina_attestati,
+               esporta_mansioni,
+               importa_mansioni,
                # aggiorna_gst,
                # aggiorna_rait,
                # aggiorna_stato
