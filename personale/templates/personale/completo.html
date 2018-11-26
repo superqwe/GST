@@ -8,18 +8,18 @@ Elenco Personale
 
 
 {% block menu %}
-{% include "personale/menu.html" %}
+    {% include "personale/menu.html" %}
 {% endblock %}
 
 
 
 {% block corpo %}
 
-<div class="row align-items-center"">
+<div class="row align-items-center">
     <div class="col"><h1>Elenco personale  <span class="badge badge-primary">{{nlavoratori}}</span></h1></div>
     <div class="col text-right align-items-center ">
         {% block sottomenu %}
-        {% include "personale/sottomenu.html" %}
+            {% include "personale/sottomenu.html" %}
         {% endblock %}
     </div>
 </div>
