@@ -69,8 +69,11 @@ def completo(request, filtro=False, ordinamento=None):
         lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore')
         pagina_attiva = 'azienda'
     elif ordinamento == 's':
-        lavoratori = Anagrafica.objects.order_by('lavoratore').filter(Q(stato='r') | Q(stato='g'))
+        lavoratori = Anagrafica.objects.order_by('-stato', 'lavoratore').filter(Q(stato='r') | Q(stato='g'))
         pagina_attiva = 'scadenza'
+    elif ordinamento == 'v':
+        lavoratori = Anagrafica.objects.order_by('idoneita')
+        pagina_attiva = 'idoneita'
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
 

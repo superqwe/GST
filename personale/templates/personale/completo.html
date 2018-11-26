@@ -31,6 +31,9 @@ Elenco Personale
             <a class="nav-link {% if pagina_attiva == 'scadenza' %}active{% endif %}"
                data-toggle="tooltip" data-placement="top" title="Elenca personale in scadenza"
                href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
+            <a class="nav-link {% if pagina_attiva == 'idoneita' %}active{% endif %}"
+               data-toggle="tooltip" data-placement="top" title="Elenca personale in scadenza idoneità sanitaria"
+               href="/personale/completo/in_forza/v"><i class="fas fa-stethoscope fa-2x"></i></a>
             <a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}"
                data-toggle="tooltip" data-placement="top" title="Ordinamento Alfabetico con Personale anche Non In Forza"
                href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>
@@ -80,7 +83,7 @@ Elenco Personale
                 <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
                 <td class="text-left"> {{anagrafica.mansione|default_if_none:""}}</td>
                 <td> {{anagrafica.get_cantiere_display|default_if_none:""}}</td>
-                <td {% if anagrafica.idoneita < oggi %} class="alert alert-danger" role="alert"
+                <td {% if anagrafica.idoneita < oggi  or not anagrafica.idoneita %} class="alert alert-danger" role="alert"
                     {% elif anagrafica.idoneita < mesi1 %} class="alert alert-warning" role="alert"
                     {% elif anagrafica.idoneita < mesi2 %} class="alert alert-info" role="alert"
                     {% endif %}>
@@ -96,7 +99,7 @@ Elenco Personale
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav ind.pdf" target="_blank">
                         {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
                 </td>
-                <td {% if formazione.art37 < oggi %} class="alert alert-danger" role="alert"
+                <td {% if formazione.art37 < oggi  or not formazione.art37 %} class="alert alert-danger" role="alert"
                     {% elif formazione.art37 < mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.art37 < mesi12 %} class="alert alert-info" role="alert"
                     {% endif %}>
