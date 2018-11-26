@@ -1,0 +1,27 @@
+{% load static %}
+
+<nav class="nav nav-pills justify-content-end">
+    <a class="nav-link {% if pagina_attiva == 'in_forza' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Ordinamento Alfabetico"
+       href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Ordinamento per Azienda"
+       href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'cantiere' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Ordinamento per Cantiere"
+       href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'scadenza' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Elenca personale in scadenza"
+       href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'idoneita' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Elenca personale in scadenza idoneità sanitaria"
+       href="/personale/completo/in_forza/v"><i class="fas fa-stethoscope fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Ordinamento Alfabetico con Personale anche Non In Forza"
+       href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>
+</nav>

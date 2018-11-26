@@ -209,3 +209,9 @@ def leggi_contrattideterminati(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">Hello, world. You're at the ''azione'' index.</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def esporta_pdf(request):
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">Pdf salvato</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)

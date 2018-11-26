@@ -30,4 +30,7 @@ urlpatterns = [
     # # /personale/azione/
     # path('azione/', views.azione, name='azione'),
 
+    # /personale/pdf/
+    path('pdf/', views.esporta_pdf, name='esporta_pdf'),
+
 ]

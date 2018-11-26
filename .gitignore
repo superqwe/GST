@@ -163,4 +163,5 @@ personale/migrations/
 personale/static/personale/attestati/
 .idea/
 *.sqlite3
+mansioni.xlsx
 SyncToy*
