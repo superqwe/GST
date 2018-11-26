@@ -3,7 +3,7 @@ from django.db import models
 STATO = (('v', 'Verde'),
          ('g', 'Giallo'),
          ('r', 'Rosso'),
-         ('c', 'Grigio'))
+         (None, '-'))
 
 
 # Create your models here.

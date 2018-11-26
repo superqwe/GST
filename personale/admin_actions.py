@@ -1,10 +1,11 @@
 import datetime
 import os
 import re
-
-from personale.models import Anagrafica, Formazione, Lavoratore
+from pprint import pprint as pp
 
 import pandas as pd
+
+from personale.models import Anagrafica, Formazione, Lavoratore
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -219,36 +220,36 @@ def aggiorna_stato_anagrafica():
         lavoratore.stato = stato
         lavoratore.save()
 
+    Anagrafica.objects.filter(in_forza=False).update(stato=None, azienda=None)
 
-def m_d_y2mdy(scadenza, tipo=None):
-    if tipo:
-        print('+' * 30, scadenza)
+    def m_d_y2mdy(scadenza, tipo=None):
+        if tipo:
+            print('+' * 30, scadenza)
 
-    re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
+        re_dma = re.compile(r'\d{2}\.\d{2}\.\d{2,4}')
 
-    if not re_dma.findall(scadenza):
-        re_dma = re.compile(r'\d{6,8}')
+        if not re_dma.findall(scadenza):
+            re_dma = re.compile(r'\d{6,8}')
+
+            try:
+                data = re_dma.findall(scadenza)[0]
+
+                giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
+                anno = anno - 2000 if anno > 2000 else anno
+                scadenza = '%02i%02i%02i' % (giorno, mese, anno)
+                return scadenza
+            except IndexError:
+                print('+++', scadenza)
+                return None
 
         try:
-            data = re_dma.findall(scadenza)[0]
-
-            giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
-            anno = anno - 2000 if anno > 2000 else anno
-            scadenza = '%02i%02i%02i' % (giorno, mese, anno)
+            giorno, mese, anno = re_dma.findall(scadenza)[0].split('.')
+            anno = int(anno) - 2000 if len(anno) == 4 else int(anno)
+            scadenza = '%s%s%02i' % (giorno, mese, anno)
             return scadenza
         except IndexError:
             print('+++', scadenza)
             return None
-
-    try:
-        giorno, mese, anno = re_dma.findall(scadenza)[0].split('.')
-        anno = int(anno) - 2000 if len(anno) == 4 else int(anno)
-        scadenza = '%s%s%02i' % (giorno, mese, anno)
-        return scadenza
-    except IndexError:
-        print('+++', scadenza)
-        return None
-
 
 def rinomina_attestati():
     path_base = PATH_BASE
@@ -364,42 +365,35 @@ def rinomina_attestati():
             except ValueError:
                 print('*** Errore in ', path)
 
-
 def in_sede(queryset):
     for lavoratore in queryset:
         lavoratore.cantiere = 'sede'
         lavoratore.save()
-
 
 def in_ilva(queryset):
     for lavoratore in queryset:
         lavoratore.cantiere = 'ilva_ta'
         lavoratore.save()
 
-
 def no_cantiere(queryset):
     for lavoratore in queryset:
         lavoratore.cantiere = None
         lavoratore.save()
-
 
 def in_forza(queryset):
     for lavoratore in queryset:
         lavoratore.in_forza = True
         lavoratore.save()
 
-
 def azienda_m(queryset):
     for lavoratore in queryset:
         lavoratore.azienda = 'm'
         lavoratore.save()
 
-
 def azienda_nessuna(queryset):
     for lavoratore in queryset:
         lavoratore.azienda = None
         lavoratore.save()
-
 
 def aggiorna_stato_formazione():
     campi = Formazione._meta.get_fields()[3:]
@@ -429,7 +423,6 @@ def aggiorna_stato_formazione():
         lavoratore.stato_formazione = stato
         lavoratore.save()
 
-
 def esporta_mansioni():
     lavoratori = Anagrafica.objects.all().order_by('lavoratore')
 
@@ -442,7 +435,6 @@ def esporta_mansioni():
 
     dati.to_excel('mansioni.xlsx', sheet_name='mansioni')
     print('\n*** Mansioni esportate\n')
-
 
 def importa_mansioni():
     xlsx = pd.ExcelFile('mansioni.xlsx')
