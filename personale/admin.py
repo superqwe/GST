@@ -17,34 +17,35 @@ PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 # azioni lavoratore
 
-def aggiorna_lavoratori(modeladmin, request, queryset):
-    admin_actions_lavoratore.aggiorna_lavoratori()
-
-
 def aggiorna_stato_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_stato_lavoratori()
-
-
-aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
-aggiorna_stato_lavoratori.short_description = "Aggiorna Stato Lavoratori"
-
-
-# azioni formazione
-
-def aggiorna_scadenza_attestati(modeladmin, request, queryset):
-    admin_actions_lavoratore.aggiorna_scadenza_documenti()
 
 
 def rinomina_attestati(modeladmin, request, queryset):
     admin_actions_lavoratore.rinomina_attestati()
 
 
+def aggiorna_scadenza_documenti(modeladmin, request, queryset):
+    admin_actions_lavoratore.aggiorna_scadenza_documenti()
+
+
+def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
+    admin_actions_lavoratore.aggiorna_elenco_lavoratori()
+
+
+aggiorna_stato_lavoratori.short_description = "Aggiorna Stato Lavoratori"
+rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
+aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti Lavoratori"
+aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+
+
+# azioni formazione
+
+
 def aggiorna_stato_formazione(modeladmin, request, queryset):
     admin_actions_formazione.aggiorna_stato_formazione()
 
 
-aggiorna_scadenza_attestati.short_description = "Aggiorna Documenti Lavoratori"
-rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
 aggiorna_stato_formazione.short_description = "Aggiorna Stato"
 
 
@@ -97,17 +98,16 @@ importa_mansioni.short_description = "Importa Mansioni"
 
 
 class AnagraficaAdmin(admin.ModelAdmin):
-    actions = [
-        # in_sede,
-        # in_ilva,
-        # no_cantiere,
-        # in_forza,
-        aggiorna_lavoratori,
-        aggiorna_stato_anagrafica,
-        # azienda_nessuna,
-        esporta_mansioni,
-        importa_mansioni,
-    ]
+    actions = [aggiorna_stato_anagrafica,
+               esporta_mansioni,
+               importa_mansioni,
+               # in_sede,
+               # in_ilva,
+               # no_cantiere,
+               # in_forza,
+               # azienda_m,
+               # azienda_nessuna,
+               ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
                     'idoneita', 'unilav')
@@ -117,10 +117,8 @@ class AnagraficaAdmin(admin.ModelAdmin):
 
 
 class FormazioneAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori,
-               aggiorna_scadenza_attestati,
-               rinomina_attestati,
-               aggiorna_stato_formazione]
+    actions = [aggiorna_stato_formazione,
+               ]
     list_display = ('lavoratore', 'stato',
                     'art37',
                     'preposto', 'primo_soccorso', 'antincendio',
@@ -134,8 +132,8 @@ class FormazioneAdmin(admin.ModelAdmin):
 
 
 class LavoratoreAdmin(admin.ModelAdmin):
-    actions = [aggiorna_lavoratori,
-               aggiorna_scadenza_attestati,
+    actions = [aggiorna_elenco_lavoratori,
+               aggiorna_scadenza_documenti,
                aggiorna_stato_lavoratori,
                rinomina_attestati,
                esporta_mansioni,

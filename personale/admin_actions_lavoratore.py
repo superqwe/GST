@@ -303,7 +303,7 @@ def aggiorna_scadenza_documenti():
                 print('*** Errore in ', path)
 
 
-def aggiorna_lavoratori():
+def aggiorna_elenco_lavoratori():
     # aggiorna elenco lavoratori
     path_base = PATH_BASE
 
