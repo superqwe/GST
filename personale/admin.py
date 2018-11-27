@@ -94,42 +94,6 @@ esporta_mansioni.short_description = "Esporta Mansioni"
 importa_mansioni.short_description = "Importa Mansioni"
 
 
-# azioni obsolete
-
-def aggiorna_gst(modeladmin, request, queryset):
-    fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\lavoratore.csv'
-    csv = pd.read_csv(fin, sep=';', skiprows=1,
-                      names=('cf', 'nome', 'cognome', 'punteggio', 'sospeso', 'data', 'situazione'))
-
-    for row in csv.iterrows():
-        cf, nome, cognome, punteggio, sospeso, data, situazione = row[1]
-
-        res = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome.title())
-
-        if res:
-            res[0].cf = cf
-            res[0].gst = datetime.datetime.strptime(data, '%d-%m-%Y')
-            res[0].situazione = situazione.lower()[0]
-            res[0].save()
-
-
-def aggiorna_rait(modeladmin, request, queryset):
-    fin = r'C:\Users\HP\Desktop\Sicurezza2\Personale\rait.xlsx'
-    xlsx = pd.read_excel(fin, header=0)
-
-    for row in xlsx.iterrows():
-        cognome, nome, data = row[1]
-        res = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome.title())
-
-        if res and not pd.isnull(data):
-            res[0].rait = data
-            res[0].save()
-
-
-aggiorna_gst.short_description = "Aggiorna GST"
-aggiorna_rait.short_description = "Aggiorna RAIT"
-
-
 class AnagraficaAdmin(admin.ModelAdmin):
     actions = [
         # in_sede,
@@ -174,9 +138,6 @@ class LavoratoreAdmin(admin.ModelAdmin):
                rinomina_attestati,
                esporta_mansioni,
                importa_mansioni,
-               # aggiorna_gst,
-               # aggiorna_rait,
-               # aggiorna_stato
                ]
 
     list_display = ('cognome', 'nome', 'stato')
