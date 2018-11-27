@@ -445,3 +445,8 @@ def importa_mansioni():
             lavoratore = Anagrafica.objects.get(lavoratore__cognome=cognome, lavoratore__nome=nome)
             lavoratore.mansione = mansione
             lavoratore.save()
+
+
+def aggiorna_stato_lavoratori():
+    aggiorna_stato_anagrafica()
+    aggiorna_stato_formazione()

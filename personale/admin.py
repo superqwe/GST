@@ -19,7 +19,12 @@ def aggiorna_lavoratori(modeladmin, request, queryset):
     admin_actions.aggiorna_lavoratori()
 
 
-aggiorna_lavoratori.short_description = "Aggiorna elenco lavoratori"
+def aggiorna_stato_lavoratori(modeladmin, request, queryset):
+    admin_actions.aggiorna_stato_lavoratori()
+
+
+aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+aggiorna_stato_lavoratori.short_description = "Aggiorna Stato Lavoratori"
 
 
 # azioni formazione
@@ -165,6 +170,7 @@ class FormazioneAdmin(admin.ModelAdmin):
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
                aggiorna_attestati,
+               aggiorna_stato_lavoratori,
                rinomina_attestati,
                esporta_mansioni,
                importa_mansioni,
