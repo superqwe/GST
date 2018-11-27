@@ -14,3 +14,11 @@ def date_scadenza():
             'mesi6': mesi6,
             'mesi12': mesi12
             }
+
+class Date_Scadenza():
+    def __init__(self):
+        self.oggi = datetime.date.today()
+        self.mesi1 = self.oggi + datetime.timedelta(days=30)
+        self.mesi2 = self.oggi + datetime.timedelta(days=60)
+        self.mesi6 = self.oggi + datetime.timedelta(days=366 / 2)
+        self.mesi12 = self.oggi + datetime.timedelta(days=365)

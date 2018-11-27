@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.template import loader
 
+from personale import views_util
 from personale.models import Lavoratore, Formazione, Anagrafica
 from personale.views_util import date_scadenza
 
@@ -24,14 +25,9 @@ def anagrafica(request):
     template = loader.get_template('personale/anagrafica.html')
     context = {
         'lavoratori': lavoratori,
-        # 'lavoratori_per_cantiere': dati,
         'nlavoratori': nlavoratori,
-        'oggi': date_scadenza()['oggi'],
-        'mesi1': date_scadenza()['mesi1'],
-        'mesi2': date_scadenza()['mesi2'],
-        'mesi6': date_scadenza()['mesi6'],
-        'mesi12': date_scadenza()['mesi12'],
-    }
+        'scadenza': views_util.Date_Scadenza()
+   }
     return HttpResponse(template.render(context, request))
 
 
@@ -59,33 +55,30 @@ def anagrafica_per_cantiere(request):
 
 
 def completo(request, filtro=False, ordinamento=None):
-    dati = []
     pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
-
     if ordinamento == 'c':
-        lavoratori = Anagrafica.objects.order_by('-cantiere', 'lavoratore')
+        lavoratori = Anagrafica.objects.order_by('-cantiere', 'lavoratore').filter(in_forza=True)
         pagina_attiva = 'cantiere'
     elif ordinamento == 'a':
-        lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore')
+        lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore').filter(in_forza=True)
         pagina_attiva = 'azienda'
     elif ordinamento == 's':
         lavoratori = Anagrafica.objects.order_by('-stato', 'lavoratore').filter(Q(stato='r') | Q(stato='g'))
         pagina_attiva = 'scadenza'
     elif ordinamento == 'v':
-        lavoratori = Anagrafica.objects.order_by('idoneita')
+        lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('idoneita')
         pagina_attiva = 'idoneita'
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
 
+    if filtro == 'in_forza':
+        lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+
+    dati = []
     for lavoratore in lavoratori:
-        anagrafica = lavoratore
         formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
 
-        if filtro == 'in_forza':
-            if anagrafica.in_forza:
-                dati.append((anagrafica, formazione))
-        else:
-            dati.append((anagrafica, formazione))
+        dati.append((lavoratore, formazione))
 
     nlavoratori = len(dati)
 
@@ -94,11 +87,7 @@ def completo(request, filtro=False, ordinamento=None):
         'dati': dati,
         'nlavoratori': nlavoratori,
         'pagina_attiva': pagina_attiva,
-        'oggi': date_scadenza()['oggi'],
-        'mesi1': date_scadenza()['mesi1'],
-        'mesi2': date_scadenza()['mesi2'],
-        'mesi6': date_scadenza()['mesi6'],
-        'mesi12': date_scadenza()['mesi12'],
+        'scadenza': views_util.Date_Scadenza()
     }
     return HttpResponse(template.render(context, request))
 
@@ -115,11 +104,8 @@ def formazione(request):
     template = loader.get_template('personale/formazione.html')
     context = {
         'lavoratori': lavoratori,
-        'oggi': oggi,
-        'mesi1': mesi1,
-        'mesi2': mesi2,
-        'mesi6': mesi6,
-        'mesi12': mesi12,
+        'scadenza': views_util.Date_Scadenza()
+
     }
     return HttpResponse(template.render(context, request))
 
