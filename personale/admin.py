@@ -4,7 +4,7 @@ from pprint import pprint as pp
 import pandas as pd
 from django.contrib import admin
 
-from personale import admin_actions
+from personale import admin_actions_formazione, admin_actions_lavoratore, admin_actions_anagrafica
 from personale.models import Anagrafica, Formazione, Lavoratore
 
 OGGI = datetime.date.today()
@@ -15,12 +15,14 @@ AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 
+# azioni lavoratore
+
 def aggiorna_lavoratori(modeladmin, request, queryset):
-    admin_actions.aggiorna_lavoratori()
+    admin_actions_lavoratore.aggiorna_lavoratori()
 
 
 def aggiorna_stato_lavoratori(modeladmin, request, queryset):
-    admin_actions.aggiorna_stato_lavoratori()
+    admin_actions_lavoratore.aggiorna_stato_lavoratori()
 
 
 aggiorna_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
@@ -29,19 +31,19 @@ aggiorna_stato_lavoratori.short_description = "Aggiorna Stato Lavoratori"
 
 # azioni formazione
 
-def aggiorna_attestati(modeladmin, request, queryset):
-    admin_actions.aggiorna_attestati()
+def aggiorna_scadenza_attestati(modeladmin, request, queryset):
+    admin_actions_lavoratore.aggiorna_scadenza_documenti()
 
 
 def rinomina_attestati(modeladmin, request, queryset):
-    admin_actions.rinomina_attestati()
+    admin_actions_lavoratore.rinomina_attestati()
 
 
 def aggiorna_stato_formazione(modeladmin, request, queryset):
-    admin_actions.aggiorna_stato_formazione()
+    admin_actions_formazione.aggiorna_stato_formazione()
 
 
-aggiorna_attestati.short_description = "Aggiorna Documenti Lavoratori"
+aggiorna_scadenza_attestati.short_description = "Aggiorna Documenti Lavoratori"
 rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
 aggiorna_stato_formazione.short_description = "Aggiorna Stato"
 
@@ -49,39 +51,39 @@ aggiorna_stato_formazione.short_description = "Aggiorna Stato"
 # azioni anagrafica
 
 def azienda(modeladmin, request, queryset):
-    admin_actions.azienda_m(queryset)
+    admin_actions_anagrafica.azienda_m(queryset)
 
 
 def azienda_nessuna(modeladmin, request, queryset):
-    admin_actions.azienda_nessuna(queryset)
+    admin_actions_anagrafica.azienda_nessuna(queryset)
 
 
 def in_forza(modeladmin, request, queryset):
-    admin_actions.in_forza(queryset)
+    admin_actions_anagrafica.in_forza(queryset)
 
 
 def in_sede(modeladmin, request, queryset):
-    admin_actions.in_sede(queryset)
+    admin_actions_anagrafica.in_sede(queryset)
 
 
 def in_ilva(modeladmin, request, queryset):
-    admin_actions.in_ilva(queryset)
+    admin_actions_anagrafica.in_ilva(queryset)
 
 
 def no_cantiere(modeladmin, request, queryset):
-    admin_actions.no_cantiere(queryset)
+    admin_actions_anagrafica.no_cantiere(queryset)
 
 
 def aggiorna_stato_anagrafica(modeladmin, request, queryset):
-    admin_actions.aggiorna_stato_anagrafica()
+    admin_actions_anagrafica.aggiorna_stato_anagrafica()
 
 
 def esporta_mansioni(modeladmin, request, queryset):
-    admin_actions.esporta_mansioni()
+    admin_actions_anagrafica.esporta_mansioni()
 
 
 def importa_mansioni(modeladmin, request, queryset):
-    admin_actions.importa_mansioni()
+    admin_actions_anagrafica.importa_mansioni()
 
 
 azienda_nessuna.short_description = "Nessuna azienda"
@@ -116,7 +118,7 @@ class AnagraficaAdmin(admin.ModelAdmin):
 
 class FormazioneAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
-               aggiorna_attestati,
+               aggiorna_scadenza_attestati,
                rinomina_attestati,
                aggiorna_stato_formazione]
     list_display = ('lavoratore', 'stato',
@@ -133,7 +135,7 @@ class FormazioneAdmin(admin.ModelAdmin):
 
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_lavoratori,
-               aggiorna_attestati,
+               aggiorna_scadenza_attestati,
                aggiorna_stato_lavoratori,
                rinomina_attestati,
                esporta_mansioni,

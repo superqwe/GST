@@ -103,10 +103,6 @@ class Anagrafica(models.Model):
     indeterminato = models.BooleanField(default=False, verbose_name='Inderminato')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
 
-    # gst = models.DateField(null=True, blank=True, verbose_name='GST')
-    #
-    # rait = models.DateField(null=True, blank=True, verbose_name='RAIT')
-
     def __str__(self):
         return '%s ' % self.lavoratore
 
