@@ -71,7 +71,7 @@ def completo(request, filtro=False, ordinamento=None):
     else:
         lavoratori = Anagrafica.objects.order_by('lavoratore')
 
-    if filtro == 'in_forza':
+    if filtro == 'in_forza' and not ordinamento:
         lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
 
     dati = []
