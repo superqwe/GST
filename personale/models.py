@@ -80,8 +80,8 @@ class Anagrafica(models.Model):
                 ('eni_ta', 'Raffineria'),
                 (None, '-')  # non in forza
                 )
-    AZIENDA = (('b', 'B'),
-               ('m', 'M'),
+    AZIENDA = (('m', 'M'),
+               ('b', 'B'),
                ('r', 'R'),
                ('w', 'W'),
                (None, '-')

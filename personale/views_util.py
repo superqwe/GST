@@ -1,4 +1,7 @@
 import datetime
+from pprint import pprint as pp
+
+from personale.models import Anagrafica
 
 
 def date_scadenza():
@@ -15,6 +18,7 @@ def date_scadenza():
             'mesi12': mesi12
             }
 
+
 class Date_Scadenza():
     def __init__(self):
         self.oggi = datetime.date.today()
@@ -22,3 +26,19 @@ class Date_Scadenza():
         self.mesi2 = self.oggi + datetime.timedelta(days=60)
         self.mesi6 = self.oggi + datetime.timedelta(days=366 / 2)
         self.mesi12 = self.oggi + datetime.timedelta(days=365)
+
+
+def lavoratori_suddivisi_per_azienda():
+    aziende = {'m': 'MODOMEC',
+               'b': 'BUILDING',
+               'r': 'RIMEC',
+               'w': 'WELDING',
+               None: '-'}
+    dati = []
+
+    for azienda in Anagrafica.AZIENDA:
+        lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('lavoratore')
+
+        dati.append((aziende[azienda[0]], lavoratori))
+
+    return dati
