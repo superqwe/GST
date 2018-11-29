@@ -110,8 +110,8 @@ class AnagraficaAdmin(admin.ModelAdmin):
                ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
-                    'idoneita', 'unilav')
-    list_filter = ['in_forza', 'stato', 'azienda', 'cantiere']
+                    'idoneita', 'indeterminato','unilav')
+    list_filter = ['in_forza', 'stato', 'azienda', 'cantiere', 'indeterminato']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 
