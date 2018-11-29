@@ -15,17 +15,32 @@
 
 {% block corpo %}
 
-    <div class="row align-items-center">
-        <div class="col"><h1>Elenco personale  <span class="badge badge-primary">{{nlavoratori}}</span></h1></div>
-        <div class="col text-right align-items-center ">
-            {% block sottomenu %}
-                {% include "personale/sottomenu.html" %}
-            {% endblock %}
-        </div>
+    <div class="row">
+        <ul>
+            <li><a href="#MODOMEC">MODOMEC</a></li>
+            <li><a href="#BUILDING">BUILDING</a></li>
+            <li><a href="#RIMEC">RIMEC</a></li>
+            <li><a href="#WELDING">WELDING</a></li>
+            <li><a href="#-">NA</a></li>
+        </ul>
     </div>
 
-    {% block tabella %}
-        {% include "personale/tabella_completa.html" %}
-    {% endblock %}
+    {% for azienda, gruppo, n in dati%}
+
+        <div class="row align-items-center">
+            <div class="col"><h1>{{azienda}} <span class="badge badge-primary">{{n}}</span></h1>
+                <a name="{{azienda}}"></a>
+            </div>
+            <div class="col text-right align-items-center ">
+                {% block sottomenu %}
+                    {% include "personale/sottomenu.html" %}
+                {% endblock %}
+            </div>
+        </div>
+
+        {% block tabella %}
+            {% include "personale/tabella_no_azienda.html" %}
+        {% endblock %}
+    {% endfor %}
 
 {% endblock %}

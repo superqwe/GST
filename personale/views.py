@@ -57,8 +57,8 @@ def anagrafica_per_cantiere(request):
 def completo(request, filtro=False, ordinamento=None):
     pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
     if ordinamento == 'a':
-        lavoratori = views_util.lavoratori_suddivisi_per_azienda()
-        lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore').filter(in_forza=True)
+        gruppi = views_util.lavoratori_suddivisi_per_azienda()
+        # lavoratori = Anagrafica.objects.order_by('azienda', 'lavoratore').filter(in_forza=True)
         pagina_attiva = 'azienda'
     elif ordinamento == 'c':
         lavoratori = Anagrafica.objects.order_by('-cantiere', 'lavoratore').filter(in_forza=True)
@@ -76,10 +76,15 @@ def completo(request, filtro=False, ordinamento=None):
         lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
 
     dati = []
-    for lavoratore in lavoratori:
-        formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+    for azienda, lavoratori in gruppi:
 
-        dati.append((lavoratore, formazione))
+        gruppo = []
+        for lavoratore in lavoratori:
+            formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+
+            gruppo.append((lavoratore, formazione))
+
+        dati.append((azienda, gruppo, len(gruppo)))
 
     nlavoratori = len(dati)
 
