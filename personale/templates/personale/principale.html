@@ -18,17 +18,27 @@
     {% for azienda, gruppo, n in dati%}
 
         {% if n %}
-            {% block link_tabelle %}
-                {% include "personale/link_tabelle.html" %}
-            {% endblock %}
+
+            {% if not tabella_completa %}
+                {% block link_tabelle %}
+                    {% include "personale/link_tabelle.html" %}
+                {% endblock %}
+            {% endif %}
 
             {% block titolo_tabella %}
                 {% include "personale/titolo_tabella.html" %}
             {% endblock %}
 
             {% block tabella %}
-                {% include "personale/tabella_no_azienda.html" %}
+
+                {% if tabella_completa %}
+                    {% include "personale/tabella_completa.html" %}
+                {% else %}
+                    {% include "personale/tabella_no_azienda.html" %}
+                {% endif %}
+
             {% endblock %}
+
         {% endif %}
 
     {% endfor %}

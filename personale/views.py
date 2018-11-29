@@ -27,7 +27,7 @@ def anagrafica(request):
         'lavoratori': lavoratori,
         'nlavoratori': nlavoratori,
         'scadenza': views_util.Date_Scadenza()
-   }
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -56,6 +56,7 @@ def anagrafica_per_cantiere(request):
 
 def completo(request, filtro=False, ordinamento=None):
     pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
+    tabella_completa = False
 
     if ordinamento == 'a':
         gruppi = views_util.lavoratori_suddivisi_per_azienda()
@@ -70,10 +71,13 @@ def completo(request, filtro=False, ordinamento=None):
         gruppi = views_util.lavoratori_suddivisi_per_azienda('idoneita')
         pagina_attiva = 'idoneita'
     else:
-        lavoratori = Anagrafica.objects.order_by('lavoratore')
+        if filtro == 'in_forza':
+            lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+        else:
+            lavoratori = Anagrafica.objects.order_by('lavoratore')
 
-    if filtro == 'in_forza' and not ordinamento:
-        lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+        gruppi = (('Elenco Personale', lavoratori),)
+        tabella_completa = True
 
     dati = []
     for azienda, lavoratori in gruppi:
@@ -93,7 +97,8 @@ def completo(request, filtro=False, ordinamento=None):
         'dati': dati,
         'nlavoratori': nlavoratori,
         'pagina_attiva': pagina_attiva,
-        'scadenza': views_util.Date_Scadenza()
+        'scadenza': views_util.Date_Scadenza(),
+        'tabella_completa': tabella_completa,
     }
     return HttpResponse(template.render(context, request))
 
