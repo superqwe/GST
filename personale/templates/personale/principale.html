@@ -17,17 +17,19 @@
 
     {% for azienda, gruppo, n in dati%}
 
-        {% block link_tabelle %}
-            {% include "personale/link_tabelle.html" %}
-        {% endblock %}
+        {% if n %}
+            {% block link_tabelle %}
+                {% include "personale/link_tabelle.html" %}
+            {% endblock %}
 
-        {% block titolo_tabella %}
-            {% include "personale/titolo_tabella.html" %}
-        {% endblock %}
+            {% block titolo_tabella %}
+                {% include "personale/titolo_tabella.html" %}
+            {% endblock %}
 
-        {% block tabella %}
-            {% include "personale/tabella_no_azienda.html" %}
-        {% endblock %}
+            {% block tabella %}
+                {% include "personale/tabella_no_azienda.html" %}
+            {% endblock %}
+        {% endif %}
 
     {% endfor %}
 
