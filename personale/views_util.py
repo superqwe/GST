@@ -1,6 +1,8 @@
 import datetime
 from pprint import pprint as pp
 
+from django.db.models import Q
+
 from personale.models import Anagrafica
 
 
@@ -28,7 +30,7 @@ class Date_Scadenza():
         self.mesi12 = self.oggi + datetime.timedelta(days=365)
 
 
-def lavoratori_suddivisi_per_azienda():
+def lavoratori_suddivisi_per_azienda(ordine=None):
     aziende = {'m': 'MODOMEC',
                'b': 'BUILDING',
                'r': 'RIMEC',
@@ -37,7 +39,17 @@ def lavoratori_suddivisi_per_azienda():
     dati = []
 
     for azienda in Anagrafica.AZIENDA:
-        lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('lavoratore')
+
+        if ordine == 'cantiere':
+            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere',
+                                                                                               'lavoratore')
+        elif ordine == 'stato':
+            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).filter(
+                Q(stato='r') | Q(stato='g')).order_by('-stato', 'lavoratore')
+        elif ordine == 'idoneita':
+            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('idoneita')
+        else:
+            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('lavoratore')
 
         dati.append((aziende[azienda[0]], lavoratori))
 

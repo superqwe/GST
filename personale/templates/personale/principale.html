@@ -1,0 +1,34 @@
+{% extends "personale/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Elenco Personale
+{% endblock %}
+
+
+{% block menu %}
+    {% include "personale/menu.html" %}
+{% endblock %}
+
+
+
+{% block corpo %}
+
+    {% for azienda, gruppo, n in dati%}
+
+        {% block link_tabelle %}
+            {% include "personale/link_tabelle.html" %}
+        {% endblock %}
+
+        {% block titolo_tabella %}
+            {% include "personale/titolo_tabella.html" %}
+        {% endblock %}
+
+        {% block tabella %}
+            {% include "personale/tabella_no_azienda.html" %}
+        {% endblock %}
+
+    {% endfor %}
+
+{% endblock %}
