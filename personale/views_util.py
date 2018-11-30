@@ -66,7 +66,8 @@ def lavoratori_con_nomine():
 
     for azienda in Anagrafica.AZIENDA:
         lavoratori = Nomine.objects.exclude(preposto__isnull=True, antincendio__isnull=True,
-                                            primo_soccorso__isnull=True, aspp__isnull=True).order_by('lavoratore')
+                                            primo_soccorso__isnull=True, rls__isnull=True, aspp__isnull=True).order_by(
+            'lavoratore')
 
         llav = []
         for lav in lavoratori:

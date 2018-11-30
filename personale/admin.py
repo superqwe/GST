@@ -147,7 +147,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
 
 
 class NomineAdmin(admin.ModelAdmin):
-    list_display = ('lavoratore', 'preposto', 'antincendio', 'primo_soccorso', 'aspp')
+    list_display = ('lavoratore', 'preposto', 'antincendio', 'primo_soccorso', 'rls', 'aspp')
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
 

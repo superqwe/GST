@@ -116,6 +116,7 @@ class Nomine(models.Model):
     preposto = models.DateField(null=True, blank=True, verbose_name='Preposto')
     antincendio = models.DateField(null=True, blank=True, verbose_name='Antincendio')
     primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
+    rls = models.DateField(null=True, blank=True, verbose_name='RLS')
     aspp = models.DateField(null=True, blank=True, verbose_name='ASPP')
 
     def __str__(self):

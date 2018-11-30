@@ -149,7 +149,11 @@
                     {% elif formazione.rls < scadenza.mesi12 %} class="alert alert-info" role="alert"
                     {% endif %}>
                     <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/rls {{formazione.rls|date:"dm"}}{{formazione.rls|date:"y"|add:-1}}.pdf" target="_blank">
-                         {{formazione.rls|default_if_none:""}}</a></td>
+                         {{formazione.rls|default_if_none:""}}</a>
+                        {% if nomine.rls%}
+                            <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.rls {{nomine.rls|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+                        {% endif %}
+                    </td>
                 <td {% if formazione.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.rspp < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"

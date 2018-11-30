@@ -306,6 +306,10 @@ def aggiorna_scadenza_documenti():
                             scadenza = scadenza2date(documento, 0)
                             nomina.primo_soccorso = scadenza
 
+                        elif tipo == 'nomina.rls':
+                            scadenza = scadenza2date(documento, 0)
+                            nomina.rls = scadenza
+
                         elif tipo == 'nomina.aspp':
                             scadenza = scadenza2date(documento, 0)
                             nomina.aspp = scadenza
