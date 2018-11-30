@@ -109,3 +109,18 @@ class Anagrafica(models.Model):
     class Meta:
         verbose_name = 'Anagrafica'
         verbose_name_plural = 'Anagrafica'
+
+
+class Nomine(models.Model):
+    lavoratore = models.ForeignKey(Lavoratore, on_delete=models.CASCADE)
+    preposto = models.DateField(null=True, blank=True, verbose_name='Preposto')
+    antincendio = models.DateField(null=True, blank=True, verbose_name='Antincendio')
+    primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
+    aspp = models.DateField(null=True, blank=True, verbose_name='ASPP')
+
+    def __str__(self):
+        return '%s ' % self.lavoratore
+
+    class Meta:
+        verbose_name = 'Nomina'
+        verbose_name_plural = 'Nomine'

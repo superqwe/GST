@@ -6,7 +6,7 @@ from pprint import pprint as pp
 import pandas as pd
 
 from personale import admin_actions_anagrafica, admin_actions_formazione
-from personale.models import Anagrafica, Formazione, Lavoratore
+from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -321,7 +321,7 @@ def aggiorna_elenco_lavoratori():
                     cognome, nome = lavoratore
 
                     try:
-                        res = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
+                        res = Lavoratore.objects.get(cognome=cognome, nome=nome)
                     except IndexError:
                         lavoratore = Lavoratore(cognome=cognome, nome=nome)
                         lavoratore.save()
@@ -329,28 +329,28 @@ def aggiorna_elenco_lavoratori():
 
         primo_ciclo = False
 
-    # crea la formazione per ogni lavoratore
     lavoratori = Lavoratore.objects.all()
-
     for lavoratore in lavoratori:
+        # crea la formazione per ogni lavoratore
         res = Formazione.objects.filter(lavoratore__id=lavoratore.id)
-
-        # break
 
         if len(res) == 0:
             formazione = Formazione(lavoratore=lavoratore)
             formazione.save()
             print('Nuova Formazione: ', lavoratore)
 
-    # crea anagrafica per ogni lavoratore
-    lavoratori = Lavoratore.objects.all()
-
-    for lavoratore in lavoratori:
+        # crea anagrafica per ogni lavoratore
         res = Anagrafica.objects.filter(lavoratore__id=lavoratore.id)
-
-        # break
 
         if len(res) == 0:
             anagrafica = Anagrafica(lavoratore=lavoratore)
             anagrafica.save()
             print('Nuova Anagrafica: ', lavoratore)
+
+        # crea nomine per ogni lavoratore
+        res = Nomine.objects.filter(lavoratore__id=lavoratore.id)
+
+        if len(res) == 0:
+            nomina = Nomine(lavoratore=lavoratore)
+            nomina.save()
+            print('Nuova Nomina: ', lavoratore)

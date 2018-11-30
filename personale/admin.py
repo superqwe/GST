@@ -5,7 +5,7 @@ import pandas as pd
 from django.contrib import admin
 
 from personale import admin_actions_formazione, admin_actions_lavoratore, admin_actions_anagrafica
-from personale.models import Anagrafica, Formazione, Lavoratore
+from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -110,7 +110,7 @@ class AnagraficaAdmin(admin.ModelAdmin):
                ]
     list_display = ('lavoratore', 'stato',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
-                    'idoneita', 'indeterminato','unilav')
+                    'idoneita', 'indeterminato', 'unilav')
     list_filter = ['in_forza', 'stato', 'azienda', 'cantiere', 'indeterminato']
     ordering = ['lavoratore']
     search_fields = ['lavoratore__cognome', ]
@@ -146,6 +146,14 @@ class LavoratoreAdmin(admin.ModelAdmin):
     search_fields = ['cognome', 'nome']
 
 
+class NomineAdmin(admin.ModelAdmin):
+    list_display = ('lavoratore', 'preposto', 'antincendio', 'primo_soccorso', 'aspp')
+    list_filter = ['preposto', 'antincendio', 'primo_soccorso', 'aspp']
+    ordering = ['lavoratore']
+    search_fields = ['lavoratore__cognome', ]
+
+
 admin.site.register(Anagrafica, AnagraficaAdmin)
 admin.site.register(Formazione, FormazioneAdmin)
 admin.site.register(Lavoratore, LavoratoreAdmin)
+admin.site.register(Nomine, NomineAdmin)
