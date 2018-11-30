@@ -14,29 +14,35 @@ AVVISO_SCADENZA = OGGI + DT
 AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
+FILE_DATI = 'dati.xlsx'
 
-def esporta_mansioni():
+def esporta_dati():
     lavoratori = Anagrafica.objects.all().order_by('lavoratore')
 
     dati = []
     for lavoratore in lavoratori:
-        rigo = (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome, lavoratore.mansione)
+        rigo = (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome, lavoratore.mansione, lavoratore.in_forza,
+                lavoratore.azienda, lavoratore.cantiere)
         dati.append(rigo)
 
-    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione'))
+    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione', 'in_forza', 'azienda', 'cantiere'))
 
-    dati.to_excel('mansioni.xlsx', sheet_name='mansioni')
+    dati.to_excel(FILE_DATI, sheet_name='dati')
     print('\n*** Mansioni esportate\n')
 
 
 def importa_mansioni():
-    xlsx = pd.ExcelFile('mansioni.xlsx')
-    df = pd.read_excel(xlsx, 'mansioni')
+    xlsx = pd.ExcelFile(FILE_DATI)
+    df = pd.read_excel(xlsx, 'dati')
 
-    for n, cognome, nome, mansione in df.itertuples():
+    for n, cognome, nome, mansione, in_forza, azienda, cantiere in df.itertuples():
         if type(mansione) == str:
             lavoratore = Anagrafica.objects.get(lavoratore__cognome=cognome, lavoratore__nome=nome)
             lavoratore.mansione = mansione
+            lavoratore.in_forza = in_forza
+            lavoratore.azienda = azienda
+            lavoratore.cantiere = cantiere
+
             lavoratore.save()
 
 

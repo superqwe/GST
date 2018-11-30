@@ -33,10 +33,10 @@ def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_elenco_lavoratori()
 
 
-aggiorna_stato_lavoratori.short_description = "Aggiorna Stato Lavoratori"
-rinomina_attestati.short_description = "Rinomina Documenti Lavoratori"
-aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti Lavoratori"
-aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco Lavoratori"
+aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"
+rinomina_attestati.short_description = "Rinomina Documenti"
+aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
+aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco"
 
 
 # azioni formazione
@@ -79,11 +79,11 @@ def aggiorna_stato_anagrafica(modeladmin, request, queryset):
     admin_actions_anagrafica.aggiorna_stato_anagrafica()
 
 
-def esporta_mansioni(modeladmin, request, queryset):
-    admin_actions_anagrafica.esporta_mansioni()
+def esporta_dati(modeladmin, request, queryset):
+    admin_actions_anagrafica.esporta_dati()
 
 
-def importa_mansioni(modeladmin, request, queryset):
+def importa_dati(modeladmin, request, queryset):
     admin_actions_anagrafica.importa_mansioni()
 
 
@@ -91,16 +91,16 @@ azienda_nessuna.short_description = "Nessuna azienda"
 in_forza.short_description = "In Forza"
 in_sede.short_description = "In Sede"
 in_ilva.short_description = "In Ilva"
-no_cantiere.short_description = "Nessun cantiere"
-no_cantiere.aggiorna_anagrafica = "Nessun cantiere"
-esporta_mansioni.short_description = "Esporta Mansioni"
-importa_mansioni.short_description = "Importa Mansioni"
+no_cantiere.short_description = "Nessun Cantiere"
+no_cantiere.aggiorna_anagrafica = "Nessun Cantiere"
+esporta_dati.short_description = "Esporta Dati"
+importa_dati.short_description = "Importa Dati"
 
 
 class AnagraficaAdmin(admin.ModelAdmin):
     actions = [aggiorna_stato_anagrafica,
-               esporta_mansioni,
-               importa_mansioni,
+               esporta_dati,
+               importa_dati,
                # in_sede,
                # in_ilva,
                # no_cantiere,
@@ -136,8 +136,8 @@ class LavoratoreAdmin(admin.ModelAdmin):
                aggiorna_scadenza_documenti,
                aggiorna_stato_lavoratori,
                rinomina_attestati,
-               esporta_mansioni,
-               importa_mansioni,
+               esporta_dati,
+               importa_dati,
                ]
 
     list_display = ('cognome', 'nome', 'stato')
