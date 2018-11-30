@@ -30,13 +30,7 @@
             {% endblock %}
 
             {% block tabella %}
-
-                {% if tabella_completa %}
-                    {% include "personale/tabella_completa.html" %}
-                {% else %}
-                    {% include "personale/tabella_no_azienda.html" %}
-                {% endif %}
-
+                {% include "personale/tabella.html" %}
             {% endblock %}
 
         {% endif %}

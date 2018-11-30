@@ -5,6 +5,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">Stato</th>
+                {% if tabella_completa %}<th>Azienda</th>{% endif %}
                 <th>Cognome</th>
                 <th>Nome</th>
                 <th>Mansione</th>
@@ -35,6 +36,7 @@
                 <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{anagrafica.lavoratore.stato}}"></i>
                     {% else %} <i class="far fa-circle {{anagrafica.lavoratore.stato}}"></i>
                     {% endif %}</td>
+                {% if tabella_completa %}<td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>{% endif %}
                 <th scope="row" class="text-left">{{anagrafica.lavoratore.cognome}}</th>
                 <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
                 <td class="text-left"> {{anagrafica.mansione|default_if_none:""}}</td>
