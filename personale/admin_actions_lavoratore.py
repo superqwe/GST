@@ -206,6 +206,7 @@ def aggiorna_scadenza_documenti():
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
                 formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
                 anagrafica = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
+                nomina = Nomine.objects.get(lavoratore__id=lavoratore.id)
 
                 for documento in files:
                     documento = documento.lower()
@@ -293,11 +294,28 @@ def aggiorna_scadenza_documenti():
                             scadenza = scadenza2date(documento, 5)
                             formazione.lavori_quota = scadenza
 
+                        elif tipo == 'nomina.preposto':
+                            scadenza = scadenza2date(documento, 0)
+                            nomina.preposto = scadenza
+
+                        elif tipo == 'nomina.antincendio':
+                            scadenza = scadenza2date(documento, 0)
+                            nomina.antincendio = scadenza
+
+                        elif tipo == 'nomina.primo.soccorso':
+                            scadenza = scadenza2date(documento, 0)
+                            nomina.primo_soccorso = scadenza
+
+                        elif tipo == 'nomina.aspp':
+                            scadenza = scadenza2date(documento, 0)
+                            nomina.aspp = scadenza
+
                         else:
                             print('***', tipo, '+++', cognome, nome, documento)
 
                 formazione.save()
                 anagrafica.save()
+                nomina.save()
 
             except ValueError:
                 print('*** Errore in ', path)
