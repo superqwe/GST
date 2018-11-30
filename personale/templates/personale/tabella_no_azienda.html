@@ -25,11 +25,11 @@
                 <th>Ponteggi</th>
                 <th>RIR</th>
                 <th>RLS</th>
-                <th>RSPP</th>
+                <th>ASPP</th>
             </tr>
         </thead>
         <tbody>
-        {% for anagrafica, formazione in gruppo %}
+        {% for anagrafica, formazione, nomine in gruppo %}
 
             <tr>
                 <td>{% if anagrafica.in_forza %} <i class="fas fa-circle {{anagrafica.lavoratore.stato}}"></i>
@@ -66,15 +66,28 @@
                     {% elif formazione.primo_soccorso < scadenza.mesi12 %} class="alert alert-info" role="alert"
                     {% endif %}>
                     <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/primo.soccorso {{formazione.primo_soccorso|date:"dm"}}{{formazione.primo_soccorso|date:"y"|add:-3}}.pdf" target="_blank">
-                         {{formazione.primo_soccorso|default_if_none:""}}</a></td>
+                         {{formazione.primo_soccorso|default_if_none:""}}</a>
+                    {% if nomine.primo_soccorso %}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.primo.soccorso {{nomine.primo_soccorso|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+                    {% endif %}
+
+                    </td>
                 <td> <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/antincendio {{formazione.antincendio|date:"dmy"}}.pdf" target="_blank">
-                    {{formazione.antincendio|default_if_none:""}}</td>
+                    {{formazione.antincendio|default_if_none:""}}
+                    {% if nomine.antincendio %}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.antincendio {{nomine.antincendio|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+                    {% endif %}
+                    </td>
                 <td {% if formazione.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.preposto < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.preposto < scadenza.mesi12 %} class="alert alert-info" role="alert"
                     {% endif %}>
                     <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/preposto {{formazione.preposto|date:"dm"}}{{formazione.preposto|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{formazione.preposto|default_if_none:""}}</td>
+                        {{formazione.preposto|default_if_none:""}}</a>
+                    {% if nomine.preposto%}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.preposto {{nomine.preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+                    {% endif %}
+                    </td>
                 <td {% if formazione.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.h2s < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.h2s < scadenza.mesi12 %} class="alert alert-info" role="alert"
@@ -140,7 +153,11 @@
                     {% elif formazione.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"
                     {% endif %}>
                     <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/rspp {{formazione.rspp|date:"dm"}}{{formazione.rspp|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{formazione.rspp|default_if_none:""}}</a></td>
+                        {{formazione.rspp|default_if_none:""}}</a>
+                    {% if nomine.aspp%}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.aspp {{nomine.aspp|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+                    {% endif %}
+                    </td>
             </tr>
         {% endfor %}
         </tbody>

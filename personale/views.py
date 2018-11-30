@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from personale import views_util
-from personale.models import Lavoratore, Formazione, Anagrafica
+from personale.models import Lavoratore, Formazione, Anagrafica, Nomine
 from personale.views_util import date_scadenza
 
 
@@ -85,8 +85,9 @@ def completo(request, filtro=False, ordinamento=None):
         gruppo = []
         for lavoratore in lavoratori:
             formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+            nomine = Nomine.objects.get(lavoratore=lavoratore.lavoratore)
 
-            gruppo.append((lavoratore, formazione))
+            gruppo.append((lavoratore, formazione, nomine))
 
         dati.append((azienda, gruppo, len(gruppo)))
 
