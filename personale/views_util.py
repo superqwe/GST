@@ -3,7 +3,7 @@ from pprint import pprint as pp
 
 from django.db.models import Q
 
-from personale.models import Anagrafica
+from personale.models import Anagrafica, Nomine
 
 
 def date_scadenza():
@@ -52,5 +52,28 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('lavoratore')
 
         dati.append((aziende[azienda[0]], lavoratori))
+
+    return dati
+
+
+def lavoratori_con_nomine():
+    aziende = {'m': 'MODOMEC',
+               'b': 'BUILDING',
+               'r': 'RIMEC',
+               'w': 'WELDING',
+               None: '-'}
+    dati = []
+
+    for azienda in Anagrafica.AZIENDA:
+        lavoratori = Nomine.objects.exclude(preposto__isnull=True, antincendio__isnull=True,
+                                            primo_soccorso__isnull=True, aspp__isnull=True).order_by('lavoratore')
+
+        llav = []
+        for lav in lavoratori:
+            xxx = Anagrafica.objects.filter(lavoratore=lav.lavoratore, azienda=azienda[0], in_forza=True)
+            if xxx:
+                llav.append(xxx[0])
+
+        dati.append((aziende[azienda[0]], llav))
 
     return dati

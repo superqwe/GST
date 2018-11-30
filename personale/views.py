@@ -64,6 +64,9 @@ def completo(request, filtro=False, ordinamento=None):
     elif ordinamento == 'c':
         gruppi = views_util.lavoratori_suddivisi_per_azienda('cantiere')
         pagina_attiva = 'cantiere'
+    elif ordinamento == 'n':
+        gruppi = views_util.lavoratori_con_nomine()
+        pagina_attiva = 'nomine'
     elif ordinamento == 's':
         gruppi = views_util.lavoratori_suddivisi_per_azienda('stato')
         pagina_attiva = 'scadenza'
