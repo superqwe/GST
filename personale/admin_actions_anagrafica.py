@@ -17,6 +17,7 @@ PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 FILE_DATI = 'dati.xlsx'
 
+
 def esporta_dati():
     lavoratori = Anagrafica.objects.all().order_by('lavoratore')
 
@@ -35,6 +36,7 @@ def esporta_dati():
 def importa_dati():
     xlsx = pd.ExcelFile(FILE_DATI)
     df = pd.read_excel(xlsx, 'dati')
+    df = df.where((pd.notnull(df)), None)
 
     for n, cognome, nome, mansione, in_forza, azienda, cantiere in df.itertuples():
         if type(mansione) == str:
@@ -43,11 +45,8 @@ def importa_dati():
             lavoratore.in_forza = in_forza
             lavoratore.azienda = azienda
             lavoratore.cantiere = cantiere
-            print(cantiere)
-            if np.isnan(cantiere):
-                print(lavoratore)
 
-            # lavoratore.save()
+            lavoratore.save()
 
 
 def in_sede(queryset):

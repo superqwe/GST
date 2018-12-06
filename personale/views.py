@@ -87,7 +87,6 @@ def completo(request, filtro=False, ordinamento=None):
 
         gruppo = []
         for lavoratore in lavoratori:
-            print(lavoratore, lavoratore.cantiere)
             formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
             nomine = Nomine.objects.get(lavoratore=lavoratore.lavoratore)
 
