@@ -162,6 +162,8 @@ fabric.properties
 personale/migrations/
 personale/static/personale/attestati/
 .idea/
+*.exe
 *.sqlite3
+*.xlsx
 mansioni.xlsx
 SyncToy*
