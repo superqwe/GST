@@ -84,7 +84,7 @@ def esporta_dati(modeladmin, request, queryset):
 
 
 def importa_dati(modeladmin, request, queryset):
-    admin_actions_anagrafica.importa_mansioni()
+    admin_actions_anagrafica.importa_dati()
 
 
 azienda_nessuna.short_description = "Nessuna azienda"

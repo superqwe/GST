@@ -343,8 +343,8 @@ def aggiorna_elenco_lavoratori():
                     cognome, nome = lavoratore
 
                     try:
-                        res = Lavoratore.objects.get(cognome=cognome, nome=nome)
-                    except IndexError:
+                        Lavoratore.objects.get(cognome=cognome, nome=nome)
+                    except Lavoratore.DoesNotExist:
                         lavoratore = Lavoratore(cognome=cognome, nome=nome)
                         lavoratore.save()
                         print('Nuovo Lavoratore: ', lavoratore)

@@ -6,6 +6,7 @@ from pprint import pprint as pp
 import pandas as pd
 
 from personale.models import Anagrafica, Formazione, Lavoratore
+import numpy as np
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -31,7 +32,7 @@ def esporta_dati():
     print('\n*** Mansioni esportate\n')
 
 
-def importa_mansioni():
+def importa_dati():
     xlsx = pd.ExcelFile(FILE_DATI)
     df = pd.read_excel(xlsx, 'dati')
 
@@ -42,8 +43,11 @@ def importa_mansioni():
             lavoratore.in_forza = in_forza
             lavoratore.azienda = azienda
             lavoratore.cantiere = cantiere
+            print(cantiere)
+            if np.isnan(cantiere):
+                print(lavoratore)
 
-            lavoratore.save()
+            # lavoratore.save()
 
 
 def in_sede(queryset):
