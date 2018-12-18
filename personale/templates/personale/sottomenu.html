@@ -1,29 +1,30 @@
 {% load static %}
 
 <nav class="nav nav-pills justify-content-end">
-    <a class="nav-link {% if pagina_attiva == 'in_forza' %}active{% endif %}"
-       data-toggle="tooltip" data-placement="top" title="Alfabetico"
-       href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Per Azienda"
-       href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
+    href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'cantiere' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Per Cantiere"
-       href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
+    href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'scadenza' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Scaduto/In Scadenza"
-       href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
+    href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'idoneita' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Idoneità Sanitaria"
-       href="/personale/completo/in_forza/v"><i class="fas fa-notes-medical fa-2x"></i></a>
+    href="/personale/completo/in_forza/v"><i class="fas fa-notes-medical fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'nomine' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Nomine"
-       href="/personale/completo/in_forza/n"><i class="fas fa-file-signature fa-2x"></i></a>
+    href="/personale/completo/in_forza/n"><i class="fas fa-file-signature fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'in_forza' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Alfabetico"
+       href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Personale anche Non In Forza"
