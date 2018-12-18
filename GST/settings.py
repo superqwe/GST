@@ -27,7 +27,7 @@ DEBUG = True
 # da commentare per togliere la barra di debug
 # INTERNAL_IPS = '127.0.0.1'
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217', 'modomec.pythonanywhere.com']
 
 # Application definition
 
@@ -124,4 +124,5 @@ STATIC_URL = '/static/'
 
 # aggiunto
 STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale', os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'
+# STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'
+STATIC_ROOT = os.path.join('/home/modomec/GST/static')
