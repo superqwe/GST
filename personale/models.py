@@ -77,6 +77,7 @@ class Anagrafica(models.Model):
                       ('r', 'Rosso'))
     CANTIERE = (('sede', 'Massafra'),
                 ('ilva_ta', 'Ilva'),
+                ('andritz_ch', 'Andritz'),
                 ('eni_ta', 'Raffineria'),
                 (None, '-')  # non in forza
                 )
