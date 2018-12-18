@@ -123,6 +123,7 @@ FORMAT_MODULE_PATH = [
 STATIC_URL = '/static/'
 
 # aggiunto
-STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale', os.path.join(BASE_DIR, 'static')]
+#STATICFILES_DIRS = [r'C:\Users\leonardo.masi\Documents\Personale', os.path.join(BASE_DIR, 'static')]
 # STATIC_ROOT = r'C:\Users\leonardo.masi\Documents\Programmi\GST\personale\static\personale\attestati'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join('/home/modomec/GST/static')
