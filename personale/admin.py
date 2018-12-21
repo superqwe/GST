@@ -19,6 +19,7 @@ PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 def aggiorna_stato_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_stato_lavoratori()
+    admin_actions_lavoratore.data_ultima_modifica_scrivi()
 
 
 def rinomina_attestati(modeladmin, request, queryset):
@@ -27,7 +28,7 @@ def rinomina_attestati(modeladmin, request, queryset):
 
 def aggiorna_scadenza_documenti(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_scadenza_documenti()
-
+    admin_actions_lavoratore.data_ultima_modifica_scrivi()
 
 def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_elenco_lavoratori()
@@ -141,8 +142,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                ]
 
-    list_display = ('cognome', 'nome', 'stato')
-    # list_filter = ['stato', ]
+    list_display = ('cognome', 'nome', 'stato',)
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
 

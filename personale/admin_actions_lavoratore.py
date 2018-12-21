@@ -15,6 +15,8 @@ AVVISO_SCADENZA = OGGI + DT
 AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
+FILE_DATA_ULTIMA_MODIFICA = 'data ultima modifica.txt'
+
 
 def m_d_y2mdy(scadenza, tipo=None):
     if tipo:
@@ -376,3 +378,15 @@ def aggiorna_elenco_lavoratori():
             nomina = Nomine(lavoratore=lavoratore)
             nomina.save()
             print('Nuova Nomina: ', lavoratore)
+
+
+def data_ultima_modifica_scrivi():
+    with open(FILE_DATA_ULTIMA_MODIFICA, 'w') as fout:
+        fout.write('%s' % OGGI)
+
+
+def data_ultima_modifica_leggi():
+    with open(FILE_DATA_ULTIMA_MODIFICA, 'r') as fin:
+        data = fin.read()
+        data = datetime.datetime.strptime(data, "%Y-%m-%d")
+        return data.strftime("%d/%m/%y")

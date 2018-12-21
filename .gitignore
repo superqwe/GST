@@ -164,6 +164,7 @@ personale/static/personale/attestati/
 .idea/
 *.exe
 *.sqlite3
+data ultima modifica.txt
 *.xlsx
 mansioni.xlsx
 SyncToy*
