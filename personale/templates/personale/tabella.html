@@ -55,8 +55,7 @@
                         {{anagrafica.unilav|default_if_none:""}} </a>
                     {% if  anagrafica.indeterminato %}
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav ind.pdf" target="_blank">
-                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
-                </td>
+                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}</td>
                 <td {% if formazione.art37 < scadenza.oggi  or not formazione.art37 %} class="alert alert-danger" role="alert"
                     {% elif formazione.art37 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.art37 < scadenza.mesi12 %} class="alert alert-info" role="alert"
@@ -71,15 +70,12 @@
                          {{formazione.primo_soccorso|default_if_none:""}}</a>
                     {% if nomine.primo_soccorso %}
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.primo.soccorso {{nomine.primo_soccorso|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}
-
-                    </td>
+                    {% endif %}</td>
                 <td> <a href="{% static ''%}{{anagrafica.lavoratore}}/attestati/antincendio {{formazione.antincendio|date:"dmy"}}.pdf" target="_blank">
                     {{formazione.antincendio|default_if_none:""}}
                     {% if nomine.antincendio %}
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.antincendio {{nomine.antincendio|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}
-                    </td>
+                    {% endif %}</td>
                 <td {% if formazione.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.preposto < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.preposto < scadenza.mesi12 %} class="alert alert-info" role="alert"
@@ -88,8 +84,7 @@
                         {{formazione.preposto|default_if_none:""}}</a>
                     {% if nomine.preposto%}
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.preposto {{nomine.preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}
-                    </td>
+                    {% endif %}</td>
                 <td {% if formazione.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.h2s < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.h2s < scadenza.mesi12 %} class="alert alert-info" role="alert"
@@ -152,8 +147,7 @@
                          {{formazione.rls|default_if_none:""}}</a>
                         {% if nomine.rls%}
                             <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.rls {{nomine.rls|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                        {% endif %}
-                    </td>
+                        {% endif %}</td>
                 <td {% if formazione.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
                     {% elif formazione.rspp < scadenza.mesi6 %} class="alert alert-warning" role="alert"
                     {% elif formazione.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"
@@ -162,8 +156,7 @@
                         {{formazione.rspp|default_if_none:""}}</a>
                     {% if nomine.aspp%}
                         <a href="{% static ''%}{{anagrafica.lavoratore}}/nomine/nomina.aspp {{nomine.aspp|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}
-                    </td>
+                    {% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>

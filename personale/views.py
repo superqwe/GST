@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from personale import views_util
+from personale.admin_actions_lavoratore import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Formazione, Anagrafica, Nomine
 from personale.views_util import date_scadenza
 
@@ -103,6 +104,7 @@ def completo(request, filtro=False, ordinamento=None):
         'pagina_attiva': pagina_attiva,
         'scadenza': views_util.Date_Scadenza(),
         'tabella_completa': tabella_completa,
+        'data_ultima_modifica': data_ultima_modifica_leggi()
     }
     return HttpResponse(template.render(context, request))
 
