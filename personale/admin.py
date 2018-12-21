@@ -131,6 +131,7 @@ class FormazioneAdmin(admin.ModelAdmin):
     search_fields = ['lavoratore__cognome', ]
 
 
+@admin.register(Lavoratore)
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_elenco_lavoratori,
                aggiorna_scadenza_documenti,
@@ -154,5 +155,5 @@ class NomineAdmin(admin.ModelAdmin):
 
 admin.site.register(Anagrafica, AnagraficaAdmin)
 admin.site.register(Formazione, FormazioneAdmin)
-admin.site.register(Lavoratore, LavoratoreAdmin)
+# admin.site.register(Lavoratore, LavoratoreAdmin)
 admin.site.register(Nomine, NomineAdmin)

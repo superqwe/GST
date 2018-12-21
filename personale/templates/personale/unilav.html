@@ -1,0 +1,108 @@
+{% extends "personale/base.html" %}
+
+{% load static %}
+
+{% block title %}
+UNILAV
+{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+
+
+{% block corpo %}
+<div class="table-responsive">
+    <table class="table table-striped table-sm text-center ">
+        <thead class="thead-light">
+            <tr>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>UNILAV</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for anagrafica in lavoratori|slice:"0:100" %}
+            <tr>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.cognome}}</th>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
+                <td {% if anagrafica.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                    {% endif %}>
+                    <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav {{anagrafica.unilav|date:"dmy"}}.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} </a>
+                    {% if  anagrafica.indeterminato %}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav ind.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <table class="table table-striped table-sm text-center ">
+        <thead class="thead-light">
+            <tr>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>UNILAV</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for anagrafica in lavoratori|slice:"100:200" %}
+            <tr>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.cognome}}</th>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
+                <td {% if anagrafica.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                    {% endif %}>
+                    <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav {{anagrafica.unilav|date:"dmy"}}.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} </a>
+                    {% if  anagrafica.indeterminato %}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav ind.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <table class="table table-striped table-sm text-center ">
+        <thead class="thead-light">
+            <tr>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>UNILAV</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for anagrafica in lavoratori|slice:"200:" %}
+            <tr>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.cognome}}</th>
+                <th scope="row" class="text-left">{{anagrafica.lavoratore.nome}}</th>
+                <td {% if anagrafica.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                    {% elif anagrafica.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                    {% endif %}>
+                    <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav {{anagrafica.unilav|date:"dmy"}}.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} </a>
+                    {% if  anagrafica.indeterminato %}
+                        <a href="{% static ''%}{{anagrafica.lavoratore}}/unilav ind.pdf" target="_blank">
+                        {{anagrafica.unilav|default_if_none:""}} IND</a>  {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

@@ -24,6 +24,9 @@ urlpatterns = [
     # /personale/scadenza/
     path('scadenza/', views.scadenza, name='scadenza'),
 
+    # /personale/unilav
+    path('unilav/', views.unilav, name='unilav'),
+
     # /personale/estri_dati/
     path('estrai_dati/', views.estrai_dati, name='estrai_dati'),
 

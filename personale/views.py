@@ -216,3 +216,20 @@ def esporta_pdf(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">Pdf salvato</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+def unilav(request):
+    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m').order_by('lavoratore')
+
+    oggi = datetime.date.today()
+    mesi1 = oggi + datetime.timedelta(days=30)
+    mesi2 = oggi + datetime.timedelta(days=60)
+    mesi6 = oggi + datetime.timedelta(days=366 / 2)
+    mesi12 = oggi + datetime.timedelta(days=365)
+
+    template = loader.get_template('personale/unilav.html')
+    context = {
+        'lavoratori': lavoratori,
+        'scadenza': views_util.Date_Scadenza()
+
+    }
+    return HttpResponse(template.render(context, request))
