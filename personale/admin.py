@@ -32,6 +32,7 @@ def aggiorna_scadenza_documenti(modeladmin, request, queryset):
 
 def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_elenco_lavoratori()
+    admin_actions_lavoratore.data_ultima_modifica_scrivi()
 
 
 aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"

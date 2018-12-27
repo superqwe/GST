@@ -206,122 +206,124 @@ def aggiorna_scadenza_documenti():
                 cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
                 print('\n', cognome, nome)
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
-                formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
                 anagrafica = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
-                nomina = Nomine.objects.get(lavoratore__id=lavoratore.id)
 
-                for documento in files:
-                    documento = documento.lower()
+                if anagrafica.in_forza:
+                    formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
+                    nomina = Nomine.objects.get(lavoratore__id=lavoratore.id)
 
-                    if documento.endswith('.pdf'):
-                        tipo, scadenza = documento.split()[:2]
+                    for documento in files:
+                        documento = documento.lower()
 
-                        if tipo == 'doc':
-                            scadenza = scadenza2date(documento, 0)
-                            formazione.ci = scadenza
+                        if documento.endswith('.pdf'):
+                            tipo, scadenza = documento.split()[:2]
 
-                        elif tipo in ('idoneità', 'idoneita'):
-                            scadenza = scadenza2date(documento, 0)
-                            anagrafica.idoneita = scadenza
-
-                        elif tipo == 'unilav':
-                            if scadenza == 'ind.pdf':
-                                anagrafica.indeterminato = True
-                                anagrafica.unilav = None
-                            else:
+                            if tipo == 'doc':
                                 scadenza = scadenza2date(documento, 0)
-                                anagrafica.unilav = scadenza
+                                formazione.ci = scadenza
 
-                        elif tipo in ('art37', 'art.37'):
-                            scadenza = scadenza2date(documento)
-                            formazione.art37 = scadenza
+                            elif tipo in ('idoneità', 'idoneita'):
+                                scadenza = scadenza2date(documento, 0)
+                                anagrafica.idoneita = scadenza
 
-                        elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
-                            scadenza = scadenza2date(documento, 3)
-                            formazione.primo_soccorso = scadenza
+                            elif tipo == 'unilav':
+                                if scadenza == 'ind.pdf':
+                                    anagrafica.indeterminato = True
+                                    anagrafica.unilav = None
+                                else:
+                                    scadenza = scadenza2date(documento, 0)
+                                    anagrafica.unilav = scadenza
 
-                        elif tipo == 'antincendio':
-                            scadenza = scadenza2date(documento, 0)
-                            formazione.antincendio = scadenza
+                            elif tipo in ('art37', 'art.37'):
+                                scadenza = scadenza2date(documento)
+                                formazione.art37 = scadenza
 
-                        elif tipo == 'preposto':
-                            scadenza = scadenza2date(documento)
-                            formazione.preposto = scadenza
+                            elif tipo in ('primo', 'primosoccorso', 'primo.soccorso'):
+                                scadenza = scadenza2date(documento, 3)
+                                formazione.primo_soccorso = scadenza
 
-                        elif tipo in ('h2s.safety', 'h2s'):
-                            scadenza = scadenza2date(documento)
-                            formazione.h2s = scadenza
+                            elif tipo == 'antincendio':
+                                scadenza = scadenza2date(documento, 0)
+                                formazione.antincendio = scadenza
 
-                        elif tipo == 'dpi':
-                            scadenza = scadenza2date(documento)
-                            formazione.dpi3 = scadenza
+                            elif tipo == 'preposto':
+                                scadenza = scadenza2date(documento)
+                                formazione.preposto = scadenza
 
-                        elif tipo in ('carrelli', 'carrello', 'sollevatore'):
-                            scadenza = scadenza2date(documento)
-                            formazione.carrello = scadenza
+                            elif tipo in ('h2s.safety', 'h2s'):
+                                scadenza = scadenza2date(documento)
+                                formazione.h2s = scadenza
 
-                        elif tipo == 'ple':
-                            scadenza = scadenza2date(documento)
-                            formazione.ple = scadenza
+                            elif tipo == 'dpi':
+                                scadenza = scadenza2date(documento)
+                                formazione.dpi3 = scadenza
 
-                        elif tipo in ('autogru', 'gru'):
-                            scadenza = scadenza2date(documento)
-                            formazione.gru = scadenza
+                            elif tipo in ('carrelli', 'carrello', 'sollevatore'):
+                                scadenza = scadenza2date(documento)
+                                formazione.carrello = scadenza
 
-                        elif tipo == 'imbracatore':
-                            scadenza = scadenza2date(documento)
-                            formazione.imbracatore = scadenza
+                            elif tipo == 'ple':
+                                scadenza = scadenza2date(documento)
+                                formazione.ple = scadenza
 
-                        elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato', 'spazi.confinati'):
-                            scadenza = scadenza2date(documento)
-                            formazione.spazi_confinati = scadenza
+                            elif tipo in ('autogru', 'gru'):
+                                scadenza = scadenza2date(documento)
+                                formazione.gru = scadenza
 
-                        elif tipo in ('altro', 'rir'):
-                            scadenza = scadenza2date(documento)
-                            formazione.rir = scadenza
+                            elif tipo == 'imbracatore':
+                                scadenza = scadenza2date(documento)
+                                formazione.imbracatore = scadenza
 
-                        elif tipo == 'rls':
-                            scadenza = scadenza2date(documento, 1)
-                            formazione.rls = scadenza
+                            elif tipo in ('spazi', 'spazio', 'spazio.confinato', 'spazi.confinato', 'spazi.confinati'):
+                                scadenza = scadenza2date(documento)
+                                formazione.spazi_confinati = scadenza
 
-                        elif tipo == 'rspp':
-                            scadenza = scadenza2date(documento)
-                            formazione.rspp = scadenza
+                            elif tipo in ('altro', 'rir'):
+                                scadenza = scadenza2date(documento)
+                                formazione.rir = scadenza
 
-                        elif tipo == 'ponteggi':
-                            scadenza = scadenza2date(documento, 4)
-                            formazione.ponteggi = scadenza
+                            elif tipo == 'rls':
+                                scadenza = scadenza2date(documento, 1)
+                                formazione.rls = scadenza
 
-                        elif tipo == 'lavori.quota':
-                            scadenza = scadenza2date(documento, 5)
-                            formazione.lavori_quota = scadenza
+                            elif tipo == 'rspp':
+                                scadenza = scadenza2date(documento)
+                                formazione.rspp = scadenza
 
-                        elif tipo == 'nomina.preposto':
-                            scadenza = scadenza2date(documento, 0)
-                            nomina.preposto = scadenza
+                            elif tipo == 'ponteggi':
+                                scadenza = scadenza2date(documento, 4)
+                                formazione.ponteggi = scadenza
 
-                        elif tipo == 'nomina.antincendio':
-                            scadenza = scadenza2date(documento, 0)
-                            nomina.antincendio = scadenza
+                            elif tipo == 'lavori.quota':
+                                scadenza = scadenza2date(documento, 5)
+                                formazione.lavori_quota = scadenza
 
-                        elif tipo == 'nomina.primo.soccorso':
-                            scadenza = scadenza2date(documento, 0)
-                            nomina.primo_soccorso = scadenza
+                            elif tipo == 'nomina.preposto':
+                                scadenza = scadenza2date(documento, 0)
+                                nomina.preposto = scadenza
 
-                        elif tipo == 'nomina.rls':
-                            scadenza = scadenza2date(documento, 0)
-                            nomina.rls = scadenza
+                            elif tipo == 'nomina.antincendio':
+                                scadenza = scadenza2date(documento, 0)
+                                nomina.antincendio = scadenza
 
-                        elif tipo == 'nomina.aspp':
-                            scadenza = scadenza2date(documento, 0)
-                            nomina.aspp = scadenza
+                            elif tipo == 'nomina.primo.soccorso':
+                                scadenza = scadenza2date(documento, 0)
+                                nomina.primo_soccorso = scadenza
 
-                        else:
-                            print('***', tipo, '+++', cognome, nome, documento)
+                            elif tipo == 'nomina.rls':
+                                scadenza = scadenza2date(documento, 0)
+                                nomina.rls = scadenza
 
-                formazione.save()
-                anagrafica.save()
-                nomina.save()
+                            elif tipo == 'nomina.aspp':
+                                scadenza = scadenza2date(documento, 0)
+                                nomina.aspp = scadenza
+
+                            else:
+                                print('***', tipo, '+++', cognome, nome, documento)
+
+                    formazione.save()
+                    anagrafica.save()
+                    nomina.save()
 
             except ValueError:
                 print('*** Errore in ', path)
@@ -368,6 +370,7 @@ def aggiorna_elenco_lavoratori():
 
         if len(res) == 0:
             anagrafica = Anagrafica(lavoratore=lavoratore)
+            anagrafica.in_forza=True
             anagrafica.save()
             print('Nuova Anagrafica: ', lavoratore)
 
