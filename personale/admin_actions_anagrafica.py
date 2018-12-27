@@ -30,7 +30,7 @@ def esporta_dati():
     dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione', 'in_forza', 'azienda', 'cantiere'))
 
     dati.to_excel(FILE_DATI, sheet_name='dati')
-    print('\n*** Mansioni esportate\n')
+    print('\n*** Dati anagrafici esportati\n')
 
 
 def importa_dati():

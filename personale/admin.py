@@ -110,7 +110,7 @@ class AnagraficaAdmin(admin.ModelAdmin):
                # azienda_m,
                # azienda_nessuna,
                ]
-    list_display = ('lavoratore', 'stato',
+    list_display = ('lavoratore', 'stato', 'codice_fiscale',
                     'in_forza', 'azienda', 'cantiere', 'mansione',
                     'idoneita', 'indeterminato', 'unilav')
     list_filter = ['in_forza', 'stato', 'azienda', 'cantiere', 'indeterminato']

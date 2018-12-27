@@ -370,7 +370,8 @@ def aggiorna_elenco_lavoratori():
 
         if len(res) == 0:
             anagrafica = Anagrafica(lavoratore=lavoratore)
-            anagrafica.in_forza=True
+            anagrafica.in_forza = True
+            anagrafica.azienda = 'm'
             anagrafica.save()
             print('Nuova Anagrafica: ', lavoratore)
 
