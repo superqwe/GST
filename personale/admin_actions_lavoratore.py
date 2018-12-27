@@ -198,17 +198,19 @@ def rinomina_attestati():
 def aggiorna_scadenza_documenti():
     path_base = PATH_BASE
 
+    lavoratori = Anagrafica.objects.filter(in_forza=True).values_list('lavoratore__cognome', 'lavoratore__nome')
+
     for root, dirs, files in os.walk(path_base):
         path = root[len(path_base) + 1:].lower()
 
         if not path.startswith('z ') and not 'scaduti' in root:
             try:
                 cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
-                print('\n', cognome, nome)
-                lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
-                anagrafica = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
 
-                if anagrafica.in_forza:
+                if (cognome, nome) in lavoratori:
+                    print('\n', cognome, nome)
+                    lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
+                    anagrafica = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
                     formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
                     nomina = Nomine.objects.get(lavoratore__id=lavoratore.id)
 
