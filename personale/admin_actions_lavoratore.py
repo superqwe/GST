@@ -377,11 +377,7 @@ def data_ultima_modifica_scrivi():
 
 
 def data_ultima_modifica_leggi():
-    try:
-        with open(FILE_DATA_ULTIMA_MODIFICA, 'r') as fin:
-            data = fin.read()
-            data = datetime.datetime.strptime(data, "%Y-%m-%d")
-            return data.strftime("%d/%m/%y")
-    except FileNotFoundError:
-        with open('CANCELLA', 'w') as fout:
-            fout.write('cancellaaaaaa')
+    with open(FILE_DATA_ULTIMA_MODIFICA, 'r') as fin:
+        data = fin.read()
+        data = datetime.datetime.strptime(data, "%Y-%m-%d")
+        return data.strftime("%d/%m/%y")

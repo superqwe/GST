@@ -76,7 +76,7 @@ class Anagrafica(models.Model):
                       ('g', 'Giallo'),
                       ('r', 'Rosso'))
     CANTIERE = (('sede', 'Massafra'),
-                ('ilva_ta', 'Ilva'),
+                ('ilva_ta', 'ArcelorMittal'),
                 ('andritz_ch', 'Andritz'),
                 ('ve', 'Marghera'),
                 ('eni_ta', 'Raffineria'),
