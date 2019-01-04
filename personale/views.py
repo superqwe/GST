@@ -58,6 +58,7 @@ def anagrafica_per_cantiere(request):
 def completo(request, filtro=False, ordinamento=None):
     pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
     tabella_completa = False
+    nn = None
 
     if ordinamento == 'a':
         gruppi = views_util.lavoratori_suddivisi_per_azienda()
@@ -77,14 +78,21 @@ def completo(request, filtro=False, ordinamento=None):
     else:
         if filtro == 'in_forza':
             lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+            nv = len(Anagrafica.objects.filter(in_forza=True, stato='v').order_by('lavoratore'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, stato='g').order_by('lavoratore'))
+            nr = len(Anagrafica.objects.filter(in_forza=True, stato='r').order_by('lavoratore'))
         else:
             lavoratori = Anagrafica.objects.order_by('lavoratore')
+            nv = len(Anagrafica.objects.filter(stato='v').order_by('lavoratore'))
+            ng = len(Anagrafica.objects.filter(stato='g').order_by('lavoratore'))
+            nr = len(Anagrafica.objects.filter(stato='r').order_by('lavoratore'))
+            nn = len(Anagrafica.objects.filter(in_forza=False).order_by('lavoratore'))
 
-        gruppi = (('Elenco Personale', lavoratori),)
+        gruppi = (('Elenco Personale', lavoratori, (nr, ng, nv)),)
         tabella_completa = True
 
     dati = []
-    for azienda, lavoratori in gruppi:
+    for azienda, lavoratori, (nr, ng, nv) in gruppi:
 
         gruppo = []
         for lavoratore in lavoratori:
@@ -93,7 +101,7 @@ def completo(request, filtro=False, ordinamento=None):
 
             gruppo.append((lavoratore, formazione, nomine))
 
-        dati.append((azienda, gruppo, len(gruppo)))
+        dati.append((azienda, gruppo, len(gruppo), nr, ng, nv))
 
     nlavoratori = len(dati)
 
@@ -101,10 +109,11 @@ def completo(request, filtro=False, ordinamento=None):
     context = {
         'dati': dati,
         'nlavoratori': nlavoratori,
+        'nn': nn,
         'pagina_attiva': pagina_attiva,
         'scadenza': views_util.Date_Scadenza(),
         'tabella_completa': tabella_completa,
-        'data_ultima_modifica': data_ultima_modifica_leggi()
+        'data_ultima_modifica': data_ultima_modifica_leggi(),
     }
     return HttpResponse(template.render(context, request))
 
@@ -218,6 +227,7 @@ def esporta_pdf(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">Pdf salvato</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
 
 def unilav(request):
     lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m').order_by('lavoratore')

@@ -1,5 +1,18 @@
 <div class="row align-items-center">
-    <div class="col"><h1>{{azienda}} <span class="badge badge-primary">{{n}}</span></h1></div>
+    <div class="col">
+        <h1>{{azienda}}
+            <span class="badge badge-danger">{{nr}}</span>
+            <span class="badge badge-warning">{{ng}}</span>
+            {% if nv %}
+                <span class="badge badge-success">{{nv}}</span>
+            {% endif %}
+            {% if nn %}
+                <span class="badge badge-light">{{nn}}</span>
+            {% endif %}
+            =
+            <span class="badge badge-primary">{{n}}</span>
+        </h1>
+    </div>
     <div class="col text-right align-items-center ">
         {% block sottomenu %}
             {% include "personale/sottomenu.html" %}
