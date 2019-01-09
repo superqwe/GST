@@ -44,29 +44,24 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
         if ordine == 'cantiere':
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere',
                                                                                                'lavoratore')
-            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r').order_by('-cantiere',
-                                                                                                      'lavoratore'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g').order_by('-cantiere',
-                                                                                                      'lavoratore'))
-            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v').order_by('-cantiere',
-                                                                                                      'lavoratore'))
+            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
+            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v'))
         elif ordine == 'stato':
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).filter(
                 Q(stato='r') | Q(stato='g')).order_by('-stato', 'lavoratore')
-            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r').order_by('-stato',
-                                                                                                      'lavoratore'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g').order_by('-stato',
-                                                                                                      'lavoratore'))
+            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
         elif ordine == 'idoneita':
-            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('idoneita')
-            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r').order_by('idoneita'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g').order_by('idoneita'))
-            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v').order_by('idoneita'))
+            lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('idoneita', 'lavoratore')
+            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
+            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v'))
         else:
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('lavoratore')
-            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r').order_by('lavoratore'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g').order_by('lavoratore'))
-            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v').order_by('lavoratore'))
+            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
+            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v'))
 
         dati.append((aziende[azienda[0]], lavoratori, (nr, ng, nv)))
 
@@ -94,12 +89,12 @@ def lavoratori_con_nomine():
                 llav.append(xxx[0])
                 stato = xxx[0].stato
 
-                if stato=='v':
-                    nv+=1
-                elif stato=='g':
-                    ng+=1
-                elif stato=='r':
-                    nr+=1
+                if stato == 'v':
+                    nv += 1
+                elif stato == 'g':
+                    ng += 1
+                elif stato == 'r':
+                    nr += 1
 
         dati.append((aziende[azienda[0]], llav, (nr, ng, nv)))
 

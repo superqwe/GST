@@ -78,15 +78,15 @@ def completo(request, filtro=False, ordinamento=None):
     else:
         if filtro == 'in_forza':
             lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
-            nv = len(Anagrafica.objects.filter(in_forza=True, stato='v').order_by('lavoratore'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, stato='g').order_by('lavoratore'))
-            nr = len(Anagrafica.objects.filter(in_forza=True, stato='r').order_by('lavoratore'))
+            nv = len(Anagrafica.objects.filter(in_forza=True, stato='v'))
+            ng = len(Anagrafica.objects.filter(in_forza=True, stato='g'))
+            nr = len(Anagrafica.objects.filter(in_forza=True, stato='r'))
         else:
             lavoratori = Anagrafica.objects.order_by('lavoratore')
-            nv = len(Anagrafica.objects.filter(stato='v').order_by('lavoratore'))
-            ng = len(Anagrafica.objects.filter(stato='g').order_by('lavoratore'))
-            nr = len(Anagrafica.objects.filter(stato='r').order_by('lavoratore'))
-            nn = len(Anagrafica.objects.filter(in_forza=False).order_by('lavoratore'))
+            nv = len(Anagrafica.objects.filter(stato='v'))
+            ng = len(Anagrafica.objects.filter(stato='g'))
+            nr = len(Anagrafica.objects.filter(stato='r'))
+            nn = len(Anagrafica.objects.filter(in_forza=False))
 
         gruppi = (('Elenco Personale', lavoratori, (nr, ng, nv)),)
         tabella_completa = True
