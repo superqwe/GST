@@ -2,6 +2,7 @@ import datetime
 import glob
 import os
 import shutil
+from datetime import timedelta
 
 import pandas as pd
 from django.db.models import Q
@@ -143,15 +144,15 @@ def scadenza(request):
 def estrai_dati(request):
     path = r'C:\Users\leonardo.masi\Documents\Personale'
     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
-    FIN = 'elenco_ilva.csv'
+    FIN = 'elenco_idoneità_x_mc.csv'
 
     with open(os.path.join(path, FIN)) as fin:
         for row in fin:
-            cognome, nome = row.split(';')
+            cognome, nome, canc = row.split(';')
             cartella_lavoratore = '%s %s' % (cognome, nome)
 
             path_idoneita = os.path.join(path, cartella_lavoratore.strip())
-            path_attestati = os.path.join(path, cartella_lavoratore.strip(), 'attestati')
+            # path_attestati = os.path.join(path, cartella_lavoratore.strip(), 'attestati')
 
             # idoneità
             pi = os.path.abspath(path_idoneita)
@@ -160,17 +161,17 @@ def estrai_dati(request):
             da_i = os.path.join(pi, nfile)
             a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'idoneità sanitaria.pdf'))
 
-            # print(da_i, '-->', a_i)
+            print(da_i, '-->', a_i)
             shutil.copy(da_i, a_i)
-
-            # attestati
-            os.chdir(path_attestati)
-            nfile = glob.glob('art*')[0]
-            da_i = os.path.join(path_attestati, nfile)
-            a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'formazione accordo stato-regione.pdf'))
-
-            # print(da_i, '-->', a_i)
-            shutil.copy(da_i, a_i)
+            #
+            # # attestati
+            # os.chdir(path_attestati)
+            # nfile = glob.glob('art*')[0]
+            # da_i = os.path.join(path_attestati, nfile)
+            # a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'formazione accordo stato-regione.pdf'))
+            #
+            # # print(da_i, '-->', a_i)
+            # shutil.copy(da_i, a_i)
 
     return HttpResponse("Dati estratti")
 
@@ -230,16 +231,20 @@ def esporta_pdf(request):
 
 
 def unilav(request):
-    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m').order_by('lavoratore')
-
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
     mesi2 = oggi + datetime.timedelta(days=60)
     mesi6 = oggi + datetime.timedelta(days=366 / 2)
     mesi12 = oggi + datetime.timedelta(days=365)
 
+    fino_al = oggi + timedelta(5)
+    print(fino_al)
+
+    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al).order_by('lavoratore')
+
     template = loader.get_template('personale/unilav.html')
     context = {
+        'fino_al': fino_al,
         'lavoratori': lavoratori,
         'scadenza': views_util.Date_Scadenza()
 
