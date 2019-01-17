@@ -146,7 +146,7 @@ def estrai_dati(request):
     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
     FIN = 'mario unilav.csv'
 
-    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m') #, spazi_confinati__isnull=False)
+    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m')  # , spazi_confinati__isnull=False)
 
     for lavoratore in lavoratori:
         cartella_lavoratore = '%s %s\\attestati' % (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome)
@@ -301,3 +301,18 @@ def unilav(request):
 
     }
     return HttpResponse(template.render(context, request))
+
+
+def test(request):
+    lav = Lavoratore.objects.all().prefetch_related('anagrafica_set', 'formazione_set').filter(
+        anagrafica__in_forza=True)
+
+    for l in lav:
+        # pp(dir(l.anagrafica_set.get().cantiere))
+        print(l.anagrafica_set.get().lavoratore.cognome)
+
+        # break
+
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">test</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)

@@ -36,4 +36,7 @@ urlpatterns = [
     # /personale/pdf/
     path('pdf/', views.esporta_pdf, name='esporta_pdf'),
 
+    # /personale/test/
+    path('test/', views.test, name='test'),
+
 ]
