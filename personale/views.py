@@ -62,7 +62,7 @@ def completo(request, filtro=False, ordinamento=None):
     nn = None
 
     if ordinamento == 'a':
-        gruppi = views_util.lavoratori_suddivisi_per_azienda()
+        dati = views_util.lavoratori_suddivisi_per_azienda2()
         pagina_attiva = 'azienda'
     elif ordinamento == 'c':
         gruppi = views_util.lavoratori_suddivisi_per_azienda('cantiere')
@@ -92,24 +92,24 @@ def completo(request, filtro=False, ordinamento=None):
         gruppi = (('Elenco Personale', lavoratori, (nr, ng, nv)),)
         tabella_completa = True
 
-    dati = []
-    for azienda, lavoratori, (nr, ng, nv) in gruppi:
-
-        gruppo = []
-        for lavoratore in lavoratori:
-            formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
-            nomine = Nomine.objects.get(lavoratore=lavoratore.lavoratore)
-
-            gruppo.append((lavoratore, formazione, nomine))
-
-        dati.append((azienda, gruppo, len(gruppo), nr, ng, nv))
-
-    nlavoratori = len(dati)
+    # dati = []
+    # for azienda, lavoratori, n in gruppi:
+    #
+    #     gruppo = []
+    #     for lavoratore in lavoratori:
+    #         formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
+    #         nomine = Nomine.objects.get(lavoratore=lavoratore.lavoratore)
+    #
+    #         gruppo.append((lavoratore, formazione, nomine))
+    #
+    #     dati.append((azienda, gruppo, n))
+    #
+    # nlavoratori = len(dati)
 
     template = loader.get_template('personale/principale.html')
     context = {
         'dati': dati,
-        'nlavoratori': nlavoratori,
+        # 'nlavoratori': nlavoratori,
         'nn': nn,
         'pagina_attiva': pagina_attiva,
         'scadenza': views_util.Date_Scadenza(),
@@ -309,7 +309,7 @@ def test(request):
 
     for l in lav:
         # pp(dir(l.anagrafica_set.get().cantiere))
-        print(l.anagrafica_set.get().lavoratore.cognome)
+        print(l.anagrafica_set.get().azienda)
 
         # break
 

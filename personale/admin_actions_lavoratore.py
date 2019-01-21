@@ -186,12 +186,13 @@ def rinomina_attestati():
                         else:
                             print('***', tipo, '+++', documento)
 
-                    if scadenza:
-                        da = os.path.join(PATH_BASE, path, documento)
-                        a = os.path.join(PATH_BASE, path, '%s %s.pdf' % (tipo, scadenza))
-                        os.rename(da, a)
-                    else:
-                        print(cognome, nome)
+                    # a cosa serve???
+                    # if scadenza:
+                    #     da = os.path.join(PATH_BASE, path, documento)
+                    #     a = os.path.join(PATH_BASE, path, '%s %s.pdf' % (tipo, scadenza))
+                    #     os.rename(da, a)
+                    # else:
+                    #     print(cognome, nome)
 
             except ValueError:
                 print('*** Errore in ', path)
@@ -220,8 +221,9 @@ def aggiorna_scadenza_documenti():
                         pth = os.path.join(root, documento)
                         mtime = os.stat(pth).st_mtime
 
-                        # 21 è il numero di giorni
-                        if mtime >= ADESSO - 21 * 24 * 60 * 60:
+                        # gg è il numero di giorni di vecchiaia del documento
+                        gg = 14
+                        if mtime >= ADESSO - gg * 24 * 60 * 60:
                             print('   ', documento)
                             documento = documento.lower()
 
