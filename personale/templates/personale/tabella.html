@@ -1,164 +1,224 @@
 {% load static %}
 
 <div  id="table-container" class="table-responsive">
-    <table id="maintable" class="table table-striped table-sm text-center ">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Stato</th>
-                {% if tabella_completa %}<th>Azienda</th>{% endif %}
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>Mansione</th>
-                <th>Cantiere</th>
-                <th>Idoneità</th>
-                <th>UNILAV</th>
-                <th>Art.37</th>
-                <th>Primo Soccorso</th>
-                <th>Antincendio</th>
-                <th>Preposto</th>
-                <th>H2S</th>
-                <th>DPI3</th>
-                <th>Muletto</th>
-                <th>PLE</th>
-                <th>Gru</th>
-                <th>Imbracatore</th>
-                <th>Spazi Confinati</th>
-                <th>Ponteggi</th>
-                <th>RIR</th>
-                <th>RLS</th>
-                <th>ASPP</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for lavoratore in lavoratori %}
-            <tr>
-                <td>{% if lavoratore.anagrafica_set.all.0.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
-                    {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
-                    {% endif %}</td>
-                {% if tabella_completa %}<td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>{% endif %}
-                <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
-                <th scope="row" class="text-left">{{lavoratore.nome}}</th>
-                <td class="text-left"> {{lavoratore.anagrafica_set.all.0.mansione|default_if_none:""}}</td>
-                <td> {{lavoratore.anagrafica_set.all.0.get_cantiere_display|default_if_none:""}}</td>
-                <td {% if lavoratore.anagrafica_set.all.0.idoneita < scadenza.oggi  or not lavoratore.anagrafica_set.all.0.idoneita %} class="alert alert-danger" role="alert"
-                    {% elif lavoratore.anagrafica_set.all.0.idoneita < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                    {% elif lavoratore.anagrafica_set.all.0.idoneita < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/idoneità {{lavoratore.anagrafica_set.all.0.idoneita|date:"dmy"}}.pdf" target="_blank">
-                        {{lavoratore.anagrafica_set.all.0.idoneita|default_if_none:""}}</a></td>
-                <td {% if lavoratore.anagrafica_set.all.0.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif lavoratore.anagrafica_set.all.0.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                    {% elif lavoratore.anagrafica_set.all.0.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/unilav {{lavoratore.anagrafica_set.all.0.unilav|date:"dmy"}}.pdf" target="_blank">
-                        {{lavoratore.anagrafica_set.all.0.unilav|default_if_none:""}} </a>
-                    {% if  lavoratore.anagrafica_set.all.0.indeterminato %}
-                        <a href="{% static ''%}{{lavoratore}}/unilav ind.pdf" target="_blank">
-                        {{lavoratore.anagrafica_set.all.0.unilav|default_if_none:""}} IND</a>  {% endif %}</td>
-                <td {% if lavoratore.formazione_set.all.0.art37 < scadenza.oggi  or not lavoratore.formazione_set.all.0.art37 %} class="alert alert-danger" role="alert"
-                    {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/art37 {{lavoratore.formazione_set.all.0.art37|date:"dm"}}{{lavoratore.formazione_set.all.0.art37|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.art37|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/primo.soccorso {{lavoratore.formazione_set.all.0.primo_soccorso|date:"dm"}}{{lavoratore.formazione_set.all.0.primo_soccorso|date:"y"|add:-3}}.pdf" target="_blank">
-                         {{lavoratore.formazione_set.all.0.primo_soccorso|default_if_none:""}}</a>
-                    {% if lavoratore.nomine_set.all.0.primo_soccorso %}
-                        <a href="{% static ''%}{{lavoratore}}/nomine/nomina.primo.soccorso {{lavoratore.nomine_set.all.0.primo_soccorso|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}</td>
-                <td> <a href="{% static ''%}{{lavoratore}}/attestati/antincendio {{lavoratore.formazione_set.all.0.antincendio|date:"dmy"}}.pdf" target="_blank">
-                    {{lavoratore.formazione_set.all.0.antincendio|default_if_none:""}}
-                    {% if lavoratore.nomine_set.all.0.antincendio %}
-                        <a href="{% static ''%}{{lavoratore}}/nomine/nomina.antincendio {{lavoratore.nomine_set.all.0.antincendio|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}</td>
-                <td {% if  lavoratore.formazione_set.all.0.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.preposto < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.preposto < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/preposto {{lavoratore.formazione_set.all.0.preposto|date:"dm"}}{{lavoratore.formazione_set.all.0.preposto|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.preposto|default_if_none:""}}</a>
-                    {% if lavoratore.nomine_set.all.0.preposto%}
-                        <a href="{% static ''%}{{lavoratore}}/nomine/nomina.preposto {{lavoratore.nomine_set.all.0.preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}</td>
-                <td {% if  lavoratore.formazione_set.all.0.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.h2s < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.h2s < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/h2s {{lavoratore.formazione_set.all.0.h2s|date:"dm"}}{{lavoratore.formazione_set.all.0.h2s|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.h2s|default_if_none:""}}</td>
-                <td {% if  lavoratore.formazione_set.all.0.dpi3 < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.dpi3 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.dpi3 < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/dpi {{lavoratore.formazione_set.all.0.dpi3|date:"dm"}}{{lavoratore.formazione_set.all.0.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.dpi3|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.carrello < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.carrello < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.carrello < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/carrelli {{lavoratore.formazione_set.all.0.carrello|date:"dm"}}{{lavoratore.formazione_set.all.0.carrello|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.carrello|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.ple < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.ple < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.ple < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/ple {{lavoratore.formazione_set.all.0.ple|date:"dm"}}{{lavoratore.formazione_set.all.0.ple|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.ple|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.gru < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.gru < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.gru < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/autogru {{lavoratore.formazione_set.all.0.gru|date:"dm"}}{{lavoratore.formazione_set.all.0.gru|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.gru|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.imbracatore < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.imbracatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.imbracatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/imbracatore {{lavoratore.formazione_set.all.0.imbracatore|date:"dm"}}{{lavoratore.formazione_set.all.0.imbracatore|date:"y"|add:-5}}.pdf" target="_blank">
-                         {{lavoratore.formazione_set.all.0.imbracatore|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/spazi.confinati {{lavoratore.formazione_set.all.0.spazi_confinati|date:"dm"}}{{lavoratore.formazione_set.all.0.spazi_confinati|date:"y"|add:-5}}.pdf" target="_blank">
-                         {{lavoratore.formazione_set.all.0.spazi_confinati|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.ponteggi < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.ponteggi < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.ponteggi < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/ponteggi {{lavoratore.formazione_set.all.0.ponteggi|date:"dm"}}{{lavoratore.formazione_set.all.0.ponteggi|date:"y"|add:-4}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.ponteggi|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.rir < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rir < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rir < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/rir {{lavoratore.formazione_set.all.0.rir|date:"dm"}}{{lavoratore.formazione_set.all.0.rir|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.rir|default_if_none:""}}</a></td>
-                <td {% if  lavoratore.formazione_set.all.0.rls < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rls < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rls < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/rls {{lavoratore.formazione_set.all.0.rls|date:"dm"}}{{lavoratore.formazione_set.all.0.rls|date:"y"|add:-1}}.pdf" target="_blank">
-                         {{lavoratore.formazione_set.all.0.rls|default_if_none:""}}</a>
-                        {% if lavoratore.nomine_set.all.0.rls%}
-                            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.rls {{lavoratore.nomine_set.all.0.rls|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                        {% endif %}</td>
-                <td {% if  lavoratore.formazione_set.all.0.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rspp < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-                    {% elif  lavoratore.formazione_set.all.0.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"
-                    {% endif %}>
-                    <a href="{% static ''%}{{lavoratore}}/attestati/rspp {{lavoratore.formazione_set.all.0.rspp|date:"dm"}}{{lavoratore.formazione_set.all.0.rspp|date:"y"|add:-5}}.pdf" target="_blank">
-                        {{lavoratore.formazione_set.all.0.rspp|default_if_none:""}}</a>
-                    {% if lavoratore.nomine_set.all.0.aspp%}
-                        <a href="{% static ''%}{{lavoratore}}/nomine/nomina.aspp {{lavoratore.nomine_set.all.0.aspp|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
-                    {% endif %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div id="bottom_anchor"></div>
+
+<table id="maintable" class="table table-striped table-sm text-center ">
+
+<thead class="thead-light">
+    <tr>
+        <th scope="col">Stato</th>
+        {% if tabella_completa %}<th>Azienda</th>{% endif %}
+        <th>Cognome</th>
+        <th>Nome</th>
+        <th>Mansione</th>
+        <th>Cantiere</th>
+        <th>Idoneità</th>
+        <th>UNILAV</th>
+        <th>Art.37</th>
+        <th>Primo Soccorso</th>
+        <th>Antincendio</th>
+        <th>Preposto</th>
+        <th>H2S</th>
+        <th>DPI3</th>
+        <th>Muletto</th>
+        <th>PLE</th>
+        <th>Gru</th>
+        <th>Imbracatore</th>
+        <th>Spazi Confinati</th>
+        <th>Ponteggi</th>
+        <th>RIR</th>
+        <th>RLS</th>
+        <th>ASPP</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for lavoratore in lavoratori %}
+<tr>
+    <td>{% if lavoratore.anagrafica_set.all.0.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
+        {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
+        {% endif %}</td>
+    {% if tabella_completa %}<td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>{% endif %}
+    <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
+    <th scope="row" class="text-left">{{lavoratore.nome}}</th>
+    <td class="text-left"> {{lavoratore.anagrafica_set.all.0.mansione|default_if_none:""}}</td>
+    <td> {{lavoratore.anagrafica_set.all.0.get_cantiere_display|default_if_none:""}}</td>
+    <td {% if lavoratore.anagrafica_set.all.0.idoneita < scadenza.oggi  or not lavoratore.anagrafica_set.all.0.idoneita %} class="alert alert-danger" role="alert"
+        {% elif lavoratore.anagrafica_set.all.0.idoneita < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+        {% elif lavoratore.anagrafica_set.all.0.idoneita < scadenza.mesi2 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.anagrafica_set.all.0.idoneita %}
+            <a href="{% static ''%}{{lavoratore}}/idoneità {{lavoratore.anagrafica_set.all.0.idoneita|date:"dmy"}}.pdf" target="_blank">
+                {{lavoratore.anagrafica_set.all.0.idoneita|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if lavoratore.anagrafica_set.all.0.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif lavoratore.anagrafica_set.all.0.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+        {% elif lavoratore.anagrafica_set.all.0.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.anagrafica_set.all.0.unilav %}
+            <a href="{% static ''%}{{lavoratore}}/unilav {{lavoratore.anagrafica_set.all.0.unilav|date:"dmy"}}.pdf" target="_blank">
+                {{lavoratore.anagrafica_set.all.0.unilav|default_if_none:""}} </a>
+            {% if  lavoratore.anagrafica_set.all.0.indeterminato %}
+                <a href="{% static ''%}{{lavoratore}}/unilav ind.pdf" target="_blank">
+                {{lavoratore.anagrafica_set.all.0.unilav|default_if_none:""}} IND</a>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td {% if lavoratore.formazione_set.all.0.art37 < scadenza.oggi  or not lavoratore.formazione_set.all.0.art37 %} class="alert alert-danger" role="alert"
+        {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.anagrafica_set.all.0.art37 %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/art37 {{lavoratore.formazione_set.all.0.art37|date:"dm"}}{{lavoratore.formazione_set.all.0.art37|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.formazione_set.all.0.art37|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td
+        {% if  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.primo_soccorso < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.primo_soccorso %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/primo.soccorso {{lavoratore.formazione_set.all.0.primo_soccorso|date:"dm"}}{{lavoratore.formazione_set.all.0.primo_soccorso|date:"y"|add:-3}}.pdf" target="_blank">
+                 {{lavoratore.formazione_set.all.0.primo_soccorso|default_if_none:""}}</a>
+        {% endif %}
+        {% if lavoratore.nomine_set.all.0.primo_soccorso %}
+            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.primo.soccorso {{lavoratore.nomine_set.all.0.primo_soccorso|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+    <td>{% if lavoratore.formazione_set.all.0.antincendio %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/antincendio {{lavoratore.formazione_set.all.0.antincendio|date:"dmy"}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.antincendio|default_if_none:""}}
+        {% endif %}
+        {% if lavoratore.nomine_set.all.0.antincendio %}
+            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.antincendio {{lavoratore.nomine_set.all.0.antincendio|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.preposto < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.preposto < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.preposto %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/preposto {{lavoratore.formazione_set.all.0.preposto|date:"dm"}}{{lavoratore.formazione_set.all.0.preposto|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.formazione_set.all.0.preposto|default_if_none:""}}</a>
+        {% endif %}
+        {% if lavoratore.nomine_set.all.0.preposto%}
+            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.preposto {{lavoratore.nomine_set.all.0.preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.h2s < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.h2s < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.h2s %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/h2s {{lavoratore.formazione_set.all.0.h2s|date:"dm"}}{{lavoratore.formazione_set.all.0.h2s|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.formazione_set.all.0.h2s|default_if_none:""}}
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.dpi3 < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.dpi3 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.dpi3 < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.h2s %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/dpi {{lavoratore.formazione_set.all.0.dpi3|date:"dm"}}{{lavoratore.formazione_set.all.0.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.formazione_set.all.0.dpi3|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.carrello < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.carrello < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.carrello < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.carrello %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/carrelli {{lavoratore.formazione_set.all.0.carrello|date:"dm"}}{{lavoratore.formazione_set.all.0.carrello|date:"y"|add:-5}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.carrello|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.ple < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.ple < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.ple < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.ple %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/ple {{lavoratore.formazione_set.all.0.ple|date:"dm"}}{{lavoratore.formazione_set.all.0.ple|date:"y"|add:-5}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.ple|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.gru < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.gru < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.gru < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.gru %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/autogru {{lavoratore.formazione_set.all.0.gru|date:"dm"}}{{lavoratore.formazione_set.all.0.gru|date:"y"|add:-5}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.gru|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.imbracatore < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.imbracatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.imbracatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.gru %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/imbracatore {{lavoratore.formazione_set.all.0.imbracatore|date:"dm"}}{{lavoratore.formazione_set.all.0.imbracatore|date:"y"|add:-5}}.pdf" target="_blank">
+             {{lavoratore.formazione_set.all.0.imbracatore|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.spazi_confinati < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.spazi_confinati %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/spazi.confinati {{lavoratore.formazione_set.all.0.spazi_confinati|date:"dm"}}{{lavoratore.formazione_set.all.0.spazi_confinati|date:"y"|add:-5}}.pdf" target="_blank">
+             {{lavoratore.formazione_set.all.0.spazi_confinati|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.ponteggi < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.ponteggi < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.ponteggi < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.ponteggi %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/ponteggi {{lavoratore.formazione_set.all.0.ponteggi|date:"dm"}}{{lavoratore.formazione_set.all.0.ponteggi|date:"y"|add:-4}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.ponteggi|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.rir < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rir < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rir < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.rir %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/rir {{lavoratore.formazione_set.all.0.rir|date:"dm"}}{{lavoratore.formazione_set.all.0.rir|date:"y"|add:-5}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.rir|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.rls < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rls < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rls < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.rls %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/rls {{lavoratore.formazione_set.all.0.rls|date:"dm"}}{{lavoratore.formazione_set.all.0.rls|date:"y"|add:-1}}.pdf" target="_blank">
+                 {{lavoratore.formazione_set.all.0.rls|default_if_none:""}}</a>
+        {% endif %}
+        {% if lavoratore.nomine_set.all.0.rls%}
+            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.rls {{lavoratore.nomine_set.all.0.rls|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+    <td {% if  lavoratore.formazione_set.all.0.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rspp < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.formazione_set.all.0.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.formazione_set.all.0.rspp %}
+        <a href="{% static ''%}{{lavoratore}}/attestati/rspp {{lavoratore.formazione_set.all.0.rspp|date:"dm"}}{{lavoratore.formazione_set.all.0.rspp|date:"y"|add:-5}}.pdf" target="_blank">
+            {{lavoratore.formazione_set.all.0.rspp|default_if_none:""}}</a>
+        {% endif %}
+        {% if lavoratore.nomine_set.all.0.aspp%}
+            <a href="{% static ''%}{{lavoratore}}/nomine/nomina.aspp {{lavoratore.nomine_set.all.0.aspp|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<div id="bottom_anchor"></div>
+
 </div>
