@@ -81,9 +81,12 @@ def lavoratori_suddivisi_per_azienda2(ordine=None):
         if ordine == 'cantiere':
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere',
                                                                                                'lavoratore')
-            nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
-            nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v'))
+            # nr = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='r'))
+            # ng = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='g'))
+            # nv = len(Anagrafica.objects.filter(in_forza=True, azienda=azienda[0], stato='v'))
+            lavoratori = Lavoratore.objects.all().prefetch_related('anagrafica_set', 'formazione_set',
+                                                                   'nomine_set').filter(anagrafica__in_forza=True,
+                                                                                        anagrafica__azienda=azienda[0])
         elif ordine == 'stato':
             lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).filter(
                 Q(stato='r') | Q(stato='g')).order_by('-stato', 'lavoratore')

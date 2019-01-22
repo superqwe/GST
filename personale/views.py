@@ -65,7 +65,7 @@ def completo(request, filtro=False, ordinamento=None):
         dati = views_util.lavoratori_suddivisi_per_azienda2()
         pagina_attiva = 'azienda'
     elif ordinamento == 'c':
-        gruppi = views_util.lavoratori_suddivisi_per_azienda('cantiere')
+        gruppi = views_util.lavoratori_suddivisi_per_azienda2('cantiere')
         pagina_attiva = 'cantiere'
     elif ordinamento == 'n':
         gruppi = views_util.lavoratori_con_nomine()
