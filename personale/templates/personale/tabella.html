@@ -69,7 +69,7 @@
         {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif lavoratore.formazione_set.all.0.art37 < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
-        {% if lavoratore.anagrafica_set.all.0.art37 %}
+        {% if lavoratore.formazione_set.all.0.art37 %}
             <a href="{% static ''%}{{lavoratore}}/attestati/art37 {{lavoratore.formazione_set.all.0.art37|date:"dm"}}{{lavoratore.formazione_set.all.0.art37|date:"y"|add:-5}}.pdf" target="_blank">
                 {{lavoratore.formazione_set.all.0.art37|default_if_none:""}}</a>
         {% endif %}

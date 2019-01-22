@@ -65,16 +65,16 @@ def completo(request, filtro=False, ordinamento=None):
         dati = views_util.lavoratori_suddivisi_per_azienda2()
         pagina_attiva = 'azienda'
     elif ordinamento == 'c':
-        gruppi = views_util.lavoratori_suddivisi_per_azienda2('cantiere')
+        dati = views_util.lavoratori_suddivisi_per_azienda2('cantiere')
         pagina_attiva = 'cantiere'
     elif ordinamento == 'n':
-        gruppi = views_util.lavoratori_con_nomine()
+        dati = views_util.lavoratori_con_nomine2()
         pagina_attiva = 'nomine'
     elif ordinamento == 's':
-        gruppi = views_util.lavoratori_suddivisi_per_azienda('stato')
+        dati = views_util.lavoratori_suddivisi_per_azienda2('stato')
         pagina_attiva = 'scadenza'
     elif ordinamento == 'v':
-        gruppi = views_util.lavoratori_suddivisi_per_azienda('idoneita')
+        dati = views_util.lavoratori_suddivisi_per_azienda2('idoneita')
         pagina_attiva = 'idoneita'
     else:
         if filtro == 'in_forza':
