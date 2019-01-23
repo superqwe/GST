@@ -341,34 +341,6 @@ def aggiorna_elenco_lavoratori():
 
         primo_ciclo = False
 
-    lavoratori = Lavoratore.objects.all()
-    for lavoratore in lavoratori:
-        # crea la formazione per ogni lavoratore
-        res = Formazione.objects.filter(lavoratore__id=lavoratore.id)
-
-        if len(res) == 0:
-            formazione = Formazione(lavoratore=lavoratore)
-            formazione.save()
-            print('Nuova Formazione: ', lavoratore)
-
-        # crea anagrafica per ogni lavoratore
-        res = Anagrafica.objects.filter(lavoratore__id=lavoratore.id)
-
-        if len(res) == 0:
-            anagrafica = Anagrafica(lavoratore=lavoratore)
-            anagrafica.in_forza = True
-            anagrafica.azienda = 'm'
-            anagrafica.save()
-            print('Nuova Anagrafica: ', lavoratore)
-
-        # crea nomine per ogni lavoratore
-        res = Nomine.objects.filter(lavoratore__id=lavoratore.id)
-
-        if len(res) == 0:
-            nomina = Nomine(lavoratore=lavoratore)
-            nomina.save()
-            print('Nuova Nomina: ', lavoratore)
-
 
 def data_ultima_modifica_scrivi():
     with open(FILE_DATA_ULTIMA_MODIFICA, 'w') as fout:
