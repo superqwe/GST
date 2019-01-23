@@ -271,7 +271,7 @@ def unilav(request):
     mesi6 = oggi + datetime.timedelta(days=366 / 2)
     mesi12 = oggi + datetime.timedelta(days=365)
 
-    fino_al = oggi + timedelta(5)
+    fino_al = oggi + timedelta(7)
     print(fino_al)
 
     lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al).order_by('lavoratore')

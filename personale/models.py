@@ -64,31 +64,12 @@ class Lavoratore(models.Model):
     rls = models.DateField(null=True, blank=True, verbose_name='RLS')
     rspp = models.DateField(null=True, blank=True, verbose_name='RSPP')
 
-    #nomine
+    # nomine
     nomina_preposto = models.DateField(null=True, blank=True, verbose_name='Preposto')
     nomina_antincendio = models.DateField(null=True, blank=True, verbose_name='Antincendio')
     nomina_primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
     nomina_rls = models.DateField(null=True, blank=True, verbose_name='RLS')
     nomina_aspp = models.DateField(null=True, blank=True, verbose_name='ASPP')
-
-
-    # def stato(self):
-    #     anagrafica = Anagrafica.objects.get(lavoratore=self)
-    #
-    #     if not anagrafica.in_forza:
-    #         return '-'
-    #
-    #     stato_anagrafica = anagrafica.stato
-    #     stato_formazione = Formazione.objects.get(lavoratore=self).stato
-    #     stati = (stato_anagrafica, stato_formazione)
-    #
-    #     stato = 'v'
-    #     if 'g' in stati:
-    #         stato = 'g'
-    #     if 'r' in stati:
-    #         stato = 'r'
-    #
-    #     return stato
 
     def __str__(self):
         return '%s %s' % (self.cognome, self.nome)

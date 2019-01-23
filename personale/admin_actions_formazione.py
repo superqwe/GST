@@ -17,7 +17,7 @@ PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 def aggiorna_stato_formazione():
     campi = Formazione._meta.get_fields()[3:]
-
+    pp(campi)
     lavoratori = Anagrafica.objects.filter(in_forza=True)
 
     for lavoratore in lavoratori:
