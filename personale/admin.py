@@ -50,54 +50,6 @@ esporta_dati.short_description = "Esporta Dati"
 importa_dati.short_description = "Importa Dati"
 
 
-# azioni formazione
-
-
-# def aggiorna_stato_formazione(modeladmin, request, queryset):
-#     admin_actions_formazione.aggiorna_stato_formazione()
-#
-#
-# aggiorna_stato_formazione.short_description = "Aggiorna Stato"
-
-
-# azioni anagrafica
-
-# def azienda(modeladmin, request, queryset):
-#     admin_actions_anagrafica.azienda_m(queryset)
-#
-#
-# def azienda_nessuna(modeladmin, request, queryset):
-#     admin_actions_anagrafica.azienda_nessuna(queryset)
-#
-#
-# def in_forza(modeladmin, request, queryset):
-#     admin_actions_anagrafica.in_forza(queryset)
-#
-#
-# def in_sede(modeladmin, request, queryset):
-#     admin_actions_anagrafica.in_sede(queryset)
-#
-#
-# def in_ilva(modeladmin, request, queryset):
-#     admin_actions_anagrafica.in_ilva(queryset)
-#
-#
-# def no_cantiere(modeladmin, request, queryset):
-#     admin_actions_anagrafica.no_cantiere(queryset)
-#
-#
-# def aggiorna_stato_anagrafica(modeladmin, request, queryset):
-#     personale.admin_actions.aggiorna_stato_anagrafica()
-#
-#
-# azienda_nessuna.short_description = "Nessuna azienda"
-# in_forza.short_description = "In Forza"
-# in_sede.short_description = "In Sede"
-# in_ilva.short_description = "In Ilva"
-# no_cantiere.short_description = "Nessun Cantiere"
-# no_cantiere.aggiorna_anagrafica = "Nessun Cantiere"
-
-
 @admin.register(Lavoratore)
 class LavoratoreAdmin(admin.ModelAdmin):
     actions = [aggiorna_elenco_lavoratori,
