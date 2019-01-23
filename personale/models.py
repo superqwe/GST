@@ -55,13 +55,11 @@ class Lavoratore(models.Model):
 
     in_forza = models.BooleanField(default=False, verbose_name='In Forza')
     azienda = models.CharField(null=True, blank=True, max_length=2, choices=AZIENDA)
-    # azienda2 = models.CharField(null=True, blank=True, max_length=2, choices=AZIENDA)
-    # azienda2 = models.ForeignKey('Azienda', default=None, on_delete=models.CASCADE)
+    azienda2 = models.ForeignKey('Azienda', default=1, on_delete=models.CASCADE)
     stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO)
 
     cantiere = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
-    # cantiere2 = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
-    # cantiere2 = models.ForeignKey('Cantiere', default=None, on_delete=models.CASCADE)
+    cantiere2 = models.ForeignKey('Cantiere', default=1, on_delete=models.CASCADE)
     mansione = models.CharField(max_length=30, null=True, blank=True, verbose_name='Mansione')
 
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
