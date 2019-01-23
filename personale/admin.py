@@ -80,7 +80,7 @@ def no_cantiere(modeladmin, request, queryset):
 
 
 def aggiorna_stato_anagrafica(modeladmin, request, queryset):
-    admin_actions_anagrafica.aggiorna_stato_anagrafica()
+    personale.admin_actions.aggiorna_stato_anagrafica()
 
 
 def esporta_dati(modeladmin, request, queryset):
@@ -145,10 +145,10 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                ]
 
-    list_display = ('cognome', 'nome', 'mansione', 'in_forza', 'idoneita', 'indeterminato', 'unilav')
+    list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'idoneita', 'indeterminato', 'unilav')
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
-    list_filter = ['in_forza', 'azienda', 'cantiere', 'indeterminato']
+    list_filter = ['in_forza', 'azienda', 'cantiere', 'stato', 'indeterminato']
 
 
 class NomineAdmin(admin.ModelAdmin):

@@ -44,23 +44,17 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere', 'cognome',
                                                                                                'nome')
         elif ordine == 'stato':
-            # lavoratori = Anagrafica.objects.filter(in_forza=True, azienda=azienda[0]).filter(
-            #     Q(stato='r') | Q(stato='g')).order_by('-stato', 'lavoratore')
-
-            # todo ora ordina alfabeticamente con anagrafica__stato
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-anagrafica__stato',
-                                                                                               'cognome',
-                                                                                               'nome')
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).filter(
+                Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
         elif ordine == 'idoneita':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('idoneita', 'cognome',
                                                                                                'nome')
         else:
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0])
 
-        # todo da richiamare lo stato da lavoratore
-        n = {'r': len(lavoratori.filter(anagrafica__stato='r')),
-             'g': len(lavoratori.filter(anagrafica__stato='g')),
-             'v': len(lavoratori.filter(anagrafica__stato='v')),
+        n = {'r': len(lavoratori.filter(stato='r')),
+             'g': len(lavoratori.filter(stato='g')),
+             'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
         dati.append((aziende[azienda[0]], lavoratori, n))

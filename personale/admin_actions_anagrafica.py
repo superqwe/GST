@@ -1,7 +1,5 @@
 import datetime
 
-from personale.models import Anagrafica
-
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
 DT_6_MESI = datetime.timedelta(30 * 6)

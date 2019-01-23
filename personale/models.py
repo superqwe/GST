@@ -31,6 +31,7 @@ class Lavoratore(models.Model):
 
     in_forza = models.BooleanField(default=False, verbose_name='In Forza')
     azienda = models.CharField(null=True, blank=True, max_length=2, choices=AZIENDA)
+    stato = models.CharField(null=True, blank=True, max_length=1, choices=STATO)
 
     cantiere = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
     mansione = models.CharField(max_length=30, null=True, blank=True, verbose_name='Mansione')
@@ -71,23 +72,23 @@ class Lavoratore(models.Model):
     nomina_aspp = models.DateField(null=True, blank=True, verbose_name='ASPP')
 
 
-    def stato(self):
-        anagrafica = Anagrafica.objects.get(lavoratore=self)
-
-        if not anagrafica.in_forza:
-            return '-'
-
-        stato_anagrafica = anagrafica.stato
-        stato_formazione = Formazione.objects.get(lavoratore=self).stato
-        stati = (stato_anagrafica, stato_formazione)
-
-        stato = 'v'
-        if 'g' in stati:
-            stato = 'g'
-        if 'r' in stati:
-            stato = 'r'
-
-        return stato
+    # def stato(self):
+    #     anagrafica = Anagrafica.objects.get(lavoratore=self)
+    #
+    #     if not anagrafica.in_forza:
+    #         return '-'
+    #
+    #     stato_anagrafica = anagrafica.stato
+    #     stato_formazione = Formazione.objects.get(lavoratore=self).stato
+    #     stati = (stato_anagrafica, stato_formazione)
+    #
+    #     stato = 'v'
+    #     if 'g' in stati:
+    #         stato = 'g'
+    #     if 'r' in stati:
+    #         stato = 'r'
+    #
+    #     return stato
 
     def __str__(self):
         return '%s %s' % (self.cognome, self.nome)

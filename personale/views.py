@@ -78,15 +78,14 @@ def completo(request, filtro=False, ordinamento=None):
         pagina_attiva = 'idoneita'
     else:
         if filtro == 'in_forza':
-            # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
             lavoratori = Lavoratore.objects.filter(in_forza=True)
         else:
             lavoratori = Anagrafica.objects.order_by('lavoratore')
             nn = len(Anagrafica.objects.filter(in_forza=False))
 
-        n = {'r': len(lavoratori.filter(anagrafica__stato='r')),
-             'g': len(lavoratori.filter(anagrafica__stato='g')),
-             'v': len(lavoratori.filter(anagrafica__stato='v')),
+        n = {'r': len(lavoratori.filter(stato='r')),
+             'g': len(lavoratori.filter(stato='g')),
+             'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
         dati = (('Elenco Personale', lavoratori, n))
@@ -300,6 +299,7 @@ def test(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
 
 def azione2(request):
     lavoratori = Lavoratore.objects.all()
