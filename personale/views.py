@@ -303,3 +303,49 @@ def test(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+def azione(request):
+    lavoratori = Lavoratore.objects.all()
+
+    for lavoratore in lavoratori:
+        anagrafica_lavoratore = Anagrafica.objects.get(lavoratore=lavoratore)
+        lavoratore.in_forza = anagrafica_lavoratore.in_forza
+        lavoratore.azienda = anagrafica_lavoratore.azienda
+        lavoratore.cantiere = anagrafica_lavoratore.cantiere
+        lavoratore.mansione = anagrafica_lavoratore.mansione
+        lavoratore.ci = anagrafica_lavoratore.ci
+        lavoratore.codice_fiscale = anagrafica_lavoratore.codice_fiscale
+        lavoratore.idoneita = anagrafica_lavoratore.idoneita
+        lavoratore.indeterminato = anagrafica_lavoratore.indeterminato
+        lavoratore.unilav = anagrafica_lavoratore.unilav
+
+        formazione_lavoratore = Formazione.objects.get(lavoratore=lavoratore)
+        lavoratore.art37 = formazione_lavoratore.art37
+        lavoratore.primo_soccorso = formazione_lavoratore.primo_soccorso
+        lavoratore.antincendio = formazione_lavoratore.antincendio
+        lavoratore.preposto = formazione_lavoratore.preposto
+        lavoratore.h2s = formazione_lavoratore.h2s
+        lavoratore.dpi3 = formazione_lavoratore.dpi3
+        lavoratore.carrello = formazione_lavoratore.carrello
+        lavoratore.ple = formazione_lavoratore.ple
+        lavoratore.gru = formazione_lavoratore.gru
+        lavoratore.imbracatore = formazione_lavoratore.imbracatore
+        lavoratore.ponteggi = formazione_lavoratore.ponteggi
+        lavoratore.lavori_quota = formazione_lavoratore.lavori_quota
+        lavoratore.spazi_confinati = formazione_lavoratore.spazi_confinati
+        lavoratore.rir = formazione_lavoratore.rir
+        lavoratore.rls = formazione_lavoratore.rls
+        lavoratore.rspp = formazione_lavoratore.rspp
+
+        nomine_lavoratore = Nomine.objects.get(lavoratore=lavoratore)
+        lavoratore.nomina_preposto = nomine_lavoratore.preposto
+        lavoratore.nomina_antincendio = nomine_lavoratore.antincendio
+        lavoratore.nomina_primo_soccorso = nomine_lavoratore.primo_soccorso
+        lavoratore.nomina_rls = nomine_lavoratore.rls
+        lavoratore.nomina_aspp = nomine_lavoratore.aspp
+
+        lavoratore.save()
+
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">Aggiornamento DB</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
