@@ -272,7 +272,7 @@ def unilav(request):
     fino_al = oggi + timedelta(7)
     print(fino_al)
 
-    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al).order_by('lavoratore')
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al)
 
     template = loader.get_template('personale/unilav.html')
     context = {
@@ -281,6 +281,7 @@ def unilav(request):
         'scadenza': views_util.Date_Scadenza()
 
     }
+
     return HttpResponse(template.render(context, request))
 
 
@@ -297,7 +298,6 @@ def test(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
-
 
 # def azione2(request):
 #     lavoratori = Lavoratore.objects.all()
