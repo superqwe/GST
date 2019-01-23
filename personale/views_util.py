@@ -115,47 +115,12 @@ def lavoratori_suddivisi_per_azienda2(ordine=None):
              'v': len(lavoratori.filter(anagrafica__stato='v')),
              't': len(lavoratori)}
 
-        # dati.append((aziende[azienda[0]], lavoratori, (nr, ng, nv)))
         dati.append((aziende[azienda[0]], lavoratori, n))
-        # break
 
     return dati
 
 
 def lavoratori_con_nomine():
-    aziende = {'m': 'MODOMEC',
-               'b': 'BUILDING',
-               'r': 'RIMEC',
-               'w': 'WELDING',
-               None: '-'}
-    dati = []
-    nr = ng = nv = 0
-
-    for azienda in Anagrafica.AZIENDA:
-        lavoratori = Nomine.objects.exclude(preposto__isnull=True, antincendio__isnull=True,
-                                            primo_soccorso__isnull=True, rls__isnull=True, aspp__isnull=True).order_by(
-            'lavoratore')
-
-        llav = []
-        for lav in lavoratori:
-            xxx = Anagrafica.objects.filter(lavoratore=lav.lavoratore, azienda=azienda[0], in_forza=True)
-            if xxx:
-                llav.append(xxx[0])
-                stato = xxx[0].stato
-
-                if stato == 'v':
-                    nv += 1
-                elif stato == 'g':
-                    ng += 1
-                elif stato == 'r':
-                    nr += 1
-
-        dati.append((aziende[azienda[0]], llav, (nr, ng, nv)))
-
-    return dati
-
-
-def lavoratori_con_nomine2():
     aziende = {'m': 'MODOMEC',
                'b': 'BUILDING',
                'r': 'RIMEC',

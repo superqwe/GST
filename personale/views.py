@@ -68,7 +68,7 @@ def completo(request, filtro=False, ordinamento=None):
         dati = views_util.lavoratori_suddivisi_per_azienda2('cantiere')
         pagina_attiva = 'cantiere'
     elif ordinamento == 'n':
-        dati = views_util.lavoratori_con_nomine2()
+        dati = views_util.lavoratori_con_nomine()
         pagina_attiva = 'nomine'
     elif ordinamento == 's':
         dati = views_util.lavoratori_suddivisi_per_azienda2('stato')
@@ -78,33 +78,20 @@ def completo(request, filtro=False, ordinamento=None):
         pagina_attiva = 'idoneita'
     else:
         if filtro == 'in_forza':
-            lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
-            nv = len(Anagrafica.objects.filter(in_forza=True, stato='v'))
-            ng = len(Anagrafica.objects.filter(in_forza=True, stato='g'))
-            nr = len(Anagrafica.objects.filter(in_forza=True, stato='r'))
+            # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+            lavoratori = Lavoratore.objects.all().prefetch_related('anagrafica_set', 'formazione_set', 'nomine_set'
+                                                                   ).filter(anagrafica__in_forza=True)
         else:
             lavoratori = Anagrafica.objects.order_by('lavoratore')
-            nv = len(Anagrafica.objects.filter(stato='v'))
-            ng = len(Anagrafica.objects.filter(stato='g'))
-            nr = len(Anagrafica.objects.filter(stato='r'))
             nn = len(Anagrafica.objects.filter(in_forza=False))
 
-        gruppi = (('Elenco Personale', lavoratori, (nr, ng, nv)),)
-        tabella_completa = True
+        n = {'r': len(lavoratori.filter(anagrafica__stato='r')),
+             'g': len(lavoratori.filter(anagrafica__stato='g')),
+             'v': len(lavoratori.filter(anagrafica__stato='v')),
+             't': len(lavoratori)}
 
-    # dati = []
-    # for azienda, lavoratori, n in gruppi:
-    #
-    #     gruppo = []
-    #     for lavoratore in lavoratori:
-    #         formazione = Formazione.objects.get(lavoratore=lavoratore.lavoratore)
-    #         nomine = Nomine.objects.get(lavoratore=lavoratore.lavoratore)
-    #
-    #         gruppo.append((lavoratore, formazione, nomine))
-    #
-    #     dati.append((azienda, gruppo, n))
-    #
-    # nlavoratori = len(dati)
+        dati = (('Elenco Personale', lavoratori, n))
+        tabella_completa = True
 
     template = loader.get_template('personale/principale.html')
     context = {
