@@ -4,7 +4,7 @@ from pprint import pprint as pp
 import pandas as pd
 from django.contrib import admin
 
-from personale import admin_actions_formazione, admin_actions_lavoratore, admin_actions_anagrafica
+from personale import admin_actions_formazione, admin_actions, admin_actions_anagrafica
 from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
 
 OGGI = datetime.date.today()
@@ -18,22 +18,22 @@ PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 # azioni lavoratore
 
 def aggiorna_stato_lavoratori(modeladmin, request, queryset):
-    admin_actions_lavoratore.aggiorna_stato_lavoratori()
-    admin_actions_lavoratore.data_ultima_modifica_scrivi()
+    admin_actions.aggiorna_stato_lavoratori()
+    admin_actions.data_ultima_modifica_scrivi()
 
 
 def rinomina_attestati(modeladmin, request, queryset):
-    admin_actions_lavoratore.rinomina_attestati()
+    admin_actions.rinomina_attestati()
 
 
 def aggiorna_scadenza_documenti(modeladmin, request, queryset):
-    admin_actions_lavoratore.aggiorna_scadenza_documenti()
-    admin_actions_lavoratore.data_ultima_modifica_scrivi()
+    admin_actions.aggiorna_scadenza_documenti()
+    admin_actions.data_ultima_modifica_scrivi()
 
 
 def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
-    admin_actions_lavoratore.aggiorna_elenco_lavoratori()
-    admin_actions_lavoratore.data_ultima_modifica_scrivi()
+    admin_actions.aggiorna_elenco_lavoratori()
+    admin_actions.data_ultima_modifica_scrivi()
 
 
 aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"

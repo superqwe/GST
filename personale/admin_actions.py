@@ -78,11 +78,13 @@ def scadenza2date(documento, durata=5):
 
 
 def aggiorna_stato_lavoratori():
+    #todo da aggiornare
     admin_actions_anagrafica.aggiorna_stato_anagrafica()
     admin_actions_formazione.aggiorna_stato_formazione()
 
 
 def rinomina_attestati():
+    #todo obsoleto da aggiornare
     path_base = PATH_BASE
     print('*' * 400)
 
