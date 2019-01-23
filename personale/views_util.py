@@ -1,9 +1,8 @@
 import datetime
-from pprint import pprint as pp
 
-from django.db.models import Q, Prefetch
+from django.db.models import Q
 
-from personale.models import Anagrafica, Nomine, Lavoratore
+from personale.models import Lavoratore
 
 
 def date_scadenza():
@@ -38,7 +37,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
                None: '-'}
     dati = []
 
-    for azienda in Anagrafica.AZIENDA:
+    for azienda in Lavoratore.AZIENDA:
 
         if ordine == 'cantiere':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere', 'cognome',
@@ -70,7 +69,7 @@ def lavoratori_con_nomine():
                None: '-'}
     dati = []
 
-    for azienda in Anagrafica.AZIENDA:
+    for azienda in Lavoratore.AZIENDA:
         lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).exclude(nomina_preposto__isnull=True,
                                                                                           nomina_antincendio__isnull=True,
                                                                                           nomina_primo_soccorso__isnull=True,

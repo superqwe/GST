@@ -3,7 +3,6 @@ import glob
 import os
 import shutil
 from datetime import timedelta
-from pprint import pprint as pp
 
 import pandas as pd
 from django.http import HttpResponse
@@ -11,7 +10,7 @@ from django.template import loader
 
 from personale import views_util
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore, Formazione, Anagrafica, Nomine
+from personale.models import Lavoratore
 from personale.views_util import date_scadenza
 
 
@@ -20,8 +19,7 @@ def index(request):
 
 
 def anagrafica(request):
-    lavoratori = Anagrafica.objects.order_by('lavoratore')
-    # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
+    lavoratori = Lavoratore.objects.all()
 
     nlavoratori = len(lavoratori)
     template = loader.get_template('personale/anagrafica.html')
@@ -34,12 +32,12 @@ def anagrafica(request):
 
 
 def anagrafica_per_cantiere(request):
-    lavoratori = Anagrafica.objects.order_by('lavoratore')
-    cantieri = Anagrafica.CANTIERE
+    lavoratori = Lavoratore.objects.all()
+    cantieri = Lavoratore.CANTIERE
 
     dati = []
     for cantiere in cantieri:
-        lavoratori = Anagrafica.objects.filter(cantiere=cantiere[0]).order_by('lavoratore')
+        lavoratori = Lavoratore.objects.filter(cantiere=cantiere[0])
 
         dati.append((cantiere[1], lavoratori))
 
@@ -80,8 +78,8 @@ def completo(request, filtro=False, ordinamento=None):
         if filtro == 'in_forza':
             lavoratori = Lavoratore.objects.filter(in_forza=True)
         else:
-            lavoratori = Anagrafica.objects.order_by('lavoratore')
-            nn = len(Anagrafica.objects.filter(in_forza=False))
+            lavoratori = Lavoratore.objects.all()
+            # nn = len(Anagrafica.objects.filter(in_forza=False))
 
         n = {'r': len(lavoratori.filter(stato='r')),
              'g': len(lavoratori.filter(stato='g')),
@@ -103,7 +101,7 @@ def completo(request, filtro=False, ordinamento=None):
 
 
 def formazione(request):
-    lavoratori = Formazione.objects.order_by('lavoratore')
+    lavoratori = Lavoratore.objects.all()
 
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
@@ -129,7 +127,7 @@ def estrai_dati(request):
     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
     FIN = 'mario unilav.csv'
 
-    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m')  # , spazi_confinati__isnull=False)
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m')  # , spazi_confinati__isnull=False)
 
     for lavoratore in lavoratori:
         cartella_lavoratore = '%s %s\\attestati' % (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome)
@@ -187,7 +185,7 @@ def estrai_dati(request):
                 # print('***', cognome, nome)
                 continue
 
-            lavoratore = Anagrafica.objects.filter(lavoratore__cognome=cognome, lavoratore__nome=nome.strip())[0]
+            lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome.strip())[0]
             if (lavoratore.in_forza):
                 da_i = os.path.join(pi, nfile)
                 a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'unilav.pdf'))
@@ -241,14 +239,14 @@ def leggi_contrattideterminati(request):
                 if not pd.isnull(cognome):
                     try:
                         lavoratore = Lavoratore.objects.filter(cognome=cognome.title(), nome=nome)[0]
-                        res = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
-
-                        res.in_forza = True
-                        res.azienda = azienda
-                        res.mansione = qualifica
-                        res.unilav = unilav
-
-                        res.save()
+                        # res = Anagrafica.objects.get(lavoratore__id=lavoratore.id)
+                        #
+                        # res.in_forza = True
+                        # res.azienda = azienda
+                        # res.mansione = qualifica
+                        # res.unilav = unilav
+                        #
+                        # res.save()
 
                     except IndexError:
                         print('*** errore ----> ', cognome, nome)
@@ -274,7 +272,7 @@ def unilav(request):
     fino_al = oggi + timedelta(7)
     print(fino_al)
 
-    lavoratori = Anagrafica.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al).order_by('lavoratore')
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al).order_by('lavoratore')
 
     template = loader.get_template('personale/unilav.html')
     context = {
@@ -301,48 +299,48 @@ def test(request):
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
 
-def azione2(request):
-    lavoratori = Lavoratore.objects.all()
-
-    for lavoratore in lavoratori:
-        anagrafica_lavoratore = Anagrafica.objects.get(lavoratore=lavoratore)
-        lavoratore.in_forza = anagrafica_lavoratore.in_forza
-        lavoratore.azienda = anagrafica_lavoratore.azienda
-        lavoratore.cantiere = anagrafica_lavoratore.cantiere
-        lavoratore.mansione = anagrafica_lavoratore.mansione
-        lavoratore.ci = anagrafica_lavoratore.ci
-        lavoratore.codice_fiscale = anagrafica_lavoratore.codice_fiscale
-        lavoratore.idoneita = anagrafica_lavoratore.idoneita
-        lavoratore.indeterminato = anagrafica_lavoratore.indeterminato
-        lavoratore.unilav = anagrafica_lavoratore.unilav
-
-        formazione_lavoratore = Formazione.objects.get(lavoratore=lavoratore)
-        lavoratore.art37 = formazione_lavoratore.art37
-        lavoratore.primo_soccorso = formazione_lavoratore.primo_soccorso
-        lavoratore.antincendio = formazione_lavoratore.antincendio
-        lavoratore.preposto = formazione_lavoratore.preposto
-        lavoratore.h2s = formazione_lavoratore.h2s
-        lavoratore.dpi3 = formazione_lavoratore.dpi3
-        lavoratore.carrello = formazione_lavoratore.carrello
-        lavoratore.ple = formazione_lavoratore.ple
-        lavoratore.gru = formazione_lavoratore.gru
-        lavoratore.imbracatore = formazione_lavoratore.imbracatore
-        lavoratore.ponteggi = formazione_lavoratore.ponteggi
-        lavoratore.lavori_quota = formazione_lavoratore.lavori_quota
-        lavoratore.spazi_confinati = formazione_lavoratore.spazi_confinati
-        lavoratore.rir = formazione_lavoratore.rir
-        lavoratore.rls = formazione_lavoratore.rls
-        lavoratore.rspp = formazione_lavoratore.rspp
-
-        nomine_lavoratore = Nomine.objects.get(lavoratore=lavoratore)
-        lavoratore.nomina_preposto = nomine_lavoratore.preposto
-        lavoratore.nomina_antincendio = nomine_lavoratore.antincendio
-        lavoratore.nomina_primo_soccorso = nomine_lavoratore.primo_soccorso
-        lavoratore.nomina_rls = nomine_lavoratore.rls
-        lavoratore.nomina_aspp = nomine_lavoratore.aspp
-
-        lavoratore.save()
-
-    ora = datetime.datetime.now()
-    return HttpResponse("""<h1 style="text-align:center">Aggiornamento DB</h1>
-                        <h2 style="text-align:center"> %s </h2>""" % ora)
+# def azione2(request):
+#     lavoratori = Lavoratore.objects.all()
+#
+#     for lavoratore in lavoratori:
+#         anagrafica_lavoratore = Anagrafica.objects.get(lavoratore=lavoratore)
+#         lavoratore.in_forza = anagrafica_lavoratore.in_forza
+#         lavoratore.azienda = anagrafica_lavoratore.azienda
+#         lavoratore.cantiere = anagrafica_lavoratore.cantiere
+#         lavoratore.mansione = anagrafica_lavoratore.mansione
+#         lavoratore.ci = anagrafica_lavoratore.ci
+#         lavoratore.codice_fiscale = anagrafica_lavoratore.codice_fiscale
+#         lavoratore.idoneita = anagrafica_lavoratore.idoneita
+#         lavoratore.indeterminato = anagrafica_lavoratore.indeterminato
+#         lavoratore.unilav = anagrafica_lavoratore.unilav
+#
+#         formazione_lavoratore = Formazione.objects.get(lavoratore=lavoratore)
+#         lavoratore.art37 = formazione_lavoratore.art37
+#         lavoratore.primo_soccorso = formazione_lavoratore.primo_soccorso
+#         lavoratore.antincendio = formazione_lavoratore.antincendio
+#         lavoratore.preposto = formazione_lavoratore.preposto
+#         lavoratore.h2s = formazione_lavoratore.h2s
+#         lavoratore.dpi3 = formazione_lavoratore.dpi3
+#         lavoratore.carrello = formazione_lavoratore.carrello
+#         lavoratore.ple = formazione_lavoratore.ple
+#         lavoratore.gru = formazione_lavoratore.gru
+#         lavoratore.imbracatore = formazione_lavoratore.imbracatore
+#         lavoratore.ponteggi = formazione_lavoratore.ponteggi
+#         lavoratore.lavori_quota = formazione_lavoratore.lavori_quota
+#         lavoratore.spazi_confinati = formazione_lavoratore.spazi_confinati
+#         lavoratore.rir = formazione_lavoratore.rir
+#         lavoratore.rls = formazione_lavoratore.rls
+#         lavoratore.rspp = formazione_lavoratore.rspp
+#
+#         nomine_lavoratore = Nomine.objects.get(lavoratore=lavoratore)
+#         lavoratore.nomina_preposto = nomine_lavoratore.preposto
+#         lavoratore.nomina_antincendio = nomine_lavoratore.antincendio
+#         lavoratore.nomina_primo_soccorso = nomine_lavoratore.primo_soccorso
+#         lavoratore.nomina_rls = nomine_lavoratore.rls
+#         lavoratore.nomina_aspp = nomine_lavoratore.aspp
+#
+#         lavoratore.save()
+#
+#     ora = datetime.datetime.now()
+#     return HttpResponse("""<h1 style="text-align:center">Aggiornamento DB</h1>
+#                         <h2 style="text-align:center"> %s </h2>""" % ora)

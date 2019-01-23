@@ -1,12 +1,9 @@
 import datetime
-from pprint import pprint as pp
 
-import pandas as pd
 from django.contrib import admin
 
-import personale.admin_actions
-from personale import admin_actions_formazione, admin_actions, admin_actions_anagrafica
-from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
+from personale import admin_actions
+from personale.models import Lavoratore
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -37,102 +34,68 @@ def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
     admin_actions.data_ultima_modifica_scrivi()
 
 
+def esporta_dati(modeladmin, request, queryset):
+    admin_actions.esporta_dati()
+
+
+def importa_dati(modeladmin, request, queryset):
+    admin_actions.importa_dati()
+
+
 aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"
 rinomina_attestati.short_description = "Rinomina Documenti"
 aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
 aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco"
+esporta_dati.short_description = "Esporta Dati"
+importa_dati.short_description = "Importa Dati"
 
 
 # azioni formazione
 
 
-def aggiorna_stato_formazione(modeladmin, request, queryset):
-    admin_actions_formazione.aggiorna_stato_formazione()
-
-
-aggiorna_stato_formazione.short_description = "Aggiorna Stato"
+# def aggiorna_stato_formazione(modeladmin, request, queryset):
+#     admin_actions_formazione.aggiorna_stato_formazione()
+#
+#
+# aggiorna_stato_formazione.short_description = "Aggiorna Stato"
 
 
 # azioni anagrafica
 
-def azienda(modeladmin, request, queryset):
-    admin_actions_anagrafica.azienda_m(queryset)
-
-
-def azienda_nessuna(modeladmin, request, queryset):
-    admin_actions_anagrafica.azienda_nessuna(queryset)
-
-
-def in_forza(modeladmin, request, queryset):
-    admin_actions_anagrafica.in_forza(queryset)
-
-
-def in_sede(modeladmin, request, queryset):
-    admin_actions_anagrafica.in_sede(queryset)
-
-
-def in_ilva(modeladmin, request, queryset):
-    admin_actions_anagrafica.in_ilva(queryset)
-
-
-def no_cantiere(modeladmin, request, queryset):
-    admin_actions_anagrafica.no_cantiere(queryset)
-
-
-def aggiorna_stato_anagrafica(modeladmin, request, queryset):
-    personale.admin_actions.aggiorna_stato_anagrafica()
-
-
-def esporta_dati(modeladmin, request, queryset):
-    personale.admin_actions.esporta_dati()
-
-
-def importa_dati(modeladmin, request, queryset):
-    personale.admin_actions.importa_dati()
-
-
-azienda_nessuna.short_description = "Nessuna azienda"
-in_forza.short_description = "In Forza"
-in_sede.short_description = "In Sede"
-in_ilva.short_description = "In Ilva"
-no_cantiere.short_description = "Nessun Cantiere"
-no_cantiere.aggiorna_anagrafica = "Nessun Cantiere"
-esporta_dati.short_description = "Esporta Dati"
-importa_dati.short_description = "Importa Dati"
-
-
-class AnagraficaAdmin(admin.ModelAdmin):
-    actions = [aggiorna_stato_anagrafica,
-               esporta_dati,
-               importa_dati,
-               # in_sede,
-               # in_ilva,
-               # no_cantiere,
-               # in_forza,
-               # azienda_m,
-               # azienda_nessuna,
-               ]
-    list_display = ('lavoratore', 'stato', 'codice_fiscale',
-                    'in_forza', 'azienda', 'cantiere', 'mansione',
-                    'idoneita', 'indeterminato', 'unilav')
-    list_filter = ['in_forza', 'stato', 'azienda', 'cantiere', 'indeterminato']
-    ordering = ['lavoratore']
-    search_fields = ['lavoratore__cognome', ]
-
-
-class FormazioneAdmin(admin.ModelAdmin):
-    actions = [aggiorna_stato_formazione,
-               ]
-    list_display = ('lavoratore', 'stato',
-                    'art37',
-                    'preposto', 'primo_soccorso', 'antincendio',
-                    'dpi3', 'ponteggi', 'lavori_quota',
-                    'carrello', 'ple', 'gru', 'imbracatore',
-                    'spazi_confinati', 'h2s',
-                    'rir', 'rls', 'rspp')
-    list_filter = ['stato', ]
-    ordering = ['lavoratore']
-    search_fields = ['lavoratore__cognome', ]
+# def azienda(modeladmin, request, queryset):
+#     admin_actions_anagrafica.azienda_m(queryset)
+#
+#
+# def azienda_nessuna(modeladmin, request, queryset):
+#     admin_actions_anagrafica.azienda_nessuna(queryset)
+#
+#
+# def in_forza(modeladmin, request, queryset):
+#     admin_actions_anagrafica.in_forza(queryset)
+#
+#
+# def in_sede(modeladmin, request, queryset):
+#     admin_actions_anagrafica.in_sede(queryset)
+#
+#
+# def in_ilva(modeladmin, request, queryset):
+#     admin_actions_anagrafica.in_ilva(queryset)
+#
+#
+# def no_cantiere(modeladmin, request, queryset):
+#     admin_actions_anagrafica.no_cantiere(queryset)
+#
+#
+# def aggiorna_stato_anagrafica(modeladmin, request, queryset):
+#     personale.admin_actions.aggiorna_stato_anagrafica()
+#
+#
+# azienda_nessuna.short_description = "Nessuna azienda"
+# in_forza.short_description = "In Forza"
+# in_sede.short_description = "In Sede"
+# in_ilva.short_description = "In Ilva"
+# no_cantiere.short_description = "Nessun Cantiere"
+# no_cantiere.aggiorna_anagrafica = "Nessun Cantiere"
 
 
 @admin.register(Lavoratore)
@@ -145,18 +108,8 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                ]
 
-    list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'idoneita', 'indeterminato', 'unilav')
+    list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'azienda', 'cantiere', 'idoneita',
+                    'indeterminato', 'unilav')
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
     list_filter = ['in_forza', 'azienda', 'cantiere', 'stato', 'indeterminato']
-
-
-class NomineAdmin(admin.ModelAdmin):
-    list_display = ('lavoratore', 'preposto', 'antincendio', 'primo_soccorso', 'rls', 'aspp')
-    ordering = ['lavoratore']
-    search_fields = ['lavoratore__cognome', ]
-
-
-admin.site.register(Anagrafica, AnagraficaAdmin)
-admin.site.register(Formazione, FormazioneAdmin)
-admin.site.register(Nomine, NomineAdmin)

@@ -2,13 +2,11 @@ import datetime
 import os
 import re
 import time
-from pprint import pprint as pp
 
 import pandas as pd
 
-from personale import admin_actions_anagrafica, admin_actions_formazione
 from personale.admin_actions_anagrafica import FILE_DATI, AVVISO_SCADENZA, OGGI
-from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
+from personale.models import Lavoratore
 
 ADESSO = time.time()
 OGGI = datetime.date.today()
@@ -91,7 +89,7 @@ def rinomina_attestati():
                 cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
                 print('\n', cognome, nome)
                 lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
-                formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
+                # formazione = Formazione.objects.get(lavoratore__id=lavoratore.id)
 
                 for documento in files:
                     documento = documento.lower()

@@ -5,6 +5,7 @@ from pprint import pprint as pp
 
 import pandas as pd
 
+# from personale.models import Anagrafica, Formazione, Lavoratore
 from personale.models import Anagrafica, Formazione, Lavoratore
 
 OGGI = datetime.date.today()
