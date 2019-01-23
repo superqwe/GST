@@ -30,6 +30,7 @@ def aggiorna_scadenza_documenti(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_scadenza_documenti()
     admin_actions_lavoratore.data_ultima_modifica_scrivi()
 
+
 def aggiorna_elenco_lavoratori(modeladmin, request, queryset):
     admin_actions_lavoratore.aggiorna_elenco_lavoratori()
     admin_actions_lavoratore.data_ultima_modifica_scrivi()
@@ -143,9 +144,10 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                ]
 
-    list_display = ('cognome', 'nome', 'stato',)
+    list_display = ('in_forza', 'cognome', 'nome', 'mansione', 'idoneita', 'indeterminato', 'unilav')
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
+    list_filter = ['in_forza', 'azienda', 'cantiere', 'indeterminato']
 
 
 class NomineAdmin(admin.ModelAdmin):
@@ -156,5 +158,4 @@ class NomineAdmin(admin.ModelAdmin):
 
 admin.site.register(Anagrafica, AnagraficaAdmin)
 admin.site.register(Formazione, FormazioneAdmin)
-# admin.site.register(Lavoratore, LavoratoreAdmin)
 admin.site.register(Nomine, NomineAdmin)
