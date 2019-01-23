@@ -76,9 +76,9 @@ def lavoratori_con_nomine():
                                                                                           nomina_rls__isnull=True,
                                                                                           nomina_aspp__isnull=True)
 
-        n = {'r': len(lavoratori.filter(anagrafica__stato='r')),
-             'g': len(lavoratori.filter(anagrafica__stato='g')),
-             'v': len(lavoratori.filter(anagrafica__stato='v')),
+        n = {'r': len(lavoratori.filter(stato='r')),
+             'g': len(lavoratori.filter(stato='g')),
+             'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
         dati.append((aziende[azienda[0]], lavoratori, n))
