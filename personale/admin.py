@@ -4,6 +4,7 @@ from pprint import pprint as pp
 import pandas as pd
 from django.contrib import admin
 
+import personale.admin_actions
 from personale import admin_actions_formazione, admin_actions, admin_actions_anagrafica
 from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
 
@@ -83,11 +84,11 @@ def aggiorna_stato_anagrafica(modeladmin, request, queryset):
 
 
 def esporta_dati(modeladmin, request, queryset):
-    admin_actions_anagrafica.esporta_dati()
+    personale.admin_actions.esporta_dati()
 
 
 def importa_dati(modeladmin, request, queryset):
-    admin_actions_anagrafica.importa_dati()
+    personale.admin_actions.importa_dati()
 
 
 azienda_nessuna.short_description = "Nessuna azienda"

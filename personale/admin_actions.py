@@ -7,6 +7,7 @@ from pprint import pprint as pp
 import pandas as pd
 
 from personale import admin_actions_anagrafica, admin_actions_formazione
+from personale.admin_actions_anagrafica import FILE_DATI
 from personale.models import Anagrafica, Formazione, Lavoratore, Nomine
 
 ADESSO = time.time()
@@ -352,3 +353,37 @@ def data_ultima_modifica_leggi():
         data = fin.read()
         data = datetime.datetime.strptime(data, "%Y-%m-%d")
         return data.strftime("%d/%m/%y")
+
+
+def esporta_dati():
+    lavoratori = Lavoratore.objects.all()
+
+    dati = []
+    for lavoratore in lavoratori:
+        rigo = (lavoratore.cognome, lavoratore.nome, lavoratore.mansione, lavoratore.in_forza,
+                lavoratore.azienda, lavoratore.cantiere)
+        dati.append(rigo)
+
+    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione', 'in_forza', 'azienda', 'cantiere'))
+
+    dati.to_excel(FILE_DATI, sheet_name='dati')
+
+    print('\n*** Dati anagrafici esportati\n')
+
+
+def importa_dati():
+    xlsx = pd.ExcelFile(FILE_DATI)
+    df = pd.read_excel(xlsx, 'dati')
+    df = df.where((pd.notnull(df)), None)
+
+    for n, cognome, nome, mansione, in_forza, azienda, cantiere in df.itertuples():
+        if type(mansione) == str:
+            lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+            lavoratore.mansione = mansione
+            lavoratore.in_forza = in_forza
+            lavoratore.azienda = azienda
+            lavoratore.cantiere = cantiere
+
+            lavoratore.save()
+
+    print('\n*** Dati anagrafici importati\n')

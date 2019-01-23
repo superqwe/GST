@@ -1,12 +1,6 @@
 import datetime
-import os
-import re
-from pprint import pprint as pp
 
-import pandas as pd
-
-from personale.models import Anagrafica, Formazione, Lavoratore
-import numpy as np
+from personale.models import Anagrafica
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -16,37 +10,6 @@ AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 PATH_BASE = "C:\\Users\\leonardo.masi\\Documents\\Personale"
 
 FILE_DATI = 'dati.xlsx'
-
-
-def esporta_dati():
-    lavoratori = Anagrafica.objects.all().order_by('lavoratore')
-
-    dati = []
-    for lavoratore in lavoratori:
-        rigo = (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome, lavoratore.mansione, lavoratore.in_forza,
-                lavoratore.azienda, lavoratore.cantiere)
-        dati.append(rigo)
-
-    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione', 'in_forza', 'azienda', 'cantiere'))
-
-    dati.to_excel(FILE_DATI, sheet_name='dati')
-    print('\n*** Dati anagrafici esportati\n')
-
-
-def importa_dati():
-    xlsx = pd.ExcelFile(FILE_DATI)
-    df = pd.read_excel(xlsx, 'dati')
-    df = df.where((pd.notnull(df)), None)
-
-    for n, cognome, nome, mansione, in_forza, azienda, cantiere in df.itertuples():
-        if type(mansione) == str:
-            lavoratore = Anagrafica.objects.get(lavoratore__cognome=cognome, lavoratore__nome=nome)
-            lavoratore.mansione = mansione
-            lavoratore.in_forza = in_forza
-            lavoratore.azienda = azienda
-            lavoratore.cantiere = cantiere
-
-            lavoratore.save()
 
 
 def in_sede(queryset):
