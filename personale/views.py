@@ -11,53 +11,15 @@ from django.template import loader
 from personale import views_util
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore
-from personale.views_util import date_scadenza
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
 
-def anagrafica(request):
-    lavoratori = Lavoratore.objects.all()
-
-    nlavoratori = len(lavoratori)
-    template = loader.get_template('personale/anagrafica.html')
-    context = {
-        'lavoratori': lavoratori,
-        'nlavoratori': nlavoratori,
-        'scadenza': views_util.Date_Scadenza()
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def anagrafica_per_cantiere(request):
-    lavoratori = Lavoratore.objects.all()
-    cantieri = Lavoratore.CANTIERE
-
-    dati = []
-    for cantiere in cantieri:
-        lavoratori = Lavoratore.objects.filter(cantiere=cantiere[0])
-
-        dati.append((cantiere[1], lavoratori))
-
-    template = loader.get_template('personale/anagrafica_per_cantiere.html')
-    context = {
-        'lavoratori': lavoratori,
-        'lavoratori_per_cantiere': dati,
-        'oggi': date_scadenza()['oggi'],
-        'mesi1': date_scadenza()['mesi1'],
-        'mesi2': date_scadenza()['mesi2'],
-        'mesi6': date_scadenza()['mesi6'],
-        'mesi12': date_scadenza()['mesi12'],
-    }
-    return HttpResponse(template.render(context, request))
-
-
 def completo(request, filtro=False, ordinamento=None):
     pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
     tabella_completa = False
-    nn = None
 
     if ordinamento == 'a':
         dati = views_util.lavoratori_suddivisi_per_azienda()
@@ -98,28 +60,6 @@ def completo(request, filtro=False, ordinamento=None):
         'data_ultima_modifica': data_ultima_modifica_leggi(),
     }
     return HttpResponse(template.render(context, request))
-
-
-def formazione(request):
-    lavoratori = Lavoratore.objects.all()
-
-    oggi = datetime.date.today()
-    mesi1 = oggi + datetime.timedelta(days=30)
-    mesi2 = oggi + datetime.timedelta(days=60)
-    mesi6 = oggi + datetime.timedelta(days=366 / 2)
-    mesi12 = oggi + datetime.timedelta(days=365)
-
-    template = loader.get_template('personale/formazione.html')
-    context = {
-        'lavoratori': lavoratori,
-        'scadenza': views_util.Date_Scadenza()
-
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def scadenza(request):
-    return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
 
 def estrai_dati(request):
@@ -256,12 +196,6 @@ def leggi_contrattideterminati(request):
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
 
-def esporta_pdf(request):
-    ora = datetime.datetime.now()
-    return HttpResponse("""<h1 style="text-align:center">Pdf salvato</h1>
-                        <h2 style="text-align:center"> %s </h2>""" % ora)
-
-
 def unilav(request):
     oggi = datetime.date.today()
     mesi1 = oggi + datetime.timedelta(days=30)
@@ -298,49 +232,3 @@ def test(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
-
-# def azione2(request):
-#     lavoratori = Lavoratore.objects.all()
-#
-#     for lavoratore in lavoratori:
-#         anagrafica_lavoratore = Anagrafica.objects.get(lavoratore=lavoratore)
-#         lavoratore.in_forza = anagrafica_lavoratore.in_forza
-#         lavoratore.azienda = anagrafica_lavoratore.azienda
-#         lavoratore.cantiere = anagrafica_lavoratore.cantiere
-#         lavoratore.mansione = anagrafica_lavoratore.mansione
-#         lavoratore.ci = anagrafica_lavoratore.ci
-#         lavoratore.codice_fiscale = anagrafica_lavoratore.codice_fiscale
-#         lavoratore.idoneita = anagrafica_lavoratore.idoneita
-#         lavoratore.indeterminato = anagrafica_lavoratore.indeterminato
-#         lavoratore.unilav = anagrafica_lavoratore.unilav
-#
-#         formazione_lavoratore = Formazione.objects.get(lavoratore=lavoratore)
-#         lavoratore.art37 = formazione_lavoratore.art37
-#         lavoratore.primo_soccorso = formazione_lavoratore.primo_soccorso
-#         lavoratore.antincendio = formazione_lavoratore.antincendio
-#         lavoratore.preposto = formazione_lavoratore.preposto
-#         lavoratore.h2s = formazione_lavoratore.h2s
-#         lavoratore.dpi3 = formazione_lavoratore.dpi3
-#         lavoratore.carrello = formazione_lavoratore.carrello
-#         lavoratore.ple = formazione_lavoratore.ple
-#         lavoratore.gru = formazione_lavoratore.gru
-#         lavoratore.imbracatore = formazione_lavoratore.imbracatore
-#         lavoratore.ponteggi = formazione_lavoratore.ponteggi
-#         lavoratore.lavori_quota = formazione_lavoratore.lavori_quota
-#         lavoratore.spazi_confinati = formazione_lavoratore.spazi_confinati
-#         lavoratore.rir = formazione_lavoratore.rir
-#         lavoratore.rls = formazione_lavoratore.rls
-#         lavoratore.rspp = formazione_lavoratore.rspp
-#
-#         nomine_lavoratore = Nomine.objects.get(lavoratore=lavoratore)
-#         lavoratore.nomina_preposto = nomine_lavoratore.preposto
-#         lavoratore.nomina_antincendio = nomine_lavoratore.antincendio
-#         lavoratore.nomina_primo_soccorso = nomine_lavoratore.primo_soccorso
-#         lavoratore.nomina_rls = nomine_lavoratore.rls
-#         lavoratore.nomina_aspp = nomine_lavoratore.aspp
-#
-#         lavoratore.save()
-#
-#     ora = datetime.datetime.now()
-#     return HttpResponse("""<h1 style="text-align:center">Aggiornamento DB</h1>
-#                         <h2 style="text-align:center"> %s </h2>""" % ora)
