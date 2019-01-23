@@ -36,20 +36,20 @@ def completo(request, filtro=False, ordinamento=None):
     elif ordinamento == 'v':
         dati = views_util.lavoratori_suddivisi_per_azienda('idoneita')
         pagina_attiva = 'idoneita'
-    else:
-        if filtro == 'in_forza':
-            lavoratori = Lavoratore.objects.filter(in_forza=True)
-        else:
-            lavoratori = Lavoratore.objects.all()
-            # nn = len(Anagrafica.objects.filter(in_forza=False))
-
-        n = {'r': len(lavoratori.filter(stato='r')),
-             'g': len(lavoratori.filter(stato='g')),
-             'v': len(lavoratori.filter(stato='v')),
-             't': len(lavoratori)}
-
-        dati = (('Elenco Personale', lavoratori, n))
-        tabella_completa = True
+    # else:
+    #     if filtro == 'in_forza':
+    #         lavoratori = Lavoratore.objects.filter(in_forza=True)
+    #     else:
+    #         lavoratori = Lavoratore.objects.all()
+    #         # nn = len(Anagrafica.objects.filter(in_forza=False))
+    #
+    #     n = {'r': len(lavoratori.filter(stato='r')),
+    #          'g': len(lavoratori.filter(stato='g')),
+    #          'v': len(lavoratori.filter(stato='v')),
+    #          't': len(lavoratori)}
+    #
+    #     dati = (('Elenco Personale', lavoratori, n))
+    #     tabella_completa = True
 
     template = loader.get_template('personale/principale.html')
     context = {

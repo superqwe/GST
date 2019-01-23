@@ -3,7 +3,7 @@ import datetime
 from django.contrib import admin
 
 from personale import admin_actions
-from personale.models import Lavoratore
+from personale.models import Lavoratore, Cantiere, Azienda
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -48,6 +48,16 @@ aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
 aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco"
 esporta_dati.short_description = "Esporta Dati"
 importa_dati.short_description = "Importa Dati"
+
+
+@admin.register(Azienda)
+class AziendaAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Cantiere)
+class CantiereAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Lavoratore)
