@@ -62,25 +62,24 @@ def completo(request, filtro=False, ordinamento=None):
     nn = None
 
     if ordinamento == 'a':
-        dati = views_util.lavoratori_suddivisi_per_azienda2()
+        dati = views_util.lavoratori_suddivisi_per_azienda()
         pagina_attiva = 'azienda'
     elif ordinamento == 'c':
-        dati = views_util.lavoratori_suddivisi_per_azienda2('cantiere')
+        dati = views_util.lavoratori_suddivisi_per_azienda('cantiere')
         pagina_attiva = 'cantiere'
     elif ordinamento == 'n':
         dati = views_util.lavoratori_con_nomine()
         pagina_attiva = 'nomine'
     elif ordinamento == 's':
-        dati = views_util.lavoratori_suddivisi_per_azienda2('stato')
+        dati = views_util.lavoratori_suddivisi_per_azienda('stato')
         pagina_attiva = 'scadenza'
     elif ordinamento == 'v':
-        dati = views_util.lavoratori_suddivisi_per_azienda2('idoneita')
+        dati = views_util.lavoratori_suddivisi_per_azienda('idoneita')
         pagina_attiva = 'idoneita'
     else:
         if filtro == 'in_forza':
             # lavoratori = Anagrafica.objects.filter(in_forza=True).order_by('lavoratore')
-            lavoratori = Lavoratore.objects.all().prefetch_related('anagrafica_set', 'formazione_set', 'nomine_set'
-                                                                   ).filter(anagrafica__in_forza=True)
+            lavoratori = Lavoratore.objects.filter(in_forza=True)
         else:
             lavoratori = Anagrafica.objects.order_by('lavoratore')
             nn = len(Anagrafica.objects.filter(in_forza=False))
@@ -304,7 +303,7 @@ def test(request):
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
-def azione(request):
+def azione2(request):
     lavoratori = Lavoratore.objects.all()
 
     for lavoratore in lavoratori:

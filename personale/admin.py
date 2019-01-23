@@ -144,7 +144,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                ]
 
-    list_display = ('in_forza', 'cognome', 'nome', 'mansione', 'idoneita', 'indeterminato', 'unilav')
+    list_display = ('cognome', 'nome', 'mansione', 'in_forza', 'idoneita', 'indeterminato', 'unilav')
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
     list_filter = ['in_forza', 'azienda', 'cantiere', 'indeterminato']
