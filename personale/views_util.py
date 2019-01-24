@@ -2,7 +2,7 @@ import datetime
 
 from django.db.models import Q
 
-from personale.models import Lavoratore
+from personale.models import Lavoratore, Azienda
 
 
 def date_scadenza():
@@ -30,33 +30,30 @@ class Date_Scadenza():
 
 
 def lavoratori_suddivisi_per_azienda(ordine=None):
-    aziende = {'m': 'MODOMEC',
-               'b': 'BUILDING',
-               'r': 'RIMEC',
-               'w': 'WELDING',
-               None: '-'}
+    aziende = Azienda.objects.all()
+
     dati = []
 
-    for azienda in Lavoratore.AZIENDA:
+    for azienda in aziende:
 
         if ordine == 'cantiere':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('-cantiere', 'cognome',
-                                                                                               'nome')
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('-cantiere', 'cognome',
+                                                                                            'nome')
         elif ordine == 'stato':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).filter(
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).filter(
                 Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
         elif ordine == 'idoneita':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).order_by('idoneita', 'cognome',
-                                                                                               'nome')
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('idoneita', 'cognome',
+                                                                                            'nome')
         else:
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0])
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda)
 
         n = {'r': len(lavoratori.filter(stato='r')),
              'g': len(lavoratori.filter(stato='g')),
              'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
-        dati.append((aziende[azienda[0]], lavoratori, n))
+        dati.append((azienda, lavoratori, n))
 
     return dati
 

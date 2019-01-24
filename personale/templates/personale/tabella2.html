@@ -38,11 +38,11 @@
     <td>{% if lavoratore.in_forza %} <i class="fas fa-circle {{lavoratore.stato}}"></i>
         {% else %} <i class="far fa-circle {{lavoratore.stato}}"></i>
         {% endif %}</td>
-    {% if tabella_completa %}<td> {{anagrafica.get_azienda_display|default_if_none:""}}</td>{% endif %}
+    {% if tabella_completa %}<td> {{anagrafica.azienda|default_if_none:""}}</td>{% endif %}
     <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
     <th scope="row" class="text-left">{{lavoratore.nome}}</th>
     <td class="text-left"> {{lavoratore.mansione|default_if_none:""}}</td>
-    <td> {{lavoratore.get_cantiere_display|default_if_none:""}}</td>
+    <td> {{lavoratore.cantiere|default_if_none:""}}</td>
     <td {% if lavoratore.idoneita < scadenza.oggi  or not lavoratore.idoneita %} class="alert alert-danger" role="alert"
         {% elif lavoratore.idoneita < scadenza.mesi1 %} class="alert alert-warning" role="alert"
         {% elif lavoratore.idoneita < scadenza.mesi2 %} class="alert alert-info" role="alert"
