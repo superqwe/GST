@@ -42,6 +42,23 @@ def importa_dati(modeladmin, request, queryset):
     admin_actions.importa_dati()
 
 
+def aaa(modeladmin, request, queryset):
+    Lavoratore.objects.filter(in_forza=True, azienda='m').update(azienda2=Azienda.objects.get(nome='Modomec'))
+    Lavoratore.objects.filter(in_forza=True, azienda='b').update(azienda2=Azienda.objects.get(nome='Building'))
+    Lavoratore.objects.filter(in_forza=True, azienda='r').update(azienda2=Azienda.objects.get(nome='Rimec'),
+                                                                 cantiere2=Cantiere.objects.get(nome='Massafra'))
+    Lavoratore.objects.filter(in_forza=True, azienda='w').update(azienda2=Azienda.objects.get(nome='Welding'))
+
+    Lavoratore.objects.filter(in_forza=True, cantiere='sede').update(cantiere2=Cantiere.objects.get(nome='Massafra'))
+    Lavoratore.objects.filter(in_forza=True, cantiere='ilva_ta').update(
+        cantiere2=Cantiere.objects.get(nome='ArcelorMittal'))
+    Lavoratore.objects.filter(in_forza=True, cantiere='andritz_ch').update(
+        cantiere2=Cantiere.objects.get(nome='Andritz'))
+    Lavoratore.objects.filter(in_forza=True, cantiere='appia_ta').update(cantiere2=Cantiere.objects.get(nome='Appia'))
+    Lavoratore.objects.filter(in_forza=True, cantiere='ve').update(cantiere2=Cantiere.objects.get(nome='Marghera'))
+
+
+
 aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"
 rinomina_attestati.short_description = "Rinomina Documenti"
 aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
@@ -68,7 +85,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                rinomina_attestati,
                esporta_dati,
                importa_dati,
-               ]
+               aaa]
 
     list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'azienda', 'azienda2', 'cantiere', 'cantiere2',
                     'idoneita', 'indeterminato', 'unilav')
