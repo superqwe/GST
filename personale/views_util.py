@@ -53,7 +53,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
              'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
-        dati.append((azienda, lavoratori, n))
+        if n['t']:
+            dati.append((azienda, lavoratori, n))
 
     return dati
 
