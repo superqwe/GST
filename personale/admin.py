@@ -58,7 +58,6 @@ def aaa(modeladmin, request, queryset):
     Lavoratore.objects.filter(in_forza=True, cantiere='ve').update(cantiere2=Cantiere.objects.get(nome='Marghera'))
 
 
-
 aggiorna_stato_lavoratori.short_description = "Aggiorna Stato"
 rinomina_attestati.short_description = "Rinomina Documenti"
 aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
@@ -87,7 +86,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                importa_dati,
                aaa]
 
-    list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'azienda', 'azienda2', 'cantiere', 'cantiere2',
+    list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'azienda', 'cantiere',
                     'idoneita', 'indeterminato', 'unilav')
     ordering = ['cognome', 'nome']
     search_fields = ['cognome', 'nome']
