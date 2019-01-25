@@ -10,7 +10,7 @@ from django.template import loader
 
 from personale import views_util
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore
+from personale.models import Lavoratore, Azienda
 
 
 def index(request):
@@ -198,22 +198,22 @@ def leggi_contrattideterminati(request):
 
 def unilav(request):
     oggi = datetime.date.today()
-    mesi1 = oggi + datetime.timedelta(days=30)
-    mesi2 = oggi + datetime.timedelta(days=60)
-    mesi6 = oggi + datetime.timedelta(days=366 / 2)
-    mesi12 = oggi + datetime.timedelta(days=365)
-
     fino_al = oggi + timedelta(7)
-    print(fino_al)
 
-    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m', unilav__lte=fino_al)
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                             unilav__lte=fino_al)
+    lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                             unilav__lt=oggi)
+
+    n = {'r': len(lavoratori_r), 't': len(lavoratori)}
+    n['g'] = n['t'] - n['r']
 
     template = loader.get_template('personale/unilav.html')
     context = {
         'fino_al': fino_al,
         'lavoratori': lavoratori,
-        'scadenza': views_util.Date_Scadenza()
-
+        'scadenza': views_util.Date_Scadenza(),
+        'n': n
     }
 
     return HttpResponse(template.render(context, request))
