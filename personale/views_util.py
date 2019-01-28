@@ -60,25 +60,26 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
 
 
 def lavoratori_con_nomine():
-    aziende = {'m': 'MODOMEC',
-               'b': 'BUILDING',
-               'r': 'RIMEC',
-               'w': 'WELDING',
-               None: '-'}
+    # aziende = {'m': 'MODOMEC',
+    #            'b': 'BUILDING',
+    #            'r': 'RIMEC',
+    #            'w': 'WELDING',
+    #            None: '-'}
+    aziende = Azienda.objects.all()
     dati = []
 
-    for azienda in Lavoratore.AZIENDA:
-        lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda[0]).exclude(nomina_preposto__isnull=True,
-                                                                                          nomina_antincendio__isnull=True,
-                                                                                          nomina_primo_soccorso__isnull=True,
-                                                                                          nomina_rls__isnull=True,
-                                                                                          nomina_aspp__isnull=True)
+    for azienda in aziende:
+        lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).exclude(nomina_preposto__isnull=True,
+                                                                                       nomina_antincendio__isnull=True,
+                                                                                       nomina_primo_soccorso__isnull=True,
+                                                                                       nomina_rls__isnull=True,
+                                                                                       nomina_aspp__isnull=True)
 
         n = {'r': len(lavoratori.filter(stato='r')),
              'g': len(lavoratori.filter(stato='g')),
              'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
-        dati.append((aziende[azienda[0]], lavoratori, n))
+        dati.append((azienda, lavoratori, n))
 
     return dati

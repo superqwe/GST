@@ -5,7 +5,7 @@ import time
 
 import pandas as pd
 
-from personale.models import Lavoratore
+from personale.models import Lavoratore, Azienda
 
 ADESSO = time.time()
 OGGI = datetime.date.today()
@@ -286,19 +286,19 @@ def aggiorna_scadenza_documenti():
                                     lavoratore.lavori_quota = scadenza2date(documento, 5)
 
                                 elif tipo == 'nomina.preposto':
-                                    lavoratore.preposto = scadenza2date(documento, 0)
+                                    lavoratore.nomina_preposto = scadenza2date(documento, 0)
 
                                 elif tipo == 'nomina.antincendio':
-                                    lavoratore.antincendio = scadenza2date(documento, 0)
+                                    lavoratore.nomina_antincendio = scadenza2date(documento, 0)
 
                                 elif tipo == 'nomina.primo.soccorso':
-                                    lavoratore.primo_soccorso = scadenza2date(documento, 0)
+                                    lavoratore.nomina_primo_soccorso = scadenza2date(documento, 0)
 
                                 elif tipo == 'nomina.rls':
-                                    lavoratore.rls = scadenza2date(documento, 0)
+                                    lavoratore.nomina_rls = scadenza2date(documento, 0)
 
                                 elif tipo == 'nomina.aspp':
-                                    lavoratore.aspp = scadenza2date(documento, 0)
+                                    lavoratore.nomina_aspp = scadenza2date(documento, 0)
 
                                 else:
                                     print('***', tipo, '+++', cognome, nome, documento)
@@ -415,4 +415,4 @@ def aggiorna_stato_lavoratori():
         lavoratore.stato = stato
         lavoratore.save()
 
-    Lavoratore.objects.filter(in_forza=False).update(stato=None, azienda=None)
+    Lavoratore.objects.filter(in_forza=False).update(stato=None, azienda=Azienda.objects.get(nome='-'))
