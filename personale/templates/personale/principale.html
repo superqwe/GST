@@ -12,26 +12,33 @@
 
 {% block corpo %}
 
-    {% for azienda, lavoratori, n in dati%}
+    {% if autorizzato %}
 
-        {% if n %}
+        {% for azienda, lavoratori, n in dati%}
 
-            {% if not tabella_completa %}
-                {% block link_tabelle %}
-                    {% include "personale/link_tabelle.html" %}
+            {% if n %}
+
+                {% if not tabella_completa %}
+                    {% block link_tabelle %}
+                        {% include "personale/link_tabelle.html" %}
+                    {% endblock %}
+                {% endif %}
+
+                {% block titolo_tabella %}
+                    {% include "personale/titolo_tabella.html" %}
                 {% endblock %}
+
+                {% block tabella %}
+                    {% include "personale/tabella2.html" %}
+                {% endblock %}
+
             {% endif %}
 
-            {% block titolo_tabella %}
-                {% include "personale/titolo_tabella.html" %}
-            {% endblock %}
+        {% endfor %}
 
-            {% block tabella %}
-                {% include "personale/tabella2.html" %}
-            {% endblock %}
+    {% else %}
+        {% include "personale/non_loggato.html" %}
+    {% endif %}
 
-        {% endif %}
-
-    {% endfor %}
 
 {% endblock %}

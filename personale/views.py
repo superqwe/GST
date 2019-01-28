@@ -12,6 +12,10 @@ from personale import views_util
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 
+from pprint import pprint as pp
+
+from personale.views_util import autorizzato
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -53,6 +57,7 @@ def completo(request, filtro=False, ordinamento=None):
 
     template = loader.get_template('personale/principale.html')
     context = {
+        'autorizzato': autorizzato(request.user),
         'dati': dati,
         'pagina_attiva': pagina_attiva,
         'scadenza': views_util.Date_Scadenza(),
@@ -201,7 +206,7 @@ def unilav(request):
     fino_al = oggi + timedelta(7)
 
     lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
-                                             unilav__lte=fino_al)
+                                           unilav__lte=fino_al)
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
                                              unilav__lt=oggi)
 
@@ -210,6 +215,7 @@ def unilav(request):
 
     template = loader.get_template('personale/unilav.html')
     context = {
+        'autorizzato': autorizzato(request.user),
         'fino_al': fino_al,
         'lavoratori': lavoratori,
         'scadenza': views_util.Date_Scadenza(),

@@ -83,3 +83,7 @@ def lavoratori_con_nomine():
         dati.append((azienda, lavoratori, n))
 
     return dati
+
+
+def autorizzato(user):
+    return user.is_superuser or ('utente_modomec',) in user.groups.all().values_list('name')
