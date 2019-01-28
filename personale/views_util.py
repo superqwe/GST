@@ -4,6 +4,12 @@ from django.db.models import Q
 
 from personale.models import Lavoratore, Azienda
 
+AZIENDE = ('Modomec', 'Building', 'Rimec', 'Welding', '-')
+
+
+def autorizzato(user):
+    return user.is_superuser or ('utente_modomec',) in user.groups.all().values_list('name')
+
 
 def date_scadenza():
     oggi = datetime.date.today()
@@ -30,11 +36,10 @@ class Date_Scadenza():
 
 
 def lavoratori_suddivisi_per_azienda(ordine=None):
-    aziende = Azienda.objects.all()
-
     dati = []
 
-    for azienda in aziende:
+    for azienda in AZIENDE:
+        azienda = Azienda.objects.get(nome=azienda)
 
         if ordine == 'cantiere':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('-cantiere', 'cognome',
@@ -60,15 +65,10 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
 
 
 def lavoratori_con_nomine():
-    # aziende = {'m': 'MODOMEC',
-    #            'b': 'BUILDING',
-    #            'r': 'RIMEC',
-    #            'w': 'WELDING',
-    #            None: '-'}
-    aziende = Azienda.objects.all()
     dati = []
 
-    for azienda in aziende:
+    for azienda in AZIENDE:
+        azienda = Azienda.objects.get(nome=azienda)
         lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).exclude(nomina_preposto__isnull=True,
                                                                                        nomina_antincendio__isnull=True,
                                                                                        nomina_primo_soccorso__isnull=True,
@@ -80,10 +80,7 @@ def lavoratori_con_nomine():
              'v': len(lavoratori.filter(stato='v')),
              't': len(lavoratori)}
 
-        dati.append((azienda, lavoratori, n))
+        if n['t']:
+            dati.append((azienda, lavoratori, n))
 
     return dati
-
-
-def autorizzato(user):
-    return user.is_superuser or ('utente_modomec',) in user.groups.all().values_list('name')
