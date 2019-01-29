@@ -17,7 +17,7 @@ urlpatterns = [
     path('unilav/', views.unilav, name='unilav'),
 
     # /personale/estri_dati/
-    path('estrai_dati/', views.estrai_dati, name='estrai_dati'),
+    path('estrai_dati/', views.estrai_dati2, name='estrai_dati2'),
 
     # /personale/azione/
     # path('azione/', views.azione, name='azione'),

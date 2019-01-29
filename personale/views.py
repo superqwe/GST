@@ -224,3 +224,84 @@ def test(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def estrai_dati2(request):
+    def copia(path_da, nome_pdf, cognome, nome, nome_documento):
+        da = os.path.join(path_da, nome_pdf)
+        a = os.path.join(path2, '%s %s - %s.pdf' % (cognome, nome, nome_documento))
+        # print(da, '-->', a)
+        print('  ', nome_documento)
+        shutil.copy(da, a)
+
+    class Estrai:
+        unilav = 1
+        idoneita = 1
+
+        art37 = 1
+        preposto = 1
+        primo_soccorso = 1
+        antincendio = 1
+        h2s = 1
+        dpi3 = 1
+        muletto = 1
+        ple = 1
+        gru = 1
+        imbracatore = 1
+        spazi_confinati = 1
+        ponteggi = 1
+        rir = 1
+
+        def formazione(self):
+            attestati = ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
+                         'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
+                         'carrelli' * self.muletto, 'ple' * self.ple, 'autogru' * self.gru,
+                         'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
+                         'ponteggi' * self.ponteggi, 'rir' * self.rir)
+            return attestati
+
+    path = r'C:\Users\leonardo.masi\Documents\Personale'
+    path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
+    FIN = '190129 AC Boiler.xlsx'
+
+    xls = pd.ExcelFile(os.path.join(path2, FIN))
+    df = xls.parse('1d')
+
+    for row in df.iterrows():
+        cognome = row[1]['Cognome']
+        nome = row[1]['Nome']
+        lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+
+        print(cognome, nome)
+
+        path_lavoratore = os.path.join(path, "%s %s" % (cognome, nome))
+        path_attestati = os.path.join(path, "%s %s" % (cognome, nome), 'attestati')
+        path_nomine = os.path.join(path, "%s %s" % (cognome, nome), 'nomine')
+
+        os.chdir(path_lavoratore)
+
+        if Estrai.unilav:
+            unilav = glob.glob('unilav*.pdf')
+
+            if unilav:
+                copia(path_lavoratore, unilav[0], cognome, nome, 'unilav')
+
+        if Estrai.idoneita:
+            idoneita = glob.glob('idoneit*.pdf')
+
+            if idoneita:
+                copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
+
+        try:
+            os.chdir(path_attestati)
+
+            for corso in Estrai.formazione(Estrai):
+                certificato = glob.glob('%s*.pdf' % corso)
+                if certificato:
+                    copia(path_attestati, certificato[0], cognome, nome, corso)
+        except FileNotFoundError:
+            pass
+
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
