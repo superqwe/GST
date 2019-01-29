@@ -84,10 +84,11 @@ class LavoratoreAdmin(admin.ModelAdmin):
                rinomina_attestati,
                esporta_dati,
                importa_dati,
-               aaa]
+               ]
 
     list_display = ('cognome', 'nome', 'mansione', 'stato', 'in_forza', 'azienda', 'cantiere',
                     'idoneita', 'indeterminato', 'unilav')
-    ordering = ['cognome', 'nome']
-    search_fields = ['cognome', 'nome']
     list_filter = ['in_forza', 'azienda', 'cantiere', 'stato', 'indeterminato']
+    ordering = ['cognome', 'nome']
+    save_on_top = True
+    search_fields = ['cognome', 'nome']
