@@ -1,5 +1,6 @@
 from django.urls import path
 
+import personale.views_estrai_dati
 from . import views
 
 urlpatterns = [
