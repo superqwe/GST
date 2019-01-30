@@ -270,7 +270,7 @@ def estrai_dati2(request):
             incarico = ('nomina.preposto' * self.nomina_preposto, 'nomina.primo.soccorso' * self.nomina_primo_soccorso,
                         'nomina.antincendio' * self.nomina_antincendio)
             return incarico
-
+    path_home = os.getcwd()
     path = r'C:\Users\leonardo.masi\Documents\Personale'
     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
     FIN = '190129 AC Boiler.xlsx'
@@ -323,6 +323,7 @@ def estrai_dati2(request):
                 if incarico:
                     copia(path_nomine, incarico[0], cognome, nome, nomina)
 
+    os.chdir(path_home)
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
