@@ -238,6 +238,7 @@ def estrai_dati2(request):
         unilav = 1
         idoneita = 1
 
+        # formazione
         art37 = 1
         preposto = 1
         primo_soccorso = 1
@@ -252,6 +253,11 @@ def estrai_dati2(request):
         ponteggi = 1
         rir = 1
 
+        # nomine
+        nomina_preposto = 1
+        nomina_primo_soccorso = 1
+        nomina_antincendio = 1
+
         def formazione(self):
             attestati = ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
                          'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
@@ -259,6 +265,11 @@ def estrai_dati2(request):
                          'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
                          'ponteggi' * self.ponteggi, 'rir' * self.rir)
             return attestati
+
+        def nomine(self):
+            incarico = ('nomina.preposto' * self.nomina_preposto, 'nomina.primo.soccorso' * self.nomina_primo_soccorso,
+                        'nomina.antincendio' * self.nomina_antincendio)
+            return incarico
 
     path = r'C:\Users\leonardo.masi\Documents\Personale'
     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
@@ -270,7 +281,7 @@ def estrai_dati2(request):
     for row in df.iterrows():
         cognome = row[1]['Cognome']
         nome = row[1]['Nome']
-        lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+        # lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
 
         print(cognome, nome)
 
@@ -278,6 +289,7 @@ def estrai_dati2(request):
         path_attestati = os.path.join(path, "%s %s" % (cognome, nome), 'attestati')
         path_nomine = os.path.join(path, "%s %s" % (cognome, nome), 'nomine')
 
+        # documenti base
         os.chdir(path_lavoratore)
 
         if Estrai.unilav:
@@ -292,15 +304,24 @@ def estrai_dati2(request):
             if idoneita:
                 copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
 
-        try:
+        # attestati corsi formazione
+        if os.path.isdir(path_attestati):
             os.chdir(path_attestati)
 
             for corso in Estrai.formazione(Estrai):
                 certificato = glob.glob('%s*.pdf' % corso)
                 if certificato:
                     copia(path_attestati, certificato[0], cognome, nome, corso)
-        except FileNotFoundError:
-            pass
+
+        # lettere incarico
+        if os.path.isdir(path_nomine):
+            os.chdir(path_nomine)
+
+            for nomina in Estrai.nomine(Estrai):
+                incarico = glob.glob('%s*.pdf' % nomina)
+
+                if incarico:
+                    copia(path_nomine, incarico[0], cognome, nome, nomina)
 
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
