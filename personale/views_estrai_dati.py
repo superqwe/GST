@@ -14,28 +14,30 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 
 
 class Estrai:
-    unilav = 1
-    idoneita = 1
+    def __init__(self):
+        # base
+        self.unilav = 1
+        self.idoneita = 1
 
-    # formazione
-    art37 = 1
-    preposto = 1
-    primo_soccorso = 1
-    antincendio = 1
-    h2s = 1
-    dpi3 = 1
-    muletto = 1
-    ple = 1
-    gru = 1
-    imbracatore = 1
-    spazi_confinati = 1
-    ponteggi = 1
-    rir = 1
+        # formazione
+        self.art37 = 1
+        self.preposto = 1
+        self.primo_soccorso = 1
+        self.antincendio = 1
+        self.h2s = 1
+        self.dpi3 = 1
+        self.muletto = 1
+        self.ple = 1
+        self.gru = 1
+        self.imbracatore = 1
+        self.spazi_confinati = 1
+        self.ponteggi = 1
+        self.rir = 1
 
-    # nomine
-    nomina_preposto = 1
-    nomina_primo_soccorso = 1
-    nomina_antincendio = 1
+        # nomine
+        self.nomina_preposto = 1
+        self.nomina_primo_soccorso = 1
+        self.nomina_antincendio = 1
 
     def formazione(self):
         attestati = ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
@@ -45,10 +47,19 @@ class Estrai:
                      'ponteggi' * self.ponteggi, 'rir' * self.rir)
         return attestati
 
+    def formazione_tutti(self):
+        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = self.muletto = 1
+        self.ple = self.gru = self.imbracatore = self.spazi_confinati = self.ponteggi = self.rir = 1
+        return self.formazione()
+
     def nomine(self):
         incarico = ('nomina.preposto' * self.nomina_preposto, 'nomina.primo.soccorso' * self.nomina_primo_soccorso,
                     'nomina.antincendio' * self.nomina_antincendio)
         return incarico
+
+    def nomine_tutte(self):
+        self.nomina_preposto = self.nomina_primo_soccorso = self.nomina_antincendio = 1
+        return self.nomine()
 
 
 def copia(path_da, nome_pdf, cognome, nome, nome_documento):
@@ -62,12 +73,11 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
 def estrai_dati2(request):
     xls = pd.ExcelFile(os.path.join(PATH2, FIN))
     df = xls.parse('1d')
+    estrai = Estrai()
 
     for row in df.iterrows():
         cognome = row[1]['Cognome']
         nome = row[1]['Nome']
-        # lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
-
         print(cognome, nome)
 
         path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
@@ -77,13 +87,13 @@ def estrai_dati2(request):
         # documenti base
         os.chdir(path_lavoratore)
 
-        if Estrai.unilav:
+        if estrai.unilav:
             unilav = glob.glob('unilav*.pdf')
 
             if unilav:
                 copia(path_lavoratore, unilav[0], cognome, nome, 'unilav')
 
-        if Estrai.idoneita:
+        if estrai.idoneita:
             idoneita = glob.glob('idoneit*.pdf')
 
             if idoneita:
@@ -93,7 +103,7 @@ def estrai_dati2(request):
         if os.path.isdir(path_attestati):
             os.chdir(path_attestati)
 
-            for corso in Estrai.formazione(Estrai):
+            for corso in estrai.formazione():
                 certificato = glob.glob('%s*.pdf' % corso)
                 if certificato:
                     copia(path_attestati, certificato[0], cognome, nome, corso)
@@ -102,7 +112,7 @@ def estrai_dati2(request):
         if os.path.isdir(path_nomine):
             os.chdir(path_nomine)
 
-            for nomina in Estrai.nomine(Estrai):
+            for nomina in estrai.nomine():
                 incarico = glob.glob('%s*.pdf' % nomina)
 
                 if incarico:
