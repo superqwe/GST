@@ -41,10 +41,9 @@ class Estrai:
 
     def formazione(self):
         attestati = ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
-                     'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
-                     'carrelli' * self.muletto, 'ple' * self.ple, 'autogru' * self.gru,
-                     'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
-                     'ponteggi' * self.ponteggi, 'rir' * self.rir)
+                     'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3, 'carrelli' * self.muletto,
+                     'ple' * self.ple, 'autogru' * self.gru, 'imbracatore' * self.imbracatore,
+                     'spazi.confinati' * self.spazi_confinati, 'ponteggi' * self.ponteggi, 'rir' * self.rir)
         return attestati
 
     def formazione_tutti(self):

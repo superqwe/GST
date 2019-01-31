@@ -5,7 +5,7 @@ import time
 
 import pandas as pd
 
-from personale.models import Lavoratore, Azienda
+from personale.models import Lavoratore, Azienda, Cantiere
 
 ADESSO = time.time()
 OGGI = datetime.date.today()
@@ -215,7 +215,7 @@ def aggiorna_scadenza_documenti():
                         mtime = os.stat(pth).st_mtime
 
                         # gg è il numero di giorni di vecchiaia del documento
-                        gg = 14
+                        gg = 7
                         if mtime >= ADESSO - gg * 24 * 60 * 60:
                             print('   ', documento)
                             documento = documento.lower()
@@ -374,8 +374,8 @@ def importa_dati():
             lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
             lavoratore.mansione = mansione
             lavoratore.in_forza = in_forza
-            lavoratore.azienda = azienda
-            lavoratore.cantiere = cantiere
+            lavoratore.azienda = Azienda.objects.get(nome=azienda)
+            lavoratore.cantiere = Cantiere.objects.get(nome=cantiere)
 
             lavoratore.save()
 
