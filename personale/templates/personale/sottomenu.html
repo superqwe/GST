@@ -30,8 +30,12 @@
        <!--data-toggle="tooltip" data-placement="top" title="Personale anche Non In Forza"-->
        <!--href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>-->
 
+
      <a class="nav-link {% if pagina_attiva == 'unilav' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="UNILAV"
        href="/personale/unilav"><i class="fas fa-calendar-check fa-2x"></i></a>
 
+     <a class="nav-link {% if pagina_attiva == 'arcelormittal' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Arcelot Mittal"
+       href="/personale/completo/in_forza/am"><img src="{% static 'personale/img/am-logo.svg' %}" height="32px"></a>
 </nav>

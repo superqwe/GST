@@ -26,6 +26,9 @@ def completo(request, filtro=False, ordinamento=None):
     if ordinamento == 'a':
         dati = views_util.lavoratori_suddivisi_per_azienda()
         pagina_attiva = 'azienda'
+    elif ordinamento == 'am':
+        dati = views_util.lavoratori_suddivisi_per_azienda('arcelormittal')
+        pagina_attiva = 'arcelormittal'
     elif ordinamento == 'c':
         dati = views_util.lavoratori_suddivisi_per_azienda('cantiere')
         pagina_attiva = 'cantiere'

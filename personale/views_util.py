@@ -2,7 +2,7 @@ import datetime
 
 from django.db.models import Q
 
-from personale.models import Lavoratore, Azienda
+from personale.models import Lavoratore, Azienda, Cantiere
 
 AZIENDE = ('Modomec', 'Building', 'Rimec', 'Welding', '-')
 
@@ -44,9 +44,14 @@ def lavoratori_suddivisi_per_azienda(ordine=None):
         if ordine == 'cantiere':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('-cantiere', 'cognome',
                                                                                             'nome')
+        elif ordine == 'arcelormittal':
+            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda, cantiere=Cantiere.objects.get(
+                nome='ArcelorMittal')).filter().order_by('cognome', 'nome')
+
         elif ordine == 'stato':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).filter(
                 Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
+
         elif ordine == 'idoneita':
             lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('idoneita', 'cognome',
                                                                                             'nome')
