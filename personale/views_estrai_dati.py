@@ -1,10 +1,8 @@
-import datetime
 import glob
 import os
 import shutil
 
 import pandas as pd
-from django.http import HttpResponse
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
@@ -18,8 +16,8 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 class Estrai:
     def __init__(self):
         # base
-        self.unilav = 1
-        self.idoneita = 1
+        self.unilav = 0
+        self.idoneita = 0
 
         # formazione
         self.art37 = 1
@@ -112,7 +110,7 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
     shutil.copy(da, a)
 
 
-def estrai_dati_da_excel():
+def estrazione_da_excel():
     xls = pd.ExcelFile(os.path.join(PATH2, FIN))
     df = xls.parse('1d')
     estrai = Estrai()
@@ -126,16 +124,16 @@ def estrai_dati_da_excel():
     os.chdir(PATH_HOME)
 
 
-def estrai_cantiere(azienda=None, cantiere=None):
+def estrazione_selettiva(azienda=None, cantiere=None):
     estrai = Estrai()
 
+    lavoratori = Lavoratore.objects.all()
+
     if azienda:
-        azienda = Azienda.objects.get(nome=azienda)
+        lavoratori = lavoratori.filter(azienda=Azienda.objects.get(nome=azienda))
 
     if cantiere:
-        cantiere = Cantiere.objects.get(nome=cantiere)
-
-    lavoratori = Lavoratore.objects.filter(cantiere=cantiere)
+        lavoratori = lavoratori.filter(cantiere=Cantiere.objects.get(nome=cantiere))
 
     for lavoratore in lavoratori:
         cognome = lavoratore.cognome
@@ -146,6 +144,6 @@ def estrai_cantiere(azienda=None, cantiere=None):
     os.chdir(PATH_HOME)
 
 
-def estrai_dati(request):
-    estrai_cantiere(cantiere='Andritz')
-    # estrai_dati_da_excel()
+def estrai_principale(request):
+    estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
+    # estrazione_da_excel()
