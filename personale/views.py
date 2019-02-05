@@ -228,7 +228,7 @@ def test(request):
 
 
 def estrai_dati2(request):
-    views_estrai_dati.estrai_dati2(request)
+    views_estrai_dati.estrai_dati(request)
 
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
