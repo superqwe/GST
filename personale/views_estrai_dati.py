@@ -63,7 +63,45 @@ class Estrai:
         return self.nomine()
 
     def estrai(self, cognome, nome):
-        pass
+        print(cognome, nome)
+
+        path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
+        path_attestati = os.path.join(PATH, "%s %s" % (cognome, nome), 'attestati')
+        path_nomine = os.path.join(PATH, "%s %s" % (cognome, nome), 'nomine')
+
+        # documenti base
+        os.chdir(path_lavoratore)
+
+        if self.unilav:
+            unilav = glob.glob('unilav*.pdf')
+
+            if unilav:
+                copia(path_lavoratore, unilav[0], cognome, nome, 'unilav')
+
+        if self.idoneita:
+            idoneita = glob.glob('idoneit*.pdf')
+
+            if idoneita:
+                copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
+
+        # attestati corsi formazione
+        if os.path.isdir(path_attestati):
+            os.chdir(path_attestati)
+
+            for corso in self.formazione():
+                certificato = glob.glob('%s*.pdf' % corso)
+                if certificato:
+                    copia(path_attestati, certificato[0], cognome, nome, corso)
+
+        # lettere incarico
+        if os.path.isdir(path_nomine):
+            os.chdir(path_nomine)
+
+            for nomina in self.nomine():
+                incarico = glob.glob('%s*.pdf' % nomina)
+
+                if incarico:
+                    copia(path_nomine, incarico[0], cognome, nome, nomina)
 
 
 def copia(path_da, nome_pdf, cognome, nome, nome_documento):
@@ -82,45 +120,8 @@ def estrai_dati_da_excel():
     for row in df.iterrows():
         cognome = row[1]['Cognome']
         nome = row[1]['Nome']
-        print(cognome, nome)
 
-        path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
-        path_attestati = os.path.join(PATH, "%s %s" % (cognome, nome), 'attestati')
-        path_nomine = os.path.join(PATH, "%s %s" % (cognome, nome), 'nomine')
-
-        # documenti base
-        os.chdir(path_lavoratore)
-
-        if estrai.unilav:
-            unilav = glob.glob('unilav*.pdf')
-
-            if unilav:
-                copia(path_lavoratore, unilav[0], cognome, nome, 'unilav')
-
-        if estrai.idoneita:
-            idoneita = glob.glob('idoneit*.pdf')
-
-            if idoneita:
-                copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
-
-        # attestati corsi formazione
-        if os.path.isdir(path_attestati):
-            os.chdir(path_attestati)
-
-            for corso in estrai.formazione():
-                certificato = glob.glob('%s*.pdf' % corso)
-                if certificato:
-                    copia(path_attestati, certificato[0], cognome, nome, corso)
-
-        # lettere incarico
-        if os.path.isdir(path_nomine):
-            os.chdir(path_nomine)
-
-            for nomina in estrai.nomine():
-                incarico = glob.glob('%s*.pdf' % nomina)
-
-                if incarico:
-                    copia(path_nomine, incarico[0], cognome, nome, nomina)
+        estrai.estrai(cognome, nome)
 
     os.chdir(PATH_HOME)
 
@@ -133,55 +134,18 @@ def estrai_cantiere(azienda=None, cantiere=None):
 
     if cantiere:
         cantiere = Cantiere.objects.get(nome=cantiere)
-        print(cantiere)
 
     lavoratori = Lavoratore.objects.filter(cantiere=cantiere)
 
     for lavoratore in lavoratori:
         cognome = lavoratore.cognome
         nome = lavoratore.nome
-        print(cognome, nome)
 
-        path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
-        path_attestati = os.path.join(PATH, "%s %s" % (cognome, nome), 'attestati')
-        path_nomine = os.path.join(PATH, "%s %s" % (cognome, nome), 'nomine')
-
-        # documenti base
-        os.chdir(path_lavoratore)
-
-        if estrai.unilav:
-            unilav = glob.glob('unilav*.pdf')
-
-            if unilav:
-                copia(path_lavoratore, unilav[0], cognome, nome, 'unilav')
-
-        if estrai.idoneita:
-            idoneita = glob.glob('idoneit*.pdf')
-
-            if idoneita:
-                copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
-
-        # attestati corsi formazione
-        if os.path.isdir(path_attestati):
-            os.chdir(path_attestati)
-
-            for corso in estrai.formazione():
-                certificato = glob.glob('%s*.pdf' % corso)
-                if certificato:
-                    copia(path_attestati, certificato[0], cognome, nome, corso)
-
-        # lettere incarico
-        if os.path.isdir(path_nomine):
-            os.chdir(path_nomine)
-
-            for nomina in estrai.nomine():
-                incarico = glob.glob('%s*.pdf' % nomina)
-
-                if incarico:
-                    copia(path_nomine, incarico[0], cognome, nome, nomina)
+        estrai.estrai(cognome, nome)
 
     os.chdir(PATH_HOME)
 
 
 def estrai_dati(request):
     estrai_cantiere(cantiere='Andritz')
+    # estrai_dati_da_excel()
