@@ -20,19 +20,19 @@ class Estrai:
         self.idoneita = 0
 
         # formazione
-        self.art37 = 1
-        self.preposto = 1
-        self.primo_soccorso = 1
-        self.antincendio = 1
-        self.h2s = 1
-        self.dpi3 = 1
-        self.muletto = 1
-        self.ple = 1
-        self.gru = 1
-        self.imbracatore = 1
-        self.spazi_confinati = 1
-        self.ponteggi = 1
-        self.rir = 1
+        self.art37 = 0
+        self.preposto = 0
+        self.primo_soccorso = 0
+        self.antincendio = 0
+        self.h2s = 0
+        self.dpi3 = 0
+        self.muletto = 0
+        self.ple = 0
+        self.gru = 0
+        self.imbracatore = 0
+        self.spazi_confinati = 0
+        self.ponteggi = 0
+        self.rir = 0
 
         # nomine
         self.nomina_preposto = 1
@@ -40,10 +40,13 @@ class Estrai:
         self.nomina_antincendio = 1
 
     def formazione(self):
-        attestati = ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
-                     'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3, 'carrelli' * self.muletto,
-                     'ple' * self.ple, 'autogru' * self.gru, 'imbracatore' * self.imbracatore,
-                     'spazi.confinati' * self.spazi_confinati, 'ponteggi' * self.ponteggi, 'rir' * self.rir)
+        attestati = filter(lambda x: x != '',
+                           ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
+                            'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
+                            'carrelli' * self.muletto, 'ple' * self.ple, 'autogru' * self.gru,
+                            'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
+                            'ponteggi' * self.ponteggi, 'rir' * self.rir)
+                           )
         return attestati
 
     def formazione_tutti(self):
@@ -52,8 +55,10 @@ class Estrai:
         return self.formazione()
 
     def nomine(self):
-        incarico = ('nomina.preposto' * self.nomina_preposto, 'nomina.primo.soccorso' * self.nomina_primo_soccorso,
-                    'nomina.antincendio' * self.nomina_antincendio)
+        incarico = filter(lambda x: x != '',
+                          ('nomina.preposto' * self.nomina_preposto,
+                           'nomina.primo.soccorso' * self.nomina_primo_soccorso,
+                           'nomina.antincendio' * self.nomina_antincendio))
         return incarico
 
     def nomine_tutte(self):
@@ -145,5 +150,6 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 
 
 def estrai_principale(request):
-    estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
+    estrazione_selettiva(azienda='Modomec')
+    # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
     # estrazione_da_excel()

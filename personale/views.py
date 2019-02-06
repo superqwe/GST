@@ -5,6 +5,7 @@ import shutil
 from datetime import timedelta
 
 import pandas as pd
+from django.db.models import Count
 from django.http import HttpResponse
 from django.template import loader
 
@@ -13,6 +14,7 @@ from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 
 from personale.views_util import autorizzato
+from pprint import pprint as pp
 
 
 def index(request):
@@ -212,15 +214,28 @@ def unilav(request):
     return HttpResponse(template.render(context, request))
 
 
+def mansioni(request):
+    mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
+        totale=Count('mansione')).order_by('-totale')
+
+    dati = []
+    for mansione in mansioni:
+        dati.append((mansione['totale'], mansione['mansione']))
+        print('%2i' % mansione['totale'], mansione['mansione'])
+
+    dati = pd.DataFrame(dati, columns=('n', 'mansione'))
+    dati.to_excel('mansioni.xlsx', sheet_name='mansioni')
+
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">mansioni.xlsx creato</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
+
 def test(request):
-    lav = Lavoratore.objects.all().prefetch_related('anagrafica_set', 'formazione_set').filter(
-        anagrafica__in_forza=True)
+    mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
+        totale=Count('mansione')).order_by('-totale')
 
-    for l in lav:
-        # pp(dir(l.anagrafica_set.get().cantiere))
-        print(l.anagrafica_set.get().azienda)
-
-        # break
+    for mansione in mansioni:
+        print('%2i' % mansione['totale'], mansione['mansione'])
 
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">test</h1>

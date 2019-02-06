@@ -60,7 +60,7 @@ class Lavoratore(models.Model):
 
     # cantiere = models.CharField(max_length=10, null=True, blank=True, choices=CANTIERE, verbose_name='Cantiere')
     cantiere = models.ForeignKey('Cantiere', default=1, on_delete=models.CASCADE)
-    mansione = models.CharField(max_length=30, null=True, blank=True, verbose_name='Mansione')
+    mansione = models.CharField(max_length=50, null=True, blank=True, verbose_name='Mansione')
 
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
     codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
