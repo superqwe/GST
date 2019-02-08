@@ -6,7 +6,6 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
-FIN = '190129 AC Boiler.xlsx'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -17,7 +16,7 @@ class Estrai:
     def __init__(self):
         # base
         self.unilav = 0
-        self.idoneita = 0
+        self.idoneita = 1
 
         # formazione
         self.art37 = 0
@@ -35,9 +34,9 @@ class Estrai:
         self.rir = 0
 
         # nomine
-        self.nomina_preposto = 1
-        self.nomina_primo_soccorso = 1
-        self.nomina_antincendio = 1
+        self.nomina_preposto = 0
+        self.nomina_primo_soccorso = 0
+        self.nomina_antincendio = 0
 
     def formazione(self):
         attestati = filter(lambda x: x != '',
@@ -116,8 +115,9 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
 
 
 def estrazione_da_excel():
+    FIN = '190208 mario asl.xlsx'
     xls = pd.ExcelFile(os.path.join(PATH2, FIN))
-    df = xls.parse('1d')
+    df = xls.parse('Foglio1')
     estrai = Estrai()
 
     for row in df.iterrows():
@@ -150,6 +150,6 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 
 
 def estrai_principale(request):
-    estrazione_selettiva(azienda='Modomec')
+    # estrazione_selettiva(azienda='Modomec')
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
-    # estrazione_da_excel()
+    estrazione_da_excel()

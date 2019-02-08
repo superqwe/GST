@@ -3,7 +3,7 @@
 <nav class="nav nav-pills justify-content-end">
 
     <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}"
-       data-toggle="tooltip" data-placement="top" title="Per Azienda"
+       data-toggle="tooltip" data-placement="top" title="Alfabetico"
     href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'cantiere' %}active{% endif %}"
@@ -26,14 +26,13 @@
        <!--data-toggle="tooltip" data-placement="top" title="Alfabetico"-->
        <!--href="/personale/completo/in_forza/"><i class="fas fa-user fa-2x"></i></a>-->
 
-    <!--<a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}"-->
-       <!--data-toggle="tooltip" data-placement="top" title="Personale anche Non In Forza"-->
-       <!--href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>-->
-
-
      <a class="nav-link {% if pagina_attiva == 'unilav' %}active{% endif %}"
-       data-toggle="tooltip" data-placement="top" title="UNILAV"
+       data-toggle="tooltip" data-placement="top" title="UNILAV in Scadenza/Scaduti"
        href="/personale/unilav"><i class="fas fa-calendar-check fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'tutti' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Personale Non In Forza"
+       href="/personale/completo/"><i class="fas fa-users fa-2x"></i></a>
 
      <a class="nav-link {% if pagina_attiva == 'arcelormittal' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Arcelot Mittal"

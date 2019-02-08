@@ -35,28 +35,28 @@ class Date_Scadenza():
         self.mesi12 = self.oggi + datetime.timedelta(days=365)
 
 
-def lavoratori_suddivisi_per_azienda(ordine=None):
+def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
     dati = []
 
     for azienda in AZIENDE:
         azienda = Azienda.objects.get(nome=azienda)
 
         if ordine == 'cantiere':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('-cantiere', 'cognome',
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).order_by('-cantiere', 'cognome',
                                                                                             'nome')
         elif ordine == 'arcelormittal':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda, cantiere=Cantiere.objects.get(
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
                 nome='ArcelorMittal')).filter().order_by('cognome', 'nome')
 
         elif ordine == 'stato':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).filter(
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
                 Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
 
         elif ordine == 'idoneita':
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).order_by('idoneita', 'cognome',
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).order_by('idoneita', 'cognome',
                                                                                             'nome')
         else:
-            lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda)
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda)
 
         n = {'r': len(lavoratori.filter(stato='r')),
              'g': len(lavoratori.filter(stato='g')),

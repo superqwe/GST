@@ -43,6 +43,9 @@ def completo(request, filtro=False, ordinamento=None):
     elif ordinamento == 'v':
         dati = views_util.lavoratori_suddivisi_per_azienda('idoneita')
         pagina_attiva = 'idoneita'
+    else:
+        dati = views_util.lavoratori_suddivisi_per_azienda(in_forza=False)
+        pagina_attiva = 'tutti'
 
     template = loader.get_template('personale/principale.html')
     context = {
@@ -229,6 +232,7 @@ def mansioni(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">mansioni.xlsx creato</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
 
 def test(request):
     mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
