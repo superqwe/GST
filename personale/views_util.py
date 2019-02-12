@@ -53,11 +53,11 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
 
         elif ordine == 'idoneita':
-            lavoratori = Lavoratore.objects. \
-                filter(in_forza=in_forza, azienda=azienda). \
-                order_by('idoneita', 'cognome', 'nome'). \
-                exclude(cantiere=Cantiere.objects.get(nome='Marghera')). \
-                exclude(cantiere=Cantiere.objects.get(nome='Monfalcone'))
+            lavoratori = Lavoratore.objects \
+                .filter(in_forza=in_forza, azienda=azienda) \
+                .order_by('idoneita', 'cognome', 'nome') \
+                .exclude(
+                Q(cantiere=Cantiere.objects.get(nome='Marghera')) | Q(cantiere=Cantiere.objects.get(nome='Monfalcone')))
         else:
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda)
 
