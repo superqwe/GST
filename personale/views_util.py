@@ -37,6 +37,7 @@ class Date_Scadenza():
 
 def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
     dati = []
+    scadenza = Date_Scadenza()
 
     for azienda in AZIENDE:
         azienda = Azienda.objects.get(nome=azienda)
@@ -55,6 +56,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
         elif ordine == 'idoneita':
             lavoratori = Lavoratore.objects \
                 .filter(in_forza=in_forza, azienda=azienda) \
+                .filter(Q(idoneita__lte=scadenza.mesi2) | Q(idoneita=None)) \
                 .order_by('idoneita', 'cognome', 'nome') \
                 .exclude(
                 Q(cantiere=Cantiere.objects.get(nome='Marghera')) | Q(cantiere=Cantiere.objects.get(nome='Monfalcone')))
