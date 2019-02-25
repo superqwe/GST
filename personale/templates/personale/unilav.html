@@ -49,11 +49,9 @@ UNILAV
                         {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
                         {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
                         {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
                             {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
-                        {% if  lavoratore.indeterminato %}
-                            <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav ind.pdf" target="_blank">
-                            {{lavoratore.unilav|default_if_none:""}} IND</a>  {% endif %}
+
                     </td>
                 </tr>
             {% endfor %}
@@ -77,11 +75,8 @@ UNILAV
                         {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
                         {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
                         {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
                             {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
-                        {% if  lavoratore.indeterminato %}
-                            <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav ind.pdf" target="_blank">
-                            {{lavoratore.unilav|default_if_none:""}} IND</a>  {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -105,11 +100,8 @@ UNILAV
                         {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
                         {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
                         {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
                             {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
-                        {% if  lavoratore.indeterminato %}
-                            <a href="{% static ''%}{{lavoratore.lavoratore}}/unilav ind.pdf" target="_blank">
-                            {{lavoratore.unilav|default_if_none:""}} IND</a>  {% endif %}
                     </td>
                 </tr>
         {% endfor %}
