@@ -6,6 +6,7 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
+FILE_XLS = '190225 Tenova - unilav.xlsx'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -15,8 +16,8 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 class Estrai:
     def __init__(self):
         # base
-        self.unilav = 0
-        self.idoneita = 1
+        self.unilav = 1
+        self.idoneita = 0
 
         # formazione
         self.art37 = 0
@@ -32,6 +33,7 @@ class Estrai:
         self.spazi_confinati = 0
         self.ponteggi = 0
         self.rir = 0
+        self.rls = 0
 
         # nomine
         self.nomina_preposto = 0
@@ -44,7 +46,7 @@ class Estrai:
                             'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
                             'carrelli' * self.muletto, 'ple' * self.ple, 'autogru' * self.gru,
                             'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
-                            'ponteggi' * self.ponteggi, 'rir' * self.rir)
+                            'ponteggi' * self.ponteggi, 'rir' * self.rir, 'rls' * self.rls)
                            )
         return attestati
 
@@ -115,8 +117,8 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
 
 
 def estrazione_da_excel():
-    FIN = '190208 mario asl.xlsx'
-    xls = pd.ExcelFile(os.path.join(PATH2, FIN))
+    fin = FILE_XLS
+    xls = pd.ExcelFile(os.path.join(PATH2, fin))
     df = xls.parse('Foglio1')
     estrai = Estrai()
 
