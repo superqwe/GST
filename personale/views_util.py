@@ -59,10 +59,10 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 .filter(Q(idoneita__lte=scadenza.mesi2) | Q(idoneita=None)) \
                 .order_by('idoneita', 'cognome', 'nome') \
                 .exclude(
-                Q(cantiere=Cantiere.objects.get(nome='Marghera')) | Q(
-                    cantiere=Cantiere.objects.get(nome='Monfalcone')) | Q(
-                    cantiere=Cantiere.objects.get(nome='Andritz')) | Q(
-                    cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                Q(cantiere=Cantiere.objects.get(nome='Marghera')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Monfalcone')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
+                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
             )
 
         else:
