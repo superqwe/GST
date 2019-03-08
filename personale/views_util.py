@@ -43,7 +43,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
         azienda = Azienda.objects.get(nome=azienda)
 
         if ordine == 'cantiere':
-            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).order_by('-cantiere', 'cognome',
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).order_by('cantiere', 'cognome',
                                                                                                 'nome')
         elif ordine == 'arcelormittal':
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
@@ -60,9 +60,11 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 .order_by('idoneita', 'cognome', 'nome') \
                 .exclude(
                 Q(cantiere=Cantiere.objects.get(nome='Marghera')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Monfalcone')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
-                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
+                # | Q(cantiere=Cantiere.objects.get(nome='-')) \
+                # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
             )
 
         else:
