@@ -50,8 +50,17 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 nome='ArcelorMittal')).filter().order_by('cognome', 'nome')
 
         elif ordine == 'stato':
-            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
-                Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome')
+            lavoratori = Lavoratore.objects \
+                .filter(in_forza=in_forza, azienda=azienda) \
+                .filter(Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome') \
+                .exclude(
+                Q(cantiere=Cantiere.objects.get(nome='Marghera')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
+                | Q(cantiere=Cantiere.objects.get(nome='-')) \
+                # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+            )
 
         elif ordine == 'idoneita':
             lavoratori = Lavoratore.objects \
@@ -63,8 +72,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 | Q(cantiere=Cantiere.objects.get(nome='Fincantieri')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='-')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                | Q(cantiere=Cantiere.objects.get(nome='-')) \
+                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
             )
 
         else:
