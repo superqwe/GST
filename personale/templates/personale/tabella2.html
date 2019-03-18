@@ -40,8 +40,8 @@
         {% endif %}</td>
     {% if tabella_completa %}<td> {{anagrafica.azienda|default_if_none:""}}</td>{% endif %}
 
-    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}">{{lavoratore.cognome}}</a></th>
-    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}">{{lavoratore.nome}}</a></th>
+    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
     <td class="text-left"> {{lavoratore.mansione|default_if_none:""}}</td>
     <td> {{lavoratore.cantiere|default_if_none:""}}</td>
     <td {% if lavoratore.idoneita < scadenza.oggi  or not lavoratore.idoneita %} class="alert alert-danger" role="alert"

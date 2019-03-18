@@ -43,8 +43,8 @@ UNILAV
             <tbody>
             {% for lavoratore in lavoratori|slice:"0:30" %}
                 <tr>
-                    <th scope="row" class="text-left">{{lavoratore.cognome}}</th>
-                    <th scope="row" class="text-left">{{lavoratore.nome}}</th>
+                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
                     <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
                         {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
                         {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
