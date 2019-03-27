@@ -95,12 +95,15 @@ def lavoratori_con_nomine():
 
     for azienda in AZIENDE:
         azienda = Azienda.objects.get(nome=azienda)
-        lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).exclude(nomina_preposto__isnull=True,
+        lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=azienda).exclude(preposto__isnull=True,
+                                                                                       antincendio__isnull=True,
+                                                                                       primo_soccorso__isnull=True,
+                                                                                       rls__isnull=True,
+                                                                                       nomina_preposto__isnull=True,
                                                                                        nomina_antincendio__isnull=True,
                                                                                        nomina_primo_soccorso__isnull=True,
                                                                                        nomina_rls__isnull=True,
                                                                                        nomina_aspp__isnull=True)
-
         n = {'r': len(lavoratori.filter(stato='r')),
              'g': len(lavoratori.filter(stato='g')),
              'v': len(lavoratori.filter(stato='v')),
