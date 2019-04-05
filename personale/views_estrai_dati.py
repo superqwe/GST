@@ -68,7 +68,7 @@ class Estrai:
         return self.nomine()
 
     def estrai(self, cognome, nome):
-        cognome = cognome.replace(' ', '_')
+        cognome = cognome  .strip().replace(' ', '_')
         print(cognome, nome)
 
         path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
@@ -127,6 +127,9 @@ def estrazione_da_excel():
     xls = pd.ExcelFile(os.path.join(PATH2, fin))
     df = xls.parse(NOME_FOGLIO)
     estrai = Estrai()
+
+    # commentare per estrazione attestati selezionati
+    estrai.formazione_tutti()
 
     for row in df.iterrows():
         cognome = row[1]['Cognome']

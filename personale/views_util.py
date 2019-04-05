@@ -54,9 +54,10 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 .filter(in_forza=in_forza, azienda=azienda) \
                 .filter(Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome') \
                 .exclude(
-                Q(cantiere=Cantiere.objects.get(nome='Marghera')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
+                Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
                 # | Q(cantiere=Cantiere.objects.get(nome='-')) \
                 # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
@@ -68,9 +69,10 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 .filter(Q(idoneita__lte=scadenza.mesi2) | Q(idoneita=None)) \
                 .order_by('idoneita', 'cognome', 'nome') \
                 .exclude(
-                Q(cantiere=Cantiere.objects.get(nome='Marghera')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz')) \
+                Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
                 # | Q(cantiere=Cantiere.objects.get(nome='-')) \
                 # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
