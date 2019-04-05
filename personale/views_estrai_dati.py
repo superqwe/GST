@@ -6,7 +6,8 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
-FILE_XLS = '190225 Tenova - unilav.xlsx'
+FILE_XLS = '190404 Macchi.xlsx'
+NOME_FOGLIO = 'Foglio1'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -17,7 +18,7 @@ class Estrai:
     def __init__(self):
         # base
         self.unilav = 1
-        self.idoneita = 0
+        self.idoneita = 1
 
         # formazione
         self.art37 = 0
@@ -67,6 +68,7 @@ class Estrai:
         return self.nomine()
 
     def estrai(self, cognome, nome):
+        cognome = cognome.replace(' ', '_')
         print(cognome, nome)
 
         path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
@@ -74,7 +76,11 @@ class Estrai:
         path_nomine = os.path.join(PATH, "%s %s" % (cognome, nome), 'nomine')
 
         # documenti base
-        os.chdir(path_lavoratore)
+        try:
+            os.chdir(path_lavoratore)
+        except FileNotFoundError:
+            print('   --> Non esiste')
+            return
 
         if self.unilav:
             unilav = glob.glob('unilav*.pdf')
@@ -119,7 +125,7 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
 def estrazione_da_excel():
     fin = FILE_XLS
     xls = pd.ExcelFile(os.path.join(PATH2, fin))
-    df = xls.parse('Foglio1')
+    df = xls.parse(NOME_FOGLIO)
     estrai = Estrai()
 
     for row in df.iterrows():
