@@ -6,8 +6,12 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
-FILE_XLS = '190404 Macchi.xlsx'
-NOME_FOGLIO = 'Foglio1'
+# FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
+# FILE_XLS = '190404 Macchi.xlsx'
+# NOME_FOGLIO = 'Foglio1'
+
+FILE_XLS = '190312-15 corso antincendio2.xlsx'
+NOME_FOGLIO = 'Foglio11'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -17,7 +21,7 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 class Estrai:
     def __init__(self):
         # base
-        self.unilav = 1
+        self.unilav = 0
         self.idoneita = 1
 
         # formazione
@@ -129,7 +133,7 @@ def estrazione_da_excel():
     estrai = Estrai()
 
     # commentare per estrazione attestati selezionati
-    estrai.formazione_tutti()
+    # estrai.formazione_tutti()
 
     for row in df.iterrows():
         cognome = row[1]['Cognome']

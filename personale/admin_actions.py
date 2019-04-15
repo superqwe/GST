@@ -199,6 +199,7 @@ def aggiorna_scadenza_documenti():
 
     lavoratori = Lavoratore.objects.filter(in_forza=True).values_list('cognome', 'nome')
 
+    print('\n'*3)
     for root, dirs, files in os.walk(path_base):
         path = root[len(path_base) + 1:].lower()
 
@@ -207,7 +208,7 @@ def aggiorna_scadenza_documenti():
                 cognome, nome = path.title().split('\\')[0].split(maxsplit=1)
 
                 if (cognome, nome) in lavoratori:
-                    print('\n', cognome, nome)
+                    # print('\n', cognome, nome)
                     lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome)[0]
 
                     for documento in files:
@@ -217,6 +218,7 @@ def aggiorna_scadenza_documenti():
                         # gg è il numero di giorni di vecchiaia del documento
                         gg = 7
                         if mtime >= ADESSO - gg * 24 * 60 * 60:
+                            print('\n', cognome, nome)
                             print('   ', documento)
                             documento = documento.lower()
 
@@ -307,6 +309,7 @@ def aggiorna_scadenza_documenti():
 
             except ValueError:
                 print('*** Errore in ', path)
+    print('\n'*3)
 
 
 def aggiorna_elenco_lavoratori():
