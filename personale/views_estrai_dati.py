@@ -7,11 +7,11 @@ import pandas as pd
 from personale.models import Azienda, Lavoratore, Cantiere
 
 # FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
-# FILE_XLS = '190404 Macchi.xlsx'
-# NOME_FOGLIO = 'Foglio1'
+FILE_XLS = '190417 Macchi.xlsx'
+NOME_FOGLIO = 'Foglio1'
 
-FILE_XLS = '190312-15 corso antincendio2.xlsx'
-NOME_FOGLIO = 'Foglio11'
+# FILE_XLS = '190312-15 corso antincendio2.xlsx'
+# NOME_FOGLIO = 'Foglio11'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -21,7 +21,7 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 class Estrai:
     def __init__(self):
         # base
-        self.unilav = 0
+        self.unilav = 1
         self.idoneita = 1
 
         # formazione
@@ -72,7 +72,7 @@ class Estrai:
         return self.nomine()
 
     def estrai(self, cognome, nome):
-        cognome = cognome  .strip().replace(' ', '_')
+        cognome = cognome.strip().replace(' ', '_')
         print(cognome, nome)
 
         path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))
@@ -128,12 +128,17 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
 
 def estrazione_da_excel():
     fin = FILE_XLS
-    xls = pd.ExcelFile(os.path.join(PATH2, fin))
+
+    try:
+        xls = pd.ExcelFile(os.path.join(PATH2, fin))
+    except FileNotFoundError:
+        return 'Il File "%s" non esiste' % fin
+
     df = xls.parse(NOME_FOGLIO)
     estrai = Estrai()
 
     # commentare per estrazione attestati selezionati
-    # estrai.formazione_tutti()
+    estrai.formazione_tutti()
 
     for row in df.iterrows():
         cognome = row[1]['Cognome']
@@ -167,4 +172,5 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 def estrai_principale(request):
     # estrazione_selettiva(azienda='Modomec')
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
-    estrazione_da_excel()
+    errore = estrazione_da_excel()
+    return errore

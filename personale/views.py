@@ -12,9 +12,7 @@ from django.template import loader
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
-
 from personale.views_util import autorizzato
-from pprint import pprint as pp
 
 
 def index(request):
@@ -247,8 +245,14 @@ def test(request):
 
 
 def estrai_dati2(request):
-    views_estrai_dati.estrai_principale(request)
-
     ora = datetime.datetime.now()
+    errore = views_estrai_dati.estrai_principale(request)
+    print(errore)
+
+    if errore:
+        return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
+                                <h2 style="text-align:center">%s</h2> 
+                                <p style="text-align:center">%s</p>""" % (ora, errore))
+
     return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
