@@ -72,6 +72,10 @@ class Estrai:
         return self.nomine()
 
     def estrai(self, cognome, nome):
+
+        if pd.isna(cognome):
+            return
+
         cognome = cognome.strip().replace(' ', '_')
         print(cognome, nome)
 
@@ -126,7 +130,7 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
     shutil.copy(da, a)
 
 
-def estrazione_da_excel():
+def estrazione_da_excel(tutto=False):
     fin = FILE_XLS
 
     try:
@@ -137,8 +141,8 @@ def estrazione_da_excel():
     df = xls.parse(NOME_FOGLIO)
     estrai = Estrai()
 
-    # commentare per estrazione attestati selezionati
-    estrai.formazione_tutti()
+    if tutto:
+        estrai.formazione_tutti()
 
     for row in df.iterrows():
         cognome = row[1]['Cognome']
@@ -172,5 +176,5 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 def estrai_principale(request):
     # estrazione_selettiva(azienda='Modomec')
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
-    errore = estrazione_da_excel()
+    errore = estrazione_da_excel(True)
     return errore
