@@ -78,6 +78,7 @@ class Lavoratore(models.Model):
     dpi3 = models.DateField(null=True, blank=True, verbose_name='DPI3')
 
     carrello = models.DateField(null=True, blank=True, verbose_name='Muletto')
+    escavatore = models.DateField(null=True, blank=True, verbose_name='Escavatore')
     ple = models.DateField(null=True, blank=True, verbose_name='PLE')
     gru = models.DateField(null=True, blank=True)
     imbracatore = models.DateField(null=True, blank=True)

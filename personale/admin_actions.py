@@ -259,6 +259,9 @@ def aggiorna_scadenza_documenti():
                                 elif tipo in ('carrelli', 'carrello', 'sollevatore'):
                                     lavoratore.carrello = scadenza2date(documento)
 
+                                elif tipo in ('escavatore', 'escavatori'):
+                                    lavoratore.escavatore = scadenza2date(documento)
+
                                 elif tipo == 'ple':
                                     lavoratore.ple = scadenza2date(documento)
 

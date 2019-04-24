@@ -59,8 +59,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='-')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                | Q(cantiere=Cantiere.objects.get(nome='-')) \
+                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
             )
 
         elif ordine == 'idoneita':
@@ -74,8 +74,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='-')) \
-                # | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                | Q(cantiere=Cantiere.objects.get(nome='-')) \
+                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
             )
 
         else:

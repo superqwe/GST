@@ -6,8 +6,8 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
-# FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
-FILE_XLS = '190417 Macchi.xlsx'
+FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
+# FILE_XLS = '190417 Macchi.xlsx'
 NOME_FOGLIO = 'Foglio1'
 
 # FILE_XLS = '190312-15 corso antincendio2.xlsx'
