@@ -3,20 +3,20 @@ import glob
 import os
 import shutil
 from datetime import timedelta
-from pprint import pprint as pp
 
+import openpyxl
 import pandas as pd
 from django.db.models import Count
 from django.http import HttpResponse
 from django.template import loader
+from django_pandas.io import read_frame
+from openpyxl.styles import Border, Side
 
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_util import autorizzato
 
-from django_pandas.io import read_frame
-from openpyxl import load_workbook
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -272,12 +272,35 @@ def formazione(request):
     aziende = ('modomec', 'building', 'rimec', 'welding')
 
     with pd.ExcelWriter('formazione.xlsx', engine='openpyxl') as writer:
-
-        for lav, az in zip(lavoratori, aziende):
+        for lav, azienda in zip(lavoratori, aziende):
             dati = read_frame(lav)
-            dati.to_excel(writer, az)
+            dati.drop(
+                ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'indeterminato', 'unilav', 'rls',
+                 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
+                 'nomina_aspp'],
+                axis=1, inplace=True)
+            dati.to_excel(writer, azienda)
 
         writer.save()
+
+    wb = openpyxl.load_workbook('formazione.xlsx')
+    thin = Side(border_style="thin", color="000000")
+
+    for azienda in aziende:
+        ws = wb[azienda]
+
+        ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
+        ws.page_setup.paperSize = ws.PAPERSIZE_A3
+        ws.print_title_rows = '1:1'
+        ws.oddFooter.right.text = "Page &[Page] of &N"
+
+        ws.delete_cols(1, 1)
+        ws.insert_rows(1)
+        ws.cell(row=1, column=1).value = azienda.title()
+        ws.cell(row=5, column=5).border = Border(bottom=thin)
+        wb.save('formazione.xlsx')
+
+    wb.close()
 
     return HttpResponse("""<h1 style="text-align:center">formazione</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
