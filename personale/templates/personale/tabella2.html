@@ -167,7 +167,7 @@
         {% elif  lavoratore.imbracatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.imbracatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
-        {% if lavoratore.gru %}
+        {% if lavoratore.imbracatore %}
         <a href="{% static ''%}{{lavoratore}}/attestati/imbracatore {{lavoratore.imbracatore|date:"dm"}}{{lavoratore.imbracatore|date:"y"|add:-5}}.pdf" target="_blank">
              {{lavoratore.imbracatore|default_if_none:""}}</a>
         {% endif %}

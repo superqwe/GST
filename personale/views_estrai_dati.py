@@ -6,12 +6,12 @@ import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
-FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
-# FILE_XLS = '190417 Macchi.xlsx'
-NOME_FOGLIO = 'Foglio1'
+# FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
+# # FILE_XLS = '190417 Macchi.xlsx'
+# NOME_FOGLIO = 'Foglio1'
 
-# FILE_XLS = '190312-15 corso antincendio2.xlsx'
-# NOME_FOGLIO = 'Foglio11'
+FILE_XLS = '190502 Tenova.xlsx'
+NOME_FOGLIO = 'Foglio1'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
@@ -87,7 +87,7 @@ class Estrai:
         try:
             os.chdir(path_lavoratore)
         except FileNotFoundError:
-            print('   --> Non esiste')
+            print('   ----------> Non esiste')
             return
 
         if self.unilav:

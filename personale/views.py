@@ -3,6 +3,7 @@ import glob
 import os
 import shutil
 from datetime import timedelta
+from pprint import pprint as pp
 
 import pandas as pd
 from django.db.models import Count
@@ -14,6 +15,8 @@ from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_util import autorizzato
 
+from django_pandas.io import read_frame
+from openpyxl import load_workbook
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -255,4 +258,26 @@ def estrai_dati2(request):
                                 <p style="text-align:center">%s</p>""" % (ora, errore))
 
     return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def formazione(request):
+    ora = datetime.datetime.now()
+    modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
+    building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
+    rimec = Lavoratore.objects.filter(azienda__nome='Rimec', in_forza=True).order_by('cognome', 'nome')
+    welding = Lavoratore.objects.filter(azienda__nome='Welding', in_forza=True).order_by('cognome', 'nome')
+
+    lavoratori = (modomec, building, rimec, welding)
+    aziende = ('modomec', 'building', 'rimec', 'welding')
+
+    with pd.ExcelWriter('formazione.xlsx', engine='openpyxl') as writer:
+
+        for lav, az in zip(lavoratori, aziende):
+            dati = read_frame(lav)
+            dati.to_excel(writer, az)
+
+        writer.save()
+
+    return HttpResponse("""<h1 style="text-align:center">formazione</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
