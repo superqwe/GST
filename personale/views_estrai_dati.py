@@ -10,13 +10,14 @@ from personale.models import Azienda, Lavoratore, Cantiere
 # # FILE_XLS = '190417 Macchi.xlsx'
 # NOME_FOGLIO = 'Foglio1'
 
-FILE_XLS = '190502 Tenova.xlsx'
+FILE_XLS = '190513 Tenova.xlsx'
 NOME_FOGLIO = 'Foglio1'
 
 PATH_HOME = os.getcwd()
 PATH = r'C:\Users\leonardo.masi\Documents\Personale'
 PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 
+ESTRAI_TUTTO = False
 
 class Estrai:
     def __init__(self):
@@ -25,7 +26,7 @@ class Estrai:
         self.idoneita = 1
 
         # formazione
-        self.art37 = 0
+        self.art37 = 1
         self.preposto = 0
         self.primo_soccorso = 0
         self.antincendio = 0
@@ -176,5 +177,5 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 def estrai_principale(request):
     # estrazione_selettiva(azienda='Modomec')
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
-    errore = estrazione_da_excel(True)
+    errore = estrazione_da_excel(ESTRAI_TUTTO)
     return errore
