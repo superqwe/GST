@@ -31,112 +31,130 @@ UNILAV
 
 <div class="table-responsive">
     <div class="d-flex flex-row bd-highlight mb-3">
-        <div class="p-2 bd-highlight"><table class="table table-striped table-sm text-center ">
-            <thead class="thead-light">
-                <tr>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>UNILAV</th>
+        <div class="p-2 bd-highlight">
+            <table class="table table-striped table-sm text-center ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cognome</th>
+                        <th>Nome</th>
+                        <th>UNILAV</th>
 
-                </tr>
-            </thead>
-            <tbody>
-            {% for lavoratore in lavoratori_r|slice:"0:30" %}
-                <tr>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
-                    <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
-                            {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lavoratore in lavoratori_r|slice:"0:30" %}
+                    <tr>
+                        <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+                        <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
+                        <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}>
+                            <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                                {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
 
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table></div>
-        <div class="p-2 bd-highlight"><table class="table table-striped table-sm text-center ">
-            <thead class="thead-light">
-                <tr>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>UNILAV</th>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                </tr>
-            </thead>
-            <tbody>
-            {% for lavoratore in lavoratori_r|slice:"30:60" %}
-                <tr>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
-                    <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
-                            {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
+        {% if lavoratori_r|slice:"30:60"|length > 0 %}
+            <div class="p-2 bd-highlight"><table class="table table-striped table-sm text-center ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cognome</th>
+                        <th>Nome</th>
+                        <th>UNILAV</th>
 
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table></div>
-        <div class="p-2 bd-highlight"><table class="table table-striped table-sm text-center ">
-        <thead class="thead-light">
-            <tr>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>UNILAV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lavoratore in lavoratori_r|slice:"30:60" %}
+                    <tr>
+                        <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+                        <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
+                        <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                            {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                            {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                            {% endif %}>
+                            <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                                {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for lavoratore in lavoratori_r|slice:"60:" %}
-                <tr>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
-                    <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
-                            {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table></div>
+        {% endif %}
 
-                    </td>
-                </tr>
-        {% endfor %}
-        </tbody>
-    </table></div>
+        {% if lavoratori_r|slice:"60:"|length > 0 %}
+            <div class="p-2 bd-highlight">
+                <table class="table table-striped table-sm text-center ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Cognome</th>
+                            <th>Nome</th>
+                            <th>UNILAV</th>
 
-    <div class="p-2 bd-highlight"><table class="table table-striped table-sm text-center ">
-        <thead class="thead-light">
-            <tr>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>UNILAV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for lavoratore in lavoratori_r|slice:"60:" %}
+                            <tr>
+                                <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+                                <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
+                                <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                                    {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                                    {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                                    {% endif %}>
+                                    <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                                        {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for lavoratore in lavoratori %}
-                <tr>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
-                    <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
-                    <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                        {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
-                        {% endif %}>
-                        <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
-                            {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
 
-                    </td>
-                </tr>
-        {% endfor %}
-        </tbody>
-    </table></div>
+
+        <div class="p-2 bd-highlight">
+            <table class="table table-striped table-sm text-center ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Cognome</th>
+                        <th>Nome</th>
+                        <th>UNILAV</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lavoratore in lavoratori %}
+                        <tr>
+                            <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.cognome}}</a></th>
+                            <th scope="row" class="text-left"><a class="text-dark" href="/admin/personale/lavoratore/{{lavoratore.pk}}" target="_blank">{{lavoratore.nome}}</a></th>
+                            <td {% if lavoratore.unilav < scadenza.oggi %} class="alert alert-danger" role="alert"
+                                {% elif lavoratore.unilav < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                                {% elif lavoratore.unilav < scadenza.mesi2 %} class="alert alert-info" role="alert"
+                                {% endif %}>
+                                <a href="{% static ''%}{{lavoratore.cognome}} {{lavoratore.nome}}/unilav {{lavoratore.unilav|date:"dmy"}}.pdf" target="_blank">
+                                    {{lavoratore.unilav|date:"d/m/y"|default_if_none:""}}</a>
+
+                            </td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </div>
+
+{% if lavoratori_r|slice:"30:60"|length > 0 %}
+ciaaao
+{% endif %}
+
 {% endblock %}
