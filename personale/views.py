@@ -10,7 +10,7 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.template import loader
 from django_pandas.io import read_frame
-from openpyxl.styles import Side
+from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
@@ -285,20 +285,55 @@ def formazione(request):
         writer.save()
 
     wb = openpyxl.load_workbook('formazione.xlsx')
-    thin = Side(border_style="thin", color="000000")
 
     for azienda in aziende:
         ws = wb[azienda]
 
         ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
         ws.page_setup.paperSize = ws.PAPERSIZE_A3
-        ws.print_title_rows = '1:1'
+
+        ws.sheet_properties.pageSetUpPr.fitToPage = True
+        ws.page_setup.fitToHeight = False
+
+        ws.print_title_rows = '1:2'
         ws.oddFooter.right.text = "Page &[Page] of &N"
+        ws.oddFooter.left.text = "Aggiornato al %s " % datetime.datetime.now().strftime("%d/%m/%y")
 
         ws.delete_cols(1, 1)
         ws.insert_rows(1)
-        ws.cell(row=1, column=1).value = azienda.title()
-        # ws.cell(row=5, column=5).border = Border(bottom=thin)
+        ws.cell(row=1, column=1).value = azienda.upper()
+        ws['A1'].font = Font(size=18, color='007e60')
+
+        for cell in ws['A2:S2'][0]:
+            cell.border = Border(top=Side(border_style='thin', color='000000'),
+                                 bottom=Side(border_style='thin', color='000000'))
+
+        max_row = ws.max_row
+        rows = ws['A3:S%i' % max_row]
+        for i, row in enumerate(rows):
+
+            for cell in row:
+                cell.border = Border(bottom=Side(border_style='thin', color='cccccc'))
+                cell.number_format = 'DD/MM/YY'
+
+                if cell.column >= 'E':
+                    cell.alignment = Alignment(horizontal='center')
+
+                if i % 2:
+                    cell.fill = PatternFill(start_color='eeeeee', end_color='eeeeee', fill_type='solid')
+
+        for cell in ws['A%i:S%i' % (max_row, max_row)][0]:
+            print(cell.column)
+            cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
+
+        dims = {}
+        for row in ws.rows:
+            for cell in row:
+                if cell.value:
+                    dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
+        for col, value in dims.items():
+            ws.column_dimensions[col].width = value
+
         wb.save('formazione.xlsx')
 
     wb.close()
