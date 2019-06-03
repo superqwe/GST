@@ -199,18 +199,19 @@ def unilav(request):
     fino_al = oggi + timedelta(7)
 
     lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
-                                           unilav__lte=fino_al)
+                                           unilav__lte=fino_al, unilav__gte=oggi)
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
                                              unilav__lt=oggi)
 
-    n = {'r': len(lavoratori_r), 't': len(lavoratori)}
-    n['g'] = n['t'] - n['r']
+    n = {'r': len(lavoratori_r), 'g': len(lavoratori)}
+    n['t'] = n['g'] + n['r']
 
     template = loader.get_template('personale/unilav.html')
     context = {
         'autorizzato': autorizzato(request.user),
         'fino_al': fino_al,
         'lavoratori': lavoratori,
+        'lavoratori_r': lavoratori_r,
         'scadenza': views_util.Date_Scadenza(),
         'n': n
     }

@@ -22,11 +22,11 @@ ESTRAI_TUTTO = False
 class Estrai:
     def __init__(self):
         # base
-        self.unilav = 1
-        self.idoneita = 1
+        self.unilav = 0
+        self.idoneita = 0
 
         # formazione
-        self.art37 = 1
+        self.art37 = 0
         self.preposto = 0
         self.primo_soccorso = 0
         self.antincendio = 0
@@ -44,7 +44,7 @@ class Estrai:
         # nomine
         self.nomina_preposto = 0
         self.nomina_primo_soccorso = 0
-        self.nomina_antincendio = 0
+        self.nomina_antincendio = 1
 
     def formazione(self):
         attestati = filter(lambda x: x != '',
@@ -173,9 +173,11 @@ def estrazione_selettiva(azienda=None, cantiere=None):
 
     os.chdir(PATH_HOME)
 
+    return
+
 
 def estrai_principale(request):
-    # estrazione_selettiva(azienda='Modomec')
+    errore = estrazione_selettiva(azienda='Modomec')
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
-    errore = estrazione_da_excel(ESTRAI_TUTTO)
+    # errore = estrazione_da_excel(ESTRAI_TUTTO)
     return errore
