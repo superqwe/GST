@@ -10,7 +10,7 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.template import loader
 from django_pandas.io import read_frame
-from openpyxl.styles import Border, Side
+from openpyxl.styles import Side
 
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
@@ -298,10 +298,18 @@ def formazione(request):
         ws.delete_cols(1, 1)
         ws.insert_rows(1)
         ws.cell(row=1, column=1).value = azienda.title()
-        ws.cell(row=5, column=5).border = Border(bottom=thin)
+        # ws.cell(row=5, column=5).border = Border(bottom=thin)
         wb.save('formazione.xlsx')
 
     wb.close()
+
+    if os.path.exists('formazione.xlsx'):
+        with open('formazione.xlsx', "rb") as excel:
+            data = excel.read()
+
+        response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=%s_Report.xlsx' % id
+        return response
 
     return HttpResponse("""<h1 style="text-align:center">formazione</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
