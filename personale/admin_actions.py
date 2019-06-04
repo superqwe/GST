@@ -336,6 +336,8 @@ def aggiorna_elenco_lavoratori():
                         Lavoratore.objects.get(cognome=cognome, nome=nome)
                     except Lavoratore.DoesNotExist:
                         lavoratore = Lavoratore(cognome=cognome, nome=nome)
+                        lavoratore.in_forza=True
+                        lavoratore.azienda = Azienda.objects.get(nome='Modomec')
                         lavoratore.save()
                         print('Nuovo Lavoratore: ', lavoratore)
 
