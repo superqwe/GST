@@ -1,6 +1,8 @@
 import glob
 import os
+import pprint
 import shutil
+from configparser import ConfigParser
 
 import pandas as pd
 
@@ -18,6 +20,7 @@ PATH = r'C:\Users\leonardo.masi\Documents\Personale'
 PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 
 ESTRAI_TUTTO = False
+
 
 class Estrai:
     def __init__(self):
@@ -181,3 +184,17 @@ def estrai_principale(request):
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
     # errore = estrazione_da_excel(ESTRAI_TUTTO)
     return errore
+
+
+def estrai_cfg():
+    parser = ConfigParser()
+    parser.read('estrai_dati.txt')
+
+    # pprint.pprint(dir(parser))
+
+    elenco_attestati = {}
+    for sec in parser.sections():
+        for k, v in parser.items(sec):
+            elenco_attestati[k] = v
+
+    pprint.pprint(elenco_attestati)

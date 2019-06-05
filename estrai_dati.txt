@@ -1,0 +1,24 @@
+[base]
+unilav = 0
+idoneita = 0
+
+[formazione]
+art37 = 0
+preposto = 0
+primo_soccorso = 0
+antincendio = 0
+h2s = 0
+dpi3 = 0
+muletto = 0
+ple = 0
+gru = 0
+imbracatore = 0
+spazi_confinati = 0
+ponteggi = 0
+rir = 0
+rls = 0
+
+[nomine]
+nomina_preposto = 0
+nomina_primo_soccorso = 0
+nomina_antincendio = 1

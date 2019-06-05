@@ -248,6 +248,7 @@ def test(request):
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
 def estrai_dati(request):
+    views_estrai_dati.estrai_cfg()
     template = loader.get_template('personale/principale.html')
     context = {
         'autorizzato': autorizzato(request.user),
