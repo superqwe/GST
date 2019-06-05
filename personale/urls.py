@@ -20,6 +20,9 @@ urlpatterns = [
     # /personale/estri_dati/
     path('estrai_dati/', views.estrai_dati2, name='estrai_dati2'),
 
+    # /personale/estri_dati2/
+    path('estrai_dati2/', views.estrai_dati, name='estrai_dati'),
+
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),
 

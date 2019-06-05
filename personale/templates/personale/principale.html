@@ -36,6 +36,10 @@
 
         {% endfor %}
 
+        {% if estrai_dati %}
+            {% include "personale/estrai_dati.html"%}
+        {% endif %}
+
     {% else %}
         {% include "personale/non_loggato.html" %}
     {% endif %}

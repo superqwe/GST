@@ -247,6 +247,15 @@ def test(request):
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
+def estrai_dati(request):
+    template = loader.get_template('personale/principale.html')
+    context = {
+        'autorizzato': autorizzato(request.user),
+        'estrai_dati': True,
+        'data_ultima_modifica': data_ultima_modifica_leggi(),
+    }
+    return HttpResponse(template.render(context, request))
+
 
 def estrai_dati2(request):
     ora = datetime.datetime.now()
