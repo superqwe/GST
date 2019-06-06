@@ -1,6 +1,27 @@
 {% load static %}
 
-<div  id="table-container" class="table-responsive">
-    ciao
+<div id="table-container" class="table-responsive">
+
+
+<!--    <form>-->
+<!--        <div class="form-check">-->
+<!--            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--            <label class="form-check-label" for="exampleCheck1">Tutto</label>-->
+<!--        </div>-->
+
+
+
+
+<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--    </form>-->
+
+    {% for sezione, dati in struttura %}
+        {{ sezione }}<br>
+
+        {% for elemento in dati %}
+            {{elemento}}<br>
+        {% endfor %}
+        <br>
+    {% endfor %}
 
 </div>

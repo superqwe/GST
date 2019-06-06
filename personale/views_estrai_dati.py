@@ -221,18 +221,34 @@ def leggi_cfg():
     return elenco_attestati
 
 
+def leggi_cfg2():
+    parser = ConfigParser()
+    parser.read('estrai_dati.txt')
+
+    base = (k for k, v in parser.items('base'))
+    formazione = (k for k, v in parser.items('formazione'))
+    nomine = (k for k, v in parser.items('nomine'))
+
+    struttura = (('Base', base), ('Formazione', formazione), ('Nomine', nomine))
+
+    return struttura
+
+
 def estrai_cfg():
-    cfg = leggi_cfg()
-    del cfg['formazione']
-    del cfg['tutto']
-    del cfg['base']
-    del cfg['nomine']
-
-    pp(cfg)
-
-    estrai = Estrai()
-
-    for doc in cfg:
-        setattr(estrai, doc, cfg[doc])
+    # cfg = leggi_cfg()
+    # del cfg['formazione']
+    # del cfg['tutto']
+    # del cfg['base']
+    # del cfg['nomine']
+    #
+    # # pp(cfg)
+    #
+    # estrai = Estrai()
+    #
+    # for doc in cfg:
+    #     setattr(estrai, doc, cfg[doc])
 
     # estrazione_da_excel(estrai=estrai)
+
+    struttura = leggi_cfg2()
+    return {'struttura': struttura}
