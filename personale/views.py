@@ -3,6 +3,7 @@ import glob
 import os
 import shutil
 from datetime import timedelta
+from pprint import pprint as pp
 
 import openpyxl
 import pandas as pd
@@ -247,7 +248,21 @@ def test(request):
     return HttpResponse("""<h1 style="text-align:center">test</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
+
 def estrai_dati(request):
+    # pp(dir(request))
+    # print('\n'*3)
+    # print()
+    # for x in request.POST:
+    #     print(x, '-->',request.POST[x])
+    # print()
+
+
+    if 'csrfmiddlewaretoken' in request.POST:
+        views_estrai_dati.scrivi_cfg(request.POST)
+
+
+
     dati = views_estrai_dati.estrai_cfg()
     template = loader.get_template('personale/principale.html')
     context = {

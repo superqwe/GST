@@ -225,13 +225,35 @@ def leggi_cfg2():
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
 
-    base = (k for k, v in parser.items('base'))
-    formazione = (k for k, v in parser.items('formazione'))
-    nomine = (k for k, v in parser.items('nomine'))
+    base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
+    formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
+    nomine = ((k, True if v == '1' else False) for k, v in parser.items('nomine'))
 
     struttura = (('Base', base), ('Formazione', formazione), ('Nomine', nomine))
 
     return struttura
+
+
+def scrivi_cfg(dati):
+    parser = ConfigParser()
+    parser.read('estrai_dati.txt')
+
+    for sec in parser.sections():
+
+        for k in parser.items(sec):
+            parser.set(sec, k[0], '0')
+
+
+    for k in dati:
+        print('-->', k)
+
+        for sec in parser.sections():
+
+            if parser.has_option(sec, k):
+                parser.set(sec, k, '1')
+
+    with open('estrai_dati.txt', 'w') as configfile:
+        parser.write(configfile)
 
 
 def estrai_cfg():
@@ -251,4 +273,5 @@ def estrai_cfg():
     # estrazione_da_excel(estrai=estrai)
 
     struttura = leggi_cfg2()
+
     return {'struttura': struttura}

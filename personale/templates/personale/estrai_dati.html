@@ -1,27 +1,33 @@
 {% load static %}
 
+
 <div id="table-container" class="table-responsive">
 
+    <form action="/personale/estrai_dati2/" method="post">{% csrf_token %}
+        <button type="submit" class="btn btn-primary">Submit</button>
 
-<!--    <form>-->
-<!--        <div class="form-check">-->
-<!--            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--            <label class="form-check-label" for="exampleCheck1">Tutto</label>-->
-<!--        </div>-->
+        {% for sezione, dati in struttura %}
+            <div>
 
+                <div>
+                    <h3>{{sezione}}</h3>
+                </div>
 
-
-
-<!--        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--    </form>-->
-
-    {% for sezione, dati in struttura %}
-        {{ sezione }}<br>
-
-        {% for elemento in dati %}
-            {{elemento}}<br>
+                <div class="form-check">
+                    {% for elemento, valore in dati %}
+                        <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
+                               {% if valore %}
+                               checked
+                               {% endif %}>
+                        <label class="form-check-label" for="{{elemento}}">{{elemento}}</label>
+                        <br>
+                    {% endfor %}
+                </div>
+                <br>
+            </div>
         {% endfor %}
-        <br>
-    {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
 </div>
