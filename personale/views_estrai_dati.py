@@ -1,12 +1,13 @@
 import glob
 import os
-import pprint
 import shutil
 from configparser import ConfigParser
 
 import pandas as pd
 
 from personale.models import Azienda, Lavoratore, Cantiere
+
+from pprint import pprint as pp
 
 # FILE_XLS = '190410 Personale x FINCOSIT.xlsx'
 # # FILE_XLS = '190417 Macchi.xlsx'
@@ -22,7 +23,7 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 ESTRAI_TUTTO = False
 
 
-class Estrai:
+class Estrai(object):
     def __init__(self):
         # base
         self.unilav = 0
@@ -134,7 +135,7 @@ def copia(path_da, nome_pdf, cognome, nome, nome_documento):
     shutil.copy(da, a)
 
 
-def estrazione_da_excel(tutto=False):
+def estrazione_da_excel(tutto=False, estrai=None):
     fin = FILE_XLS
 
     try:
@@ -143,7 +144,9 @@ def estrazione_da_excel(tutto=False):
         return 'Il File "%s" non esiste' % fin
 
     df = xls.parse(NOME_FOGLIO)
-    estrai = Estrai()
+
+    if not estrai:
+        estrai = Estrai()
 
     if tutto:
         estrai.formazione_tutti()
@@ -186,15 +189,32 @@ def estrai_principale(request):
     return errore
 
 
-def estrai_cfg():
+def leggi_cfg():
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
 
-    # pprint.pprint(dir(parser))
-
     elenco_attestati = {}
-    for sec in parser.sections():
-        for k, v in parser.items(sec):
-            elenco_attestati[k] = v
 
-    pprint.pprint(elenco_attestati)
+    # todo: da implementare la selezion multipla per categoria documento
+    # tutto, base, formazione, nomine = parser.items('tutto')
+
+    for sec in parser.sections():
+
+        for k, v in parser.items(sec):
+            elenco_attestati[k] = False if v == '0' else 1
+
+    return elenco_attestati
+
+
+def estrai_cfg():
+    cfg = leggi_cfg()
+    del cfg['formazione']
+    del cfg['nomine']
+    # pp(cfg)
+
+    estrai = Estrai()
+
+    for doc in cfg:
+        setattr(estrai, doc, cfg[doc])
+
+    estrazione_da_excel(estrai=estrai)
