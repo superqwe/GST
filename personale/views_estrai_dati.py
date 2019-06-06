@@ -203,21 +203,6 @@ def leggi_cfg():
         for k, v in parser.items(sec):
             elenco_attestati[k] = 0 if v == '0' else 1
 
-    # if tutto[1] == '1':
-    #     base = formazione = nomine = (None, '1')
-    #
-    # if base[1] in ('0', '1'):
-    #     for k in parser['base']:
-    #         elenco_attestati[k] = base[1]
-    #
-    # if formazione[1] in ('0', '1'):
-    #     for k in parser['formazione']:
-    #         elenco_attestati[k] = formazione[1]
-    #
-    # if nomine[1] in ('0', '1'):
-    #     for k in parser['nomine']:
-    #         elenco_attestati[k] = nomine[1]
-
     return elenco_attestati
 
 

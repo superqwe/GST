@@ -250,10 +250,10 @@ def test(request):
 
 
 def estrai_dati(request):
-    post=False
+    post = False
 
     if 'csrfmiddlewaretoken' in request.POST:
-        post=True
+        post = True
         views_estrai_dati.scrivi_cfg(request.POST)
 
     dati = views_estrai_dati.estrai_cfg(post)
