@@ -250,20 +250,13 @@ def test(request):
 
 
 def estrai_dati(request):
-    # pp(dir(request))
-    # print('\n'*3)
-    # print()
-    # for x in request.POST:
-    #     print(x, '-->',request.POST[x])
-    # print()
-
+    post=False
 
     if 'csrfmiddlewaretoken' in request.POST:
+        post=True
         views_estrai_dati.scrivi_cfg(request.POST)
 
-
-
-    dati = views_estrai_dati.estrai_cfg()
+    dati = views_estrai_dati.estrai_cfg(post)
     template = loader.get_template('personale/principale.html')
     context = {
         'autorizzato': autorizzato(request.user),

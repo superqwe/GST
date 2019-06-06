@@ -5,18 +5,18 @@ formazione = 0
 nomine = 0
 
 [base]
-unilav = 1
-idoneita = 0
+unilav = 0
+idoneita = 1
 
 [formazione]
 art37 = 0
 preposto = 0
 primo_soccorso = 0
-antincendio = 1
+antincendio = 0
 h2s = 0
 dpi3 = 0
 muletto = 0
-ple = 1
+ple = 0
 gru = 0
 imbracatore = 0
 spazi_confinati = 0

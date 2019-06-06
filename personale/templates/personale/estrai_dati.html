@@ -9,7 +9,7 @@
         {% for sezione, dati in struttura %}
             <div>
 
-                <div>
+                <div class="{{sezione}}">
                     <h3>{{sezione}}</h3>
                 </div>
 
@@ -17,8 +17,9 @@
                     {% for elemento, valore in dati %}
                         <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
                                {% if valore %}
-                               checked
-                               {% endif %}>
+                                    checked
+                               {% endif %}
+                        >
                         <label class="form-check-label" for="{{elemento}}">{{elemento}}</label>
                         <br>
                     {% endfor %}
