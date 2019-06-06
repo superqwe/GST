@@ -1,11 +1,11 @@
 [tutto]
-tutto       = 2
-base        = 2
+tutto       = 0
+base        = 1
 formazione  = 2
 nomine      = 2
 
 [base]
-unilav      = 0
+unilav      = 1
 idoneita    = 0
 
 [formazione]
@@ -26,5 +26,5 @@ rls             = 0
 
 [nomine]
 nomina_preposto         = 0
-nomina_primo_soccorso   = 0
+nomina_primo_soccorso   = 1
 nomina_antincendio      = 0
