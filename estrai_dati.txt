@@ -1,5 +1,6 @@
 [estrazione]
-tipo = filtri
+tipo = excel
+nome_file_xlsx = 190513 Tenova.xlsx
 
 [tutto]
 tutto = 0
@@ -9,7 +10,7 @@ nomine = 0
 
 [base]
 unilav = 0
-idoneita = 1
+idoneita = 0
 
 [formazione]
 art37 = 0

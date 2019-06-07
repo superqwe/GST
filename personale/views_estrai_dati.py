@@ -211,7 +211,8 @@ def leggi_cfg2():
     parser.read('estrai_dati.txt')
 
     # estrazione = ((k, v) for k, v in parser.items('estrazione'))
-    estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo')}
+    estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo'),
+                  'nome_file_xlsx': parser.get('estrazione', 'nome_file_xlsx')}
     base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
     formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
     nomine = ((k, True if v == '1' else False) for k, v in parser.items('nomine'))
@@ -223,7 +224,7 @@ def leggi_cfg2():
 
 
 def scrivi_cfg(dati):
-    # pp(dati)
+    pp(dati)
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
 
@@ -240,6 +241,7 @@ def scrivi_cfg(dati):
                 parser.set(sec, k, '1')
 
     parser.set('estrazione', 'tipo', dati['tipo_estrazione'])
+    parser.set('estrazione', 'nome_file_xlsx', dati['nome_file_xlsx'])
 
     with open('estrai_dati.txt', 'w') as configfile:
         parser.write(configfile)
