@@ -210,16 +210,20 @@ def leggi_cfg2():
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
 
+    # estrazione = ((k, v) for k, v in parser.items('estrazione'))
+    estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo')}
     base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
     formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
     nomine = ((k, True if v == '1' else False) for k, v in parser.items('nomine'))
 
-    struttura = (('Base', base), ('Formazione', formazione), ('Nomine', nomine))
+    struttura = {'estrazione': estrazione,
+                 'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
 
     return struttura
 
 
 def scrivi_cfg(dati):
+    # pp(dati)
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
 
@@ -235,12 +239,14 @@ def scrivi_cfg(dati):
             if parser.has_option(sec, k):
                 parser.set(sec, k, '1')
 
+    parser.set('estrazione', 'tipo', dati['tipo_estrazione'])
+
     with open('estrai_dati.txt', 'w') as configfile:
         parser.write(configfile)
 
 
 def estrai_cfg(post):
-    struttura = leggi_cfg2()
+    preferenze = leggi_cfg2()
 
     if post:
         cfg = leggi_cfg()
@@ -248,12 +254,14 @@ def estrai_cfg(post):
         del cfg['tutto']
         del cfg['base']
         del cfg['nomine']
+        # del cfg['estrazione']
 
         estrai = Estrai()
 
         for doc in cfg:
             setattr(estrai, doc, cfg[doc])
 
-        estrazione_da_excel(estrai=estrai)
+        # estrazione_da_excel(estrai=estrai)
 
-    return {'struttura': struttura}
+    return {'struttura': preferenze['documenti'],
+            'estrazione': preferenze['estrazione']}

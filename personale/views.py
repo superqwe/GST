@@ -252,17 +252,24 @@ def test(request):
 def estrai_dati(request):
     post = False
 
+    # for x in request.POST:
+    #     print(x, '-->', request.POST[x])
+
     if 'csrfmiddlewaretoken' in request.POST:
         post = True
         views_estrai_dati.scrivi_cfg(request.POST)
 
     dati = views_estrai_dati.estrai_cfg(post)
+
+    # pp(dati)
+
     template = loader.get_template('personale/principale.html')
     context = {
         'autorizzato': autorizzato(request.user),
         'estrai_dati': True,
         'data_ultima_modifica': data_ultima_modifica_leggi(),
         'struttura': dati['struttura'],
+        'estrazione': dati['estrazione']
     }
     return HttpResponse(template.render(context, request))
 

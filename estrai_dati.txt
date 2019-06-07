@@ -1,3 +1,6 @@
+[estrazione]
+tipo = filtri
+
 [tutto]
 tutto = 0
 base = 0

@@ -4,28 +4,47 @@
 <div id="table-container" class="table-responsive">
 
     <form action="/personale/estrai_dati2/" method="post">{% csrf_token %}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tipo_estrazione" id="inlineRadio1" value="excel"
+                   {% if estrazione.tipo_estrazione == "excel" %}
+                    checked
+                   {% endif%}>
+            <label class="form-check-label" for="inlineRadio1">Seleziona da Excel</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tipo_estrazione" id="inlineRadio2" value="filtri"
+                   {% if estrazione.tipo_estrazione == "filtri" %}
+                    checked
+                   {% endif%}>
+            <label class="form-check-label" for="inlineRadio2">Filtri</label>
+        </div>
+
 
         {% for sezione, dati in struttura %}
-            <div>
+        <div>
 
-                <div class="{{sezione}}">
-                    <h3>{{sezione}}</h3>
-                </div>
-
-                <div class="form-check">
-                    {% for elemento, valore in dati %}
-                        <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
-                               {% if valore %}
-                                    checked
-                               {% endif %}
-                        >
-                        <label class="form-check-label" for="{{elemento}}">{{elemento}}</label>
-                        <br>
-                    {% endfor %}
-                </div>
-                <br>
+            <div class="{{sezione}}">
+                <h3>{{sezione}}</h3>
             </div>
+
+            <div class="form-check">
+                {% for elemento, valore in dati %}
+                <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
+                       {% if valore %}
+                       checked
+                       {% endif %}
+                >
+                <label class="form-check-label" for="{{elemento}}">{{elemento}}</label>
+                <br>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
         {% endfor %}
 
         <button type="submit" class="btn btn-primary">Submit</button>
