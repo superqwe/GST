@@ -349,7 +349,6 @@ def formazione(request):
                     cell.fill = PatternFill(start_color='eeeeee', end_color='eeeeee', fill_type='solid')
 
         for cell in ws['A%i:S%i' % (max_row, max_row)][0]:
-            print(cell.column)
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
         dims = {}
