@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = 190513 Tenova.xlsx
+nome_file_xlsx = 0
 
 [tutto]
 tutto = 0

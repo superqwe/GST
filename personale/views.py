@@ -261,7 +261,8 @@ def estrai_dati(request):
 
     dati = views_estrai_dati.estrai_cfg(post)
 
-    # pp(dati)
+    print('dati -------------')
+    pp(dati)
 
     template = loader.get_template('personale/principale.html')
     context = {

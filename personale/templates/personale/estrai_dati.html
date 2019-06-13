@@ -26,13 +26,16 @@
 
 
 
-
-
-
-          <div class="form-group hide">
-              <label for="exampleFormControlFile1">Example file input</label>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1" name="nome_file_xlsx">
-          </div>
+        {% if estrazione.tipo_estrazione == 'excel' %}
+            <div class="form-group">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="nome_file_xlsx">
+                <input type="submit" class="" value="Carica">
+            </div>
+        {% else %}
+            <div class="form-group">
+                elenco filtri
+            </div>
+        {% endif %}
 
 
 

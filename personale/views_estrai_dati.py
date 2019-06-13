@@ -241,7 +241,9 @@ def scrivi_cfg(dati):
                 parser.set(sec, k, '1')
 
     parser.set('estrazione', 'tipo', dati['tipo_estrazione'])
-    parser.set('estrazione', 'nome_file_xlsx', dati['nome_file_xlsx'])
+
+    if 'nome_file_xlsx' in dati:
+        parser.set('estrazione', 'nome_file_xlsx', dati['nome_file_xlsx'])
 
     with open('estrai_dati.txt', 'w') as configfile:
         parser.write(configfile)
