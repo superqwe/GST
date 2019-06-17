@@ -213,17 +213,22 @@ def leggi_cfg2():
     # estrazione = ((k, v) for k, v in parser.items('estrazione'))
     estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo'),
                   'nome_file_xlsx': parser.get('estrazione', 'nome_file_xlsx')}
+
+    filtro_impresa = ((k, True if v == '1' else False) for k, v in parser.items('filtro_impresa'))
+
     base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
     formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
     nomine = ((k, True if v == '1' else False) for k, v in parser.items('nomine'))
 
     struttura = {'estrazione': estrazione,
+                 'filtro_impresa': filtro_impresa,
                  'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
 
     return struttura
 
 
 def scrivi_cfg(dati):
+    print('dati post ------------------')
     pp(dati)
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
@@ -268,4 +273,5 @@ def estrai_cfg(post):
         # estrazione_da_excel(estrai=estrai)
 
     return {'struttura': preferenze['documenti'],
-            'estrazione': preferenze['estrazione']}
+            'estrazione': preferenze['estrazione'],
+            'filtro_impresa': preferenze['filtro_impresa']}

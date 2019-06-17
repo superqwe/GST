@@ -261,7 +261,7 @@ def estrai_dati(request):
 
     dati = views_estrai_dati.estrai_cfg(post)
 
-    print('dati -------------')
+    print('\ndati invio -------------')
     pp(dati)
 
     template = loader.get_template('personale/principale.html')
@@ -270,7 +270,8 @@ def estrai_dati(request):
         'estrai_dati': True,
         'data_ultima_modifica': data_ultima_modifica_leggi(),
         'struttura': dati['struttura'],
-        'estrazione': dati['estrazione']
+        'estrazione': dati['estrazione'],
+        'filtro_impresa': dati['filtro_impresa']
     }
     return HttpResponse(template.render(context, request))
 

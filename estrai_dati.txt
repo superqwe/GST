@@ -2,6 +2,12 @@
 tipo = excel
 nome_file_xlsx = 0
 
+[filtro_impresa]
+modomec = 0
+building = 0
+rimec = 0
+welding = 0
+
 [tutto]
 tutto = 0
 base = 0
@@ -10,7 +16,7 @@ nomine = 0
 
 [base]
 unilav = 0
-idoneita = 0
+idoneita = 1
 
 [formazione]
 art37 = 0
