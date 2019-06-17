@@ -214,7 +214,7 @@ def leggi_cfg2():
     estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo'),
                   'nome_file_xlsx': parser.get('estrazione', 'nome_file_xlsx')}
 
-    filtro_impresa = ((k, True if v == '1' else False) for k, v in parser.items('filtro_impresa'))
+    filtro_impresa = list(((k, True if v == '1' else False) for k, v in parser.items('filtro_impresa')))
 
     base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
     formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))

@@ -26,50 +26,48 @@
 
 
 
-        {% if estrazione.tipo_estrazione == 'excel' %}
-            <div id="seleziona_file">
-                <div class="form-group">
-                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="nome_file_xlsx">
-                    <input type="submit" class="" value="Carica">
-                </div>
+
+        <div id="seleziona_file" {% if estrazione.tipo_estrazione == 'filtri' %} style="display: none" {%endif%}>
+            <div class="form-group">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="nome_file_xlsx">
+                <input type="submit" class="" value="Carica">
             </div>
-        {% else %}
-            <div id="seleziona_filtro">
-                <h2>Impresa</h2>
+        </div>
+        <div id="seleziona_filtro" {% if estrazione.tipo_estrazione == 'excel' %} style="display: none" {%endif%}>
+            <h2>Impresa</h2>
 
-                <div class="form-check">
-                    {% for elemento, valore in filtro_impresa %}
-                        <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
-                               {% if valore %}
-                               checked
-                               {% endif %}
-                        >
-                        <label class="form-check-label" for="{{elemento}}">{{elemento|title}}</label>
-                        <br>
-                    {% endfor %}
-                </div>
+            <div class="form-check">
+                {% for elemento, valore in filtro_impresa %}
+                    <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
+                           {% if valore %}
+                           checked
+                           {% endif %}
+                    >
+                    <label class="form-check-label" for="{{elemento}}">{{elemento|title}}</label>
+                    <br>
+                {% endfor %}
             </div>
-        {% endif %}
+        </div>
+
+        <script>
+          let selezione1 = document.getElementById("inlineRadio1")
+          let selezione2 = document.getElementById("inlineRadio2")
+          let seleziona_file = document.getElementById("seleziona_file")
+          let seleziona_filtro = document.getElementById("seleziona_filtro")
 
 
+          selezione1.addEventListener("click", () => {
+            console.log("seleziona da excel premuto");
+            document.getElementById("seleziona_file").style.display = "block";
+            document.getElementById("seleziona_filtro").style.display = "none";
 
-
-<script>
-  let selezione1 = document.getElementById("inlineRadio1")
-  let selezione2 = document.getElementById("inlineRadio2")
-  let seleziona_file = document.getElementById("seleziona_file")
-  let seleziona_filtro = document.getElementById("seleziona_filtro")
-
-
-  selezione1.addEventListener("click", () => {
-    console.log("seleziona da excel premuto");
-  })
-  selezione2.addEventListener("click", () => {
-    console.log("seleziona con filtro premuto");
-  })
-
-
-</script>
+          })
+          selezione2.addEventListener("click", () => {
+            console.log("seleziona con filtro premuto");
+            document.getElementById("seleziona_file").style.display = "none";
+            document.getElementById("seleziona_filtro").style.display = "block";
+          })
+        </script>
 
 
 

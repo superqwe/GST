@@ -1,9 +1,9 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 0
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 0
+modomec = 1
 building = 0
 rimec = 0
 welding = 0
