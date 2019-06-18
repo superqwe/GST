@@ -2,6 +2,7 @@ import datetime
 import glob
 import os
 import shutil
+from configparser import ConfigParser
 from datetime import timedelta
 from pprint import pprint as pp
 
@@ -15,7 +16,7 @@ from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore, Azienda
+from personale.models import Lavoratore, Azienda, Cantiere
 from personale.views_util import autorizzato
 
 
@@ -261,8 +262,23 @@ def estrai_dati(request):
 
     dati = views_estrai_dati.estrai_cfg(post)
 
-    print('\ndati invio -------------')
+    print('\nDati invio -------------')
     pp(dati)
+
+    cantieri = Cantiere.objects.all()
+    parser = ConfigParser()
+    parser.read('estrai_dati.txt')
+
+    for cantiere in cantieri:
+
+        if not parser.has_option('filtro_cantiere', cantiere.nome):
+            parser.set('filtro_cantiere', cantiere.nome, '0')
+
+    with open('estrai_dati.txt', 'w') as configfile:
+        parser.write(configfile)
+
+
+
 
     template = loader.get_template('personale/principale.html')
     context = {
@@ -271,7 +287,8 @@ def estrai_dati(request):
         'data_ultima_modifica': data_ultima_modifica_leggi(),
         'struttura': dati['struttura'],
         'estrazione': dati['estrazione'],
-        'filtro_impresa': dati['filtro_impresa']
+        'filtro_impresa': dati['filtro_impresa'],
+        'cantieri': dati['filtro_cantiere'],
     }
     return HttpResponse(template.render(context, request))
 

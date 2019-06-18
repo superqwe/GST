@@ -215,6 +215,7 @@ def leggi_cfg2():
                   'nome_file_xlsx': parser.get('estrazione', 'nome_file_xlsx')}
 
     filtro_impresa = list(((k, True if v == '1' else False) for k, v in parser.items('filtro_impresa')))
+    filtro_cantiere = list(((k, True if v == '1' else False) for k, v in parser.items('filtro_cantiere')))
 
     base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
     formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
@@ -222,6 +223,7 @@ def leggi_cfg2():
 
     struttura = {'estrazione': estrazione,
                  'filtro_impresa': filtro_impresa,
+                 'filtro_cantiere': filtro_cantiere,
                  'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
 
     return struttura
@@ -274,4 +276,6 @@ def estrai_cfg(post):
 
     return {'struttura': preferenze['documenti'],
             'estrazione': preferenze['estrazione'],
-            'filtro_impresa': preferenze['filtro_impresa']}
+            'filtro_impresa': preferenze['filtro_impresa'],
+            'filtro_cantiere': preferenze['filtro_cantiere'],
+            }

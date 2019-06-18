@@ -35,7 +35,6 @@
         </div>
         <div id="seleziona_filtro" {% if estrazione.tipo_estrazione == 'excel' %} style="display: none" {%endif%}>
             <h2>Impresa</h2>
-
             <div class="form-check">
                 {% for elemento, valore in filtro_impresa %}
                     <input type="checkbox" class="form-check-input" id="{{elemento}}" name="{{elemento}}"
@@ -47,6 +46,21 @@
                     <br>
                 {% endfor %}
             </div>
+
+            <h2>Cantiere</h2>
+            <div class="form-check">
+                {% for cantiere, valore in cantieri %}
+                    <input type="checkbox" class="form-check-input" id="{{cantiere}}" name="{{cantiere|lower}}"
+                           {% if valore %}
+                           checked
+                           {% endif %}
+                    >
+                    <label class="form-check-label" for="{{cantiere}}">{{cantiere|title}}</label>
+                    <br>
+
+                {% endfor %}
+            </div>
+
         </div>
 
         <script>
