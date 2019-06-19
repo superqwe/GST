@@ -129,19 +129,20 @@ class Estrai_Dati_Util(object):
         self.parser.read('estrai_dati.txt')
 
     def leggi_cfg(self):
-        elenco_attestati = {}
+        """elenco di tutte le preferenze"""
 
-        # todo: da implementare la selezion multipla per categoria documento
-        tutto, base, formazione, nomine = self.parser.items('tutto')
+        cfg = {}
 
         for sec in self.parser.sections():
 
             for k, v in self.parser.items(sec):
-                elenco_attestati[k] = 0 if v == '0' else 1
+                cfg[k] = 0 if v == '0' else 1
 
-        return elenco_attestati
+        return cfg
 
-    def leggi_cfg2(self):
+    def organizza_cfg(self):
+        """organizza le preferenze per sezioni da inviare alla pagina html"""
+
         estrazione = {'tipo_estrazione': self.parser.get('estrazione', 'tipo'),
                       'nome_file_xlsx': self.parser.get('estrazione', 'nome_file_xlsx')}
 
@@ -152,54 +153,49 @@ class Estrai_Dati_Util(object):
         formazione = ((k, True if v == '1' else False) for k, v in self.parser.items('formazione'))
         nomine = ((k, True if v == '1' else False) for k, v in self.parser.items('nomine'))
 
-        self.struttura = {'estrazione': estrazione,
-                          'filtro_impresa': filtro_impresa,
-                          'filtro_cantiere': filtro_cantiere,
-                          'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
+        return {'estrazione': estrazione,
+                'filtro_impresa': filtro_impresa,
+                'filtro_cantiere': filtro_cantiere,
+                'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
 
-    def scrivi_cfg(self, dati):
+    def scrivi_cfg(self, post):
+        """scrive le preferenze da POST"""
+
         print('dati post ------------------')
-        pp(dati)
+        pp(post)
 
         for sec in self.parser.sections():
 
             for k in self.parser.items(sec):
                 self.parser.set(sec, k[0], '0')
 
-        for k in dati:
+        for k in post:
 
             for sec in self.parser.sections():
 
                 if self.parser.has_option(sec, k):
                     self.parser.set(sec, k, '1')
 
-        self.parser.set('estrazione', 'tipo', dati['tipo_estrazione'])
+        self.parser.set('estrazione', 'tipo', post['tipo_estrazione'])
 
-        if 'nome_file_xlsx' in dati:
-            self.parser.set('estrazione', 'nome_file_xlsx', dati['nome_file_xlsx'])
+        if 'nome_file_xlsx' in post:
+            self.parser.set('estrazione', 'nome_file_xlsx', post['nome_file_xlsx'])
 
         with open('estrai_dati.txt', 'w') as configfile:
             self.parser.write(configfile)
 
     def leggi_post(self, post):
-        # preferenze = leggi_cfg2()
-        self.leggi_cfg2()
-        preferenze = self.struttura
-
+        preferenze = self.organizza_cfg()
 
         if post:
             cfg = self.leggi_cfg()
-            del cfg['formazione']
-            del cfg['tutto']
-            del cfg['base']
-            del cfg['nomine']
-            # del cfg['estrazione']
 
             estrai = Estrai()
 
             for doc in cfg:
                 setattr(estrai, doc, cfg[doc])
 
+            # esegue l'estrazione dei documenti
             # estrazione_da_excel(estrai=estrai)
 
         return {'struttura': preferenze['documenti'],
@@ -207,4 +203,3 @@ class Estrai_Dati_Util(object):
                 'filtro_impresa': preferenze['filtro_impresa'],
                 'filtro_cantiere': preferenze['filtro_cantiere'],
                 }
-

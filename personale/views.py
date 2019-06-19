@@ -264,7 +264,6 @@ def estrai_dati(request):
         opzioni_estrazione.scrivi_cfg(request.POST)
         print('\n\n\nEstrai Dati\n\n\n')
 
-    # dati = personale.views_util.estrai_cfg(post)
     dati = opzioni_estrazione.leggi_post(post)
 
     print('\nDati invio -------------')
@@ -294,6 +293,7 @@ def estrai_dati(request):
         'filtro_impresa': dati['filtro_impresa'],
         'cantieri': dati['filtro_cantiere'],
     }
+
     return HttpResponse(template.render(context, request))
 
 
