@@ -63,90 +63,90 @@ def completo(request, filtro=False, ordinamento=None):
     return HttpResponse(template.render(context, request))
 
 
-def estrai_dati(request):
-    path = r'C:\Users\leonardo.masi\Documents\Personale'
-    path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
-    FIN = 'mario unilav.csv'
-
-    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m')  # , spazi_confinati__isnull=False)
-
-    for lavoratore in lavoratori:
-        cartella_lavoratore = '%s %s\\attestati' % (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome)
-        path_idoneita = os.path.join(path, cartella_lavoratore)
-        pi = os.path.abspath(path_idoneita)
-
-        try:
-            os.chdir(pi)
-        except FileNotFoundError:
-            continue
-
-        try:
-            nfile = glob.glob('spaz*')[0]
-            # print('***', lavoratore, nfile)
-        except IndexError:
-            # print('***', lavoratore)
-            continue
-
-        da_i = os.path.join(pi, nfile)
-        a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore[:-10], 'DPR177.pdf'))
-
-        print(da_i, '-->', a_i)
-        shutil.copy(da_i, a_i)
-        # return HttpResponse("Dati estratti")
-
-    with open(os.path.join(path, os.path.join(path2, FIN))) as fin:
-        for row in fin:
-            cognome, nome = row.split(';')
-            cartella_lavoratore = '%s %s' % (cognome, nome)
-
-            path_idoneita = os.path.join(path, cartella_lavoratore.strip())
-            # path_attestati = os.path.join(path, cartella_lavoratore.strip(), 'attestati')
-
-            # # idoneità
-            # pi = os.path.abspath(path_idoneita)
-            # os.chdir(pi)
-            # nfile = glob.glob('idon*')[0]
-            # da_i = os.path.join(pi, nfile)
-            # a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'idoneità sanitaria.pdf'))
-            #
-            # print(da_i, '-->', a_i)
-            # shutil.copy(da_i, a_i)
-
-            # unilav
-            pi = os.path.abspath(path_idoneita)
-            try:
-                os.chdir(pi)
-            except FileNotFoundError:
-                # print('///', cognome, nome.strip(), 'non presente\n')
-                continue
-
-            try:
-                nfile = glob.glob('uni*')[0]
-            except IndexError:
-                # print('***', cognome, nome)
-                continue
-
-            lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome.strip())[0]
-            if (lavoratore.in_forza):
-                da_i = os.path.join(pi, nfile)
-                a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'unilav.pdf'))
-
-                # print(da_i, '-->', a_i)
-                # shutil.copy(da_i, a_i)
-            else:
-                # print('+++', cognome, nome.strip(), 'non in forza\n')
-                pass
-
-            # # attestati
-            # os.chdir(path_attestati)
-            # nfile = glob.glob('art*')[0]
-            # da_i = os.path.join(path_attestati, nfile)
-            # a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'formazione accordo stato-regione.pdf'))
-            #
-            # # print(da_i, '-->', a_i)
-            # shutil.copy(da_i, a_i)
-
-    return HttpResponse("Dati estratti")
+# def estrai_dati(request):
+#     path = r'C:\Users\leonardo.masi\Documents\Personale'
+#     path2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
+#     FIN = 'mario unilav.csv'
+#
+#     lavoratori = Lavoratore.objects.filter(in_forza=True, azienda='m')  # , spazi_confinati__isnull=False)
+#
+#     for lavoratore in lavoratori:
+#         cartella_lavoratore = '%s %s\\attestati' % (lavoratore.lavoratore.cognome, lavoratore.lavoratore.nome)
+#         path_idoneita = os.path.join(path, cartella_lavoratore)
+#         pi = os.path.abspath(path_idoneita)
+#
+#         try:
+#             os.chdir(pi)
+#         except FileNotFoundError:
+#             continue
+#
+#         try:
+#             nfile = glob.glob('spaz*')[0]
+#             # print('***', lavoratore, nfile)
+#         except IndexError:
+#             # print('***', lavoratore)
+#             continue
+#
+#         da_i = os.path.join(pi, nfile)
+#         a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore[:-10], 'DPR177.pdf'))
+#
+#         print(da_i, '-->', a_i)
+#         shutil.copy(da_i, a_i)
+#         # return HttpResponse("Dati estratti")
+#
+#     with open(os.path.join(path, os.path.join(path2, FIN))) as fin:
+#         for row in fin:
+#             cognome, nome = row.split(';')
+#             cartella_lavoratore = '%s %s' % (cognome, nome)
+#
+#             path_idoneita = os.path.join(path, cartella_lavoratore.strip())
+#             # path_attestati = os.path.join(path, cartella_lavoratore.strip(), 'attestati')
+#
+#             # # idoneità
+#             # pi = os.path.abspath(path_idoneita)
+#             # os.chdir(pi)
+#             # nfile = glob.glob('idon*')[0]
+#             # da_i = os.path.join(pi, nfile)
+#             # a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'idoneità sanitaria.pdf'))
+#             #
+#             # print(da_i, '-->', a_i)
+#             # shutil.copy(da_i, a_i)
+#
+#             # unilav
+#             pi = os.path.abspath(path_idoneita)
+#             try:
+#                 os.chdir(pi)
+#             except FileNotFoundError:
+#                 # print('///', cognome, nome.strip(), 'non presente\n')
+#                 continue
+#
+#             try:
+#                 nfile = glob.glob('uni*')[0]
+#             except IndexError:
+#                 # print('***', cognome, nome)
+#                 continue
+#
+#             lavoratore = Lavoratore.objects.filter(cognome=cognome, nome=nome.strip())[0]
+#             if (lavoratore.in_forza):
+#                 da_i = os.path.join(pi, nfile)
+#                 a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'unilav.pdf'))
+#
+#                 # print(da_i, '-->', a_i)
+#                 # shutil.copy(da_i, a_i)
+#             else:
+#                 # print('+++', cognome, nome.strip(), 'non in forza\n')
+#                 pass
+#
+#             # # attestati
+#             # os.chdir(path_attestati)
+#             # nfile = glob.glob('art*')[0]
+#             # da_i = os.path.join(path_attestati, nfile)
+#             # a_i = os.path.join(path2, '%s - %s' % (cartella_lavoratore.strip(), 'formazione accordo stato-regione.pdf'))
+#             #
+#             # # print(da_i, '-->', a_i)
+#             # shutil.copy(da_i, a_i)
+#
+#     return HttpResponse("Dati estratti")
 
 
 def leggi_contrattideterminati(request):
@@ -257,12 +257,15 @@ def estrai_dati(request):
     # for x in request.POST:
     #     print(x, '-->', request.POST[x])
 
+    opzioni_estrazione = views_util.Estrai_Dati_Util()
+
     if 'csrfmiddlewaretoken' in request.POST:
         post = True
-        personale.views_util.scrivi_cfg(request.POST)
+        opzioni_estrazione.scrivi_cfg(request.POST)
         print('\n\n\nEstrai Dati\n\n\n')
 
-    dati = personale.views_util.estrai_cfg(post)
+    # dati = personale.views_util.estrai_cfg(post)
+    dati = opzioni_estrazione.leggi_post(post)
 
     print('\nDati invio -------------')
     pp(dati)

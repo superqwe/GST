@@ -5,7 +5,7 @@ from pprint import pprint as pp
 from django.db.models import Q
 
 from personale.models import Lavoratore, Azienda, Cantiere
-from personale.views_estrai_dati import leggi_cfg, Estrai
+from personale.views_estrai_dati import Estrai
 
 AZIENDE = ('Modomec', 'Building', 'Rimec', 'Welding', '-')
 
@@ -129,6 +129,19 @@ class Estrai_Dati_Util(object):
         self.parser.read('estrai_dati.txt')
 
     def leggi_cfg(self):
+        elenco_attestati = {}
+
+        # todo: da implementare la selezion multipla per categoria documento
+        tutto, base, formazione, nomine = self.parser.items('tutto')
+
+        for sec in self.parser.sections():
+
+            for k, v in self.parser.items(sec):
+                elenco_attestati[k] = 0 if v == '0' else 1
+
+        return elenco_attestati
+
+    def leggi_cfg2(self):
         estrazione = {'tipo_estrazione': self.parser.get('estrazione', 'tipo'),
                       'nome_file_xlsx': self.parser.get('estrazione', 'nome_file_xlsx')}
 
@@ -169,10 +182,13 @@ class Estrai_Dati_Util(object):
             self.parser.write(configfile)
 
     def leggi_post(self, post):
-        preferenze = leggi_cfg2()
+        # preferenze = leggi_cfg2()
+        self.leggi_cfg2()
+        preferenze = self.struttura
+
 
         if post:
-            cfg = leggi_cfg()
+            cfg = self.leggi_cfg()
             del cfg['formazione']
             del cfg['tutto']
             del cfg['base']
@@ -192,77 +208,3 @@ class Estrai_Dati_Util(object):
                 'filtro_cantiere': preferenze['filtro_cantiere'],
                 }
 
-
-def leggi_cfg2():
-    parser = ConfigParser()
-    parser.read('estrai_dati.txt')
-
-    # estrazione = ((k, v) for k, v in parser.items('estrazione'))
-    estrazione = {'tipo_estrazione': parser.get('estrazione', 'tipo'),
-                  'nome_file_xlsx': parser.get('estrazione', 'nome_file_xlsx')}
-
-    filtro_impresa = list(((k, True if v == '1' else False) for k, v in parser.items('filtro_impresa')))
-    filtro_cantiere = list(((k, True if v == '1' else False) for k, v in parser.items('filtro_cantiere')))
-
-    base = ((k, True if v == '1' else False) for k, v in parser.items('base'))
-    formazione = ((k, True if v == '1' else False) for k, v in parser.items('formazione'))
-    nomine = ((k, True if v == '1' else False) for k, v in parser.items('nomine'))
-
-    struttura = {'estrazione': estrazione,
-                 'filtro_impresa': filtro_impresa,
-                 'filtro_cantiere': filtro_cantiere,
-                 'documenti': (('Base', base), ('Formazione', formazione), ('Nomine', nomine))}
-
-    return struttura
-
-
-def scrivi_cfg(dati):
-    print('dati post ------------------')
-    pp(dati)
-    parser = ConfigParser()
-    parser.read('estrai_dati.txt')
-
-    for sec in parser.sections():
-
-        for k in parser.items(sec):
-            parser.set(sec, k[0], '0')
-
-    for k in dati:
-
-        for sec in parser.sections():
-
-            if parser.has_option(sec, k):
-                parser.set(sec, k, '1')
-
-    parser.set('estrazione', 'tipo', dati['tipo_estrazione'])
-
-    if 'nome_file_xlsx' in dati:
-        parser.set('estrazione', 'nome_file_xlsx', dati['nome_file_xlsx'])
-
-    with open('estrai_dati.txt', 'w') as configfile:
-        parser.write(configfile)
-
-
-def estrai_cfg(post):
-    preferenze = leggi_cfg2()
-
-    if post:
-        cfg = leggi_cfg()
-        del cfg['formazione']
-        del cfg['tutto']
-        del cfg['base']
-        del cfg['nomine']
-        # del cfg['estrazione']
-
-        estrai = Estrai()
-
-        for doc in cfg:
-            setattr(estrai, doc, cfg[doc])
-
-        # estrazione_da_excel(estrai=estrai)
-
-    return {'struttura': preferenze['documenti'],
-            'estrazione': preferenze['estrazione'],
-            'filtro_impresa': preferenze['filtro_impresa'],
-            'filtro_cantiere': preferenze['filtro_cantiere'],
-            }

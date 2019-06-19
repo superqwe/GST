@@ -1,11 +1,11 @@
 [estrazione]
-tipo = filtri
+tipo = excel
 nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 1
-building = 0
-rimec = 0
+building = 1
+rimec = 1
 welding = 0
 
 [filtro_cantiere]
@@ -28,7 +28,7 @@ formazione = 0
 nomine = 0
 
 [base]
-unilav = 0
+unilav = 1
 idoneita = 1
 
 [formazione]

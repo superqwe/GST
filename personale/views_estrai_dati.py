@@ -1,7 +1,6 @@
 import glob
 import os
 import shutil
-from configparser import ConfigParser
 
 import pandas as pd
 
@@ -185,22 +184,5 @@ def estrai_principale(request):
     # estrazione_selettiva(cantiere='Massafra', azienda='Modomec')
     # errore = estrazione_da_excel(ESTRAI_TUTTO)
     return errore
-
-
-def leggi_cfg():
-    parser = ConfigParser()
-    parser.read('estrai_dati.txt')
-
-    elenco_attestati = {}
-
-    # todo: da implementare la selezion multipla per categoria documento
-    tutto, base, formazione, nomine = parser.items('tutto')
-
-    for sec in parser.sections():
-
-        for k, v in parser.items(sec):
-            elenco_attestati[k] = 0 if v == '0' else 1
-
-    return elenco_attestati
 
 
