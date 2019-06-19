@@ -264,24 +264,10 @@ def estrai_dati(request):
         opzioni_estrazione.scrivi_cfg(request.POST)
         print('\n\n\nEstrai Dati\n\n\n')
 
-    dati = opzioni_estrazione.leggi_post(post)
+    dati = opzioni_estrazione.estrai_documenti(post)
 
     print('\nDati invio -------------')
     pp(dati)
-
-    # aggiorna la lista dei cantieri
-    cantieri = Cantiere.objects.all()
-    parser = ConfigParser()
-    parser.read('estrai_dati.txt')
-
-    for cantiere in cantieri:
-
-        if not parser.has_option('filtro_cantiere', cantiere.nome):
-            parser.set('filtro_cantiere', cantiere.nome, '0')
-
-    with open('estrai_dati.txt', 'w') as configfile:
-        parser.write(configfile)
-    #
 
     template = loader.get_template('personale/principale.html')
     context = {

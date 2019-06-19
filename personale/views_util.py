@@ -127,6 +127,7 @@ class Estrai_Dati_Util(object):
     def __init__(self):
         self.parser = ConfigParser()
         self.parser.read('estrai_dati.txt')
+        self.aggiorna_lista_cantieri()
 
     def leggi_cfg(self):
         """elenco di tutte le preferenze"""
@@ -148,6 +149,7 @@ class Estrai_Dati_Util(object):
 
         filtro_impresa = list(((k, True if v == '1' else False) for k, v in self.parser.items('filtro_impresa')))
         filtro_cantiere = list(((k, True if v == '1' else False) for k, v in self.parser.items('filtro_cantiere')))
+        filtro_cantiere.sort()
 
         base = ((k, True if v == '1' else False) for k, v in self.parser.items('base'))
         formazione = ((k, True if v == '1' else False) for k, v in self.parser.items('formazione'))
@@ -184,7 +186,7 @@ class Estrai_Dati_Util(object):
         with open('estrai_dati.txt', 'w') as configfile:
             self.parser.write(configfile)
 
-    def leggi_post(self, post):
+    def estrai_documenti(self, post):
         preferenze = self.organizza_cfg()
 
         if post:
@@ -203,3 +205,14 @@ class Estrai_Dati_Util(object):
                 'filtro_impresa': preferenze['filtro_impresa'],
                 'filtro_cantiere': preferenze['filtro_cantiere'],
                 }
+
+    def aggiorna_lista_cantieri(self):
+        cantieri = Cantiere.objects.all()
+
+        for cantiere in cantieri:
+
+            if not self.parser.has_option('filtro_cantiere', cantiere.nome):
+                self.parser.set('filtro_cantiere', cantiere.nome, '0')
+
+        with open('estrai_dati.txt', 'w') as configfile:
+            self.parser.write(configfile)

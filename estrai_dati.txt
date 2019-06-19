@@ -10,7 +10,6 @@ welding = 0
 
 [filtro_cantiere]
 - = 0
-ac boiler = 0
 andritz (ch) = 0
 appia = 0
 arcelormittal = 0
@@ -20,6 +19,7 @@ macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 1
+ac boiler = 0
 
 [base]
 unilav = 0
