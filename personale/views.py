@@ -14,6 +14,7 @@ from django.template import loader
 from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
+import personale.views_util
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda, Cantiere
@@ -258,13 +259,15 @@ def estrai_dati(request):
 
     if 'csrfmiddlewaretoken' in request.POST:
         post = True
-        views_estrai_dati.scrivi_cfg(request.POST)
+        personale.views_util.scrivi_cfg(request.POST)
+        print('\n\n\nEstrai Dati\n\n\n')
 
-    dati = views_estrai_dati.estrai_cfg(post)
+    dati = personale.views_util.estrai_cfg(post)
 
     print('\nDati invio -------------')
     pp(dati)
 
+    # aggiorna la lista dei cantieri
     cantieri = Cantiere.objects.all()
     parser = ConfigParser()
     parser.read('estrai_dati.txt')
@@ -276,9 +279,7 @@ def estrai_dati(request):
 
     with open('estrai_dati.txt', 'w') as configfile:
         parser.write(configfile)
-
-
-
+    #
 
     template = loader.get_template('personale/principale.html')
     context = {
@@ -350,22 +351,22 @@ def formazione(request):
         ws['A1'].font = Font(size=18, color='007e60')
 
         for cell in ws['A2:S2'][0]:
-            cell.border = Border(top=Side(border_style='thin', color='000000'),
-                                 bottom=Side(border_style='thin', color='000000'))
+            cell.border = Border(top=Side(border_style='thin', color='007e60'),
+                                 bottom=Side(border_style='thin', color='007e60'))
 
         max_row = ws.max_row
         rows = ws['A3:S%i' % max_row]
         for i, row in enumerate(rows):
 
             for cell in row:
-                cell.border = Border(bottom=Side(border_style='thin', color='cccccc'))
+                cell.border = Border(bottom=Side(border_style='thin', color='91ffe3'))
                 cell.number_format = 'DD/MM/YY'
 
                 if cell.column >= 'E':
                     cell.alignment = Alignment(horizontal='center')
 
                 if i % 2:
-                    cell.fill = PatternFill(start_color='eeeeee', end_color='eeeeee', fill_type='solid')
+                    cell.fill = PatternFill(start_color='ebfffa', end_color='ebfffa', fill_type='solid')
 
         for cell in ws['A%i:S%i' % (max_row, max_row)][0]:
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )

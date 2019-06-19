@@ -4,22 +4,22 @@ nome_file_xlsx =
 
 [filtro_impresa]
 modomec = 1
-building = 1
+building = 0
 rimec = 0
 welding = 0
 
 [filtro_cantiere]
 - = 0
-ac boiler = 1
+ac boiler = 0
 andritz (ch) = 0
-appia = 1
+appia = 0
 arcelormittal = 0
 distacco = 0
 fincantieri (go) = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
-massafra = 0
+massafra = 1
 
 [tutto]
 tutto = 0
