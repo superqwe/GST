@@ -2,7 +2,10 @@ import glob
 import os
 import shutil
 
+from pprint import pprint as pp
+
 import pandas as pd
+from django.db.models import Q
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
@@ -186,3 +189,29 @@ def estrai_principale(request):
     return errore
 
 
+def estrazione_selettiva2(aziende=None, cantiere=None):
+    estrai = Estrai()
+
+    lavoratori = Lavoratore.objects.all()
+
+    if aziende:
+        aziende = [azienda.title() for azienda in aziende]
+        pp(aziende)
+
+
+        lavoratori = lavoratori.filter(azienda__nome__in=aziende)
+        pp(lavoratori)
+
+    if cantiere:
+        lavoratori = lavoratori.filter(cantiere=Cantiere.objects.get(nome=cantiere))
+
+    for lavoratore in lavoratori:
+        cognome = lavoratore.cognome
+        nome = lavoratore.nome
+
+
+        # estrai.estrai(cognome, nome)
+
+    os.chdir(PATH_HOME)
+
+    return lavoratori

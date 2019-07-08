@@ -18,6 +18,7 @@ import personale.views_util
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda, Cantiere
+from personale.views_estrai_dati import estrazione_selettiva2
 from personale.views_util import autorizzato
 
 
@@ -286,6 +287,8 @@ def estrai_dati(request):
 
     dati = opzioni_estrazione.estrai_documenti(post)
 
+    lavoratori = estrazione_selettiva2(aziende=imprese)
+
     template = loader.get_template('personale/principale.html')
     context = {
         'autorizzato': autorizzato(request.user),
@@ -299,6 +302,7 @@ def estrai_dati(request):
         'res_imprese': imprese,
         'res_cantieri': cantieri,
         'res_elenco_doc': elenco_doc,
+        'res_lavoratori': lavoratori,
     }
 
     return HttpResponse(template.render(context, request))

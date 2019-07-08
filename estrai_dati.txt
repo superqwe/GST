@@ -3,10 +3,10 @@ tipo = filtri
 nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 1
+modomec = 0
 building = 0
-rimec = 0
-welding = 0
+rimec = 1
+welding = 1
 
 [filtro_cantiere]
 - = 0

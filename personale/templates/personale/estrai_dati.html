@@ -154,6 +154,24 @@
 
                 <div class="col">
                     <h2>Elenco documenti</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Azienda</th>
+                                <th scope="col">Cognome</th>
+                                <th scope="col">Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lavoratore in res_lavoratori %}
+                                <tr>
+                                    <td>{{lavoratore.azienda}}</td>
+                                    <td>{{lavoratore.cognome}}</td>
+                                    <td>{{lavoratore.nome}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         {% endif %}
