@@ -266,8 +266,25 @@ def estrai_dati(request):
 
     dati = opzioni_estrazione.estrai_documenti(post)
 
+    # parte per pagina risultati
     print('\nDati invio -------------')
     pp(dati)
+
+    imprese = [impresa[0] for impresa in dati['filtro_impresa'] if impresa[1]]
+    cantieri = [cantiere[0] for cantiere in dati['filtro_cantiere'] if cantiere[1]]
+
+    # print('-----------------------------')
+    elenco_doc = []
+    for classe_doc in dati['struttura']:
+
+        for doc in classe_doc[1]:
+
+            if doc[1]:
+                elenco_doc.append(doc[0])
+
+    ###
+
+    dati = opzioni_estrazione.estrai_documenti(post)
 
     template = loader.get_template('personale/principale.html')
     context = {
@@ -278,6 +295,10 @@ def estrai_dati(request):
         'estrazione': dati['estrazione'],
         'filtro_impresa': dati['filtro_impresa'],
         'cantieri': dati['filtro_cantiere'],
+        'post': post,
+        'res_imprese': imprese,
+        'res_cantieri': cantieri,
+        'res_elenco_doc': elenco_doc,
     }
 
     return HttpResponse(template.render(context, request))

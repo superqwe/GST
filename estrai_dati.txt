@@ -11,19 +11,19 @@ welding = 0
 [filtro_cantiere]
 - = 0
 andritz (ch) = 0
-appia = 0
+appia = 1
 arcelormittal = 0
 distacco = 0
 fincantieri (go) = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
-massafra = 1
+massafra = 0
 ac boiler = 0
 
 [base]
-unilav = 0
-idoneita = 1
+unilav = 1
+idoneita = 0
 
 [formazione]
 art37 = 0

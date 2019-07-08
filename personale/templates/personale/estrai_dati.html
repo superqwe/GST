@@ -4,6 +4,7 @@
 <div id="table-container" class="table-responsive">
     <div class="container">
 
+        {% if not post %}
         <form action="/personale/estrai_dati2/" method="post">{% csrf_token %}
             <div class="row">
                 <div class="col">
@@ -124,5 +125,38 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        {% else %}
+            <a class="btn btn-primary" href="/personale/estrai_dati2/" role="button">Ritorna</a>
+            <div class="row">
+                <div class="col">
+                    <h2>Imprese</h2>
+                    <ul class="list-unstyled">
+                        {% for impresa in res_imprese %}
+                        <li>{{impresa|title}}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <h2>Cantieri</h2>
+                    <ul class="list-unstyled">
+                        {% for cantiere in res_cantieri %}
+                        <li>{{cantiere|title}}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <h2>Tipo documento</h2>
+                    <ul class="list-unstyled">
+                        {% for doc in res_elenco_doc %}
+                        <li>{{doc|title}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <h2>Elenco documenti</h2>
+                </div>
+            </div>
+        {% endif %}
+
     </div>
 </div>
