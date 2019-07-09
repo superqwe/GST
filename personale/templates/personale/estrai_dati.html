@@ -155,7 +155,7 @@
 
                 <div class="col">
                     <h2>Elenco documenti</h2>
-                    <table class="table">
+                    <table class="table text-center">
                         <thead>
                             <tr>
                                 <th scope="col">Azienda</th>
@@ -170,10 +170,14 @@
                             {% for lavoratore in res_lavoratori %}
                                 <tr>
                                     <td>{{lavoratore.azienda}}</td>
-                                    <td scope="row">{{lavoratore.cognome}}</td>
-                                    <td>{{lavoratore.nome}}</td>
+                                    <td class="text-left">{{lavoratore.cognome}}</td>
+                                    <td class="text-left">{{lavoratore.nome}}</td>
                                     {% for doc in res_elenco_doc%}
-                                        <td>{{lavoratore|get_obj_attr:doc|default_if_none:""}}</td>
+                                        <td>{{lavoratore|get_obj_attr:doc|default_if_none:""}}
+                                            {% if doc == "unilav" and lavoratore.indeterminato %}
+                                                ind
+                                            {% endif %}
+                                        </td>
                                     {% endfor %}
                                 </tr>
                             {% endfor %}

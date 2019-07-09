@@ -26,7 +26,7 @@ unilav = 1
 idoneita = 1
 
 [formazione]
-art37 = 1
+art37 = 0
 preposto = 0
 primo_soccorso = 0
 antincendio = 0
