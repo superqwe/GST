@@ -1,5 +1,6 @@
 {% load static %}
 
+{% load myapp_tags %}
 
 <div id="table-container" class="table-responsive">
     <div class="container">
@@ -160,14 +161,20 @@
                                 <th scope="col">Azienda</th>
                                 <th scope="col">Cognome</th>
                                 <th scope="col">Nome</th>
+                                {% for doc in res_elenco_doc%}
+                                    <th scope="col">{{doc}}</th>
+                                {% endfor %}
                             </tr>
                         </thead>
                         <tbody>
                             {% for lavoratore in res_lavoratori %}
                                 <tr>
                                     <td>{{lavoratore.azienda}}</td>
-                                    <td>{{lavoratore.cognome}}</td>
+                                    <td scope="row">{{lavoratore.cognome}}</td>
                                     <td>{{lavoratore.nome}}</td>
+                                    {% for doc in res_elenco_doc%}
+                                        <td>{{lavoratore|get_obj_attr:doc|default_if_none:""}}</td>
+                                    {% endfor %}
                                 </tr>
                             {% endfor %}
                         </tbody>

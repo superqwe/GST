@@ -287,7 +287,7 @@ def estrai_dati(request):
 
     dati = opzioni_estrazione.estrai_documenti(post)
 
-    lavoratori = estrazione_selettiva2(aziende=imprese)
+    lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
 
     template = loader.get_template('personale/principale.html')
     context = {

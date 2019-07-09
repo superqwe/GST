@@ -3,30 +3,30 @@ tipo = filtri
 nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 0
+modomec = 1
 building = 0
-rimec = 1
-welding = 1
+rimec = 0
+welding = 0
 
 [filtro_cantiere]
 - = 0
 andritz (ch) = 0
-appia = 1
+appia = 0
 arcelormittal = 0
 distacco = 0
 fincantieri (go) = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
-massafra = 0
+massafra = 1
 ac boiler = 0
 
 [base]
 unilav = 1
-idoneita = 0
+idoneita = 1
 
 [formazione]
-art37 = 0
+art37 = 1
 preposto = 0
 primo_soccorso = 0
 antincendio = 0

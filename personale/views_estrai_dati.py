@@ -189,28 +189,34 @@ def estrai_principale(request):
     return errore
 
 
-def estrazione_selettiva2(aziende=None, cantiere=None):
+def estrazione_selettiva2(aziende=None, cantieri=None, documenti=None):
     estrai = Estrai()
 
-    lavoratori = Lavoratore.objects.all()
+    lavoratori = Lavoratore.objects.filter(in_forza=True)
 
     if aziende:
         aziende = [azienda.title() for azienda in aziende]
-        pp(aziende)
-
 
         lavoratori = lavoratori.filter(azienda__nome__in=aziende)
-        pp(lavoratori)
 
-    if cantiere:
-        lavoratori = lavoratori.filter(cantiere=Cantiere.objects.get(nome=cantiere))
+    if cantieri:
+        filtro_cantieri = Q()
+
+        for cantiere in cantieri:
+            filtro_cantieri |= Q(nome__iexact=cantiere)
+        cantieri = Cantiere.objects.filter(filtro_cantieri)
+
+        lavoratori = lavoratori.filter(cantiere__in=cantieri)
+
+    if documenti:
+        pp(documenti)
+
 
     for lavoratore in lavoratori:
         cognome = lavoratore.cognome
         nome = lavoratore.nome
 
-
-        # estrai.estrai(cognome, nome)
+        estrai.estrai(cognome, nome)
 
     os.chdir(PATH_HOME)
 
