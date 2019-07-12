@@ -172,12 +172,18 @@
                                     <td>{{lavoratore.azienda}}</td>
                                     <td class="text-left">{{lavoratore.cognome}}</td>
                                     <td class="text-left">{{lavoratore.nome}}</td>
-                                    {% for doc in res_elenco_doc%}
-                                        <td>{{lavoratore|get_obj_attr:doc|default_if_none:""}}
-                                            {% if doc == "unilav" and lavoratore.indeterminato %}
-                                                ind
-                                            {% endif %}
-                                        </td>
+                                    {% for doc in res_elenco_doc %}
+                                        {% with documento=lavoratore|get_obj_attr:doc|default_if_none:"" %}
+                                            <td {% if doc == "unilav" and lavoratore.indeterminato or documento == "" %}
+                                                {% elif documento < scadenza.oggi  or not documento %} class="alert alert-danger" role="alert"
+                                                {% elif documento < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                                                {% endif %}>
+                                                {{ documento }}
+                                                {% if doc == "unilav" and lavoratore.indeterminato %}
+                                                    IND
+                                                {% endif %}
+                                            </td>
+                                        {% endwith %}
                                     {% endfor %}
                                 </tr>
                             {% endfor %}

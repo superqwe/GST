@@ -303,6 +303,7 @@ def estrai_dati(request):
         'res_cantieri': cantieri,
         'res_elenco_doc': elenco_doc,
         'res_lavoratori': lavoratori,
+        'scadenza': views_util.Date_Scadenza(),
     }
 
     return HttpResponse(template.render(context, request))
