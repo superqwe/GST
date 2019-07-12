@@ -1,10 +1,10 @@
 [estrazione]
-tipo = filtri
+tipo = excel
 nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 1
-building = 0
+modomec = 0
+building = 1
 rimec = 0
 welding = 0
 
@@ -18,12 +18,12 @@ fincantieri (go) = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
-massafra = 1
+massafra = 0
 ac boiler = 0
 
 [base]
 unilav = 1
-idoneita = 1
+idoneita = 0
 
 [formazione]
 art37 = 0
