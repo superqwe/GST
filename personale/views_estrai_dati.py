@@ -60,9 +60,9 @@ class Estrai(object):
                            )
         return attestati
 
-    def formazione_tutti(self):
-        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = self.muletto = 1
-        self.ple = self.gru = self.imbracatore = self.spazi_confinati = self.ponteggi = self.rir = 1
+    def formazione_tutti(self, scelta=True):
+        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = self.muletto = scelta
+        self.ple = self.gru = self.imbracatore = self.spazi_confinati = self.ponteggi = self.rir = scelta
         return self.formazione()
 
     def nomine(self):
@@ -72,14 +72,23 @@ class Estrai(object):
                            'nomina.antincendio' * self.nomina_antincendio))
         return incarico
 
-    def nomine_tutte(self):
-        self.nomina_preposto = self.nomina_primo_soccorso = self.nomina_antincendio = 1
+    def nomine_tutte(self, scelta=True):
+        self.nomina_preposto = self.nomina_primo_soccorso = self.nomina_antincendio = scelta
         return self.nomine()
 
-    def estrai(self, cognome, nome):
+    def resetta(self):
+        self.unilav = False
+        self.idoneita = False
+        self.formazione_tutti(False)
+        self.nomine_tutte(False)
+
+    def estrai(self, cognome, nome, documenti=None):
 
         if pd.isna(cognome):
             return
+
+        for doc in documenti:
+            setattr(self, doc, 1)
 
         cognome = cognome.strip().replace(' ', '_')
         print(cognome, nome)
@@ -191,6 +200,7 @@ def estrai_principale(request):
 
 def estrazione_selettiva2(aziende=None, cantieri=None, documenti=None):
     estrai = Estrai()
+    estrai.resetta()
 
     lavoratori = Lavoratore.objects.filter(in_forza=True)
 
@@ -208,15 +218,11 @@ def estrazione_selettiva2(aziende=None, cantieri=None, documenti=None):
 
         lavoratori = lavoratori.filter(cantiere__in=cantieri)
 
-    if documenti:
-        pp(documenti)
-
-
     for lavoratore in lavoratori:
         cognome = lavoratore.cognome
         nome = lavoratore.nome
 
-        estrai.estrai(cognome, nome)
+        estrai.estrai(cognome, nome, documenti)
 
     os.chdir(PATH_HOME)
 
