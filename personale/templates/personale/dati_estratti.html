@@ -9,19 +9,24 @@
 
         <div class="row">
             <div class="col">
-                <h2>Imprese</h2>
-                <ul class="list-unstyled">
-                    {% for impresa in res_imprese %}
-                    <li>{{impresa|title}}</li>
-                    {% endfor %}
-                </ul>
+                {% if tipo_estrazione == "excel" %}
+                    <h2>File XLSX</h2>
+                    <p>{{nome_file_xlsx}}</p>
+                {%else%}
+                    <h2>Imprese</h2>
+                    <ul class="list-unstyled">
+                        {% for impresa in res_imprese %}
+                        <li>{{impresa|title}}</li>
+                        {% endfor %}
+                    </ul>
 
-                <h2>Cantieri</h2>
-                <ul class="list-unstyled">
-                    {% for cantiere in res_cantieri %}
-                    <li>{{cantiere|title}}</li>
-                    {% endfor %}
-                </ul>
+                    <h2>Cantieri</h2>
+                    <ul class="list-unstyled">
+                        {% for cantiere in res_cantieri %}
+                        <li>{{cantiere|title}}</li>
+                        {% endfor %}
+                    </ul>
+                {%endif%}
 
                 <h2>Tipo documento</h2>
                 <ul class="list-unstyled">

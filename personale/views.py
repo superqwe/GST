@@ -273,6 +273,7 @@ def estrai_dati(request):
 
 
 def estrai_dati2(request):
+    # todo obsoleto
     ora = datetime.datetime.now()
     errore = views_estrai_dati.estrai_principale(request)
     print(errore)
@@ -380,12 +381,10 @@ def dati_estratti(request):
     print('\n' * 5, 'estrazione dati')
     opzioni_estrazione = views_util.Estrai_Dati_Util()
 
-    # if 'csrfmiddlewaretoken' in request.POST:
-    post = True
     opzioni_estrazione.scrivi_cfg(request.POST)
     print('\n\n\nEstrai Dati\n\n\n')
 
-    dati = opzioni_estrazione.estrai_documenti(post)
+    dati = opzioni_estrazione.estrai_documenti(True)
 
     # parte per pagina risultati
     print('\nDati invio -------------')
@@ -405,15 +404,17 @@ def dati_estratti(request):
 
     ###
 
-    dati = opzioni_estrazione.estrai_documenti(post)
+    dati = opzioni_estrazione.estrai_documenti(True)
 
     if dati['estrazione']['tipo_estrazione'] == 'filtri':
         lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
+        tipo_estrazione = 'filtri'
     else:
         xlsx = dati['estrazione']['nome_file_xlsx']
         lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
+        tipo_estrazione = 'excel'
 
-    dati = opzioni_estrazione.estrai_documenti(post)
+    dati = opzioni_estrazione.estrai_documenti(True)
 
     if dati['estrazione']['tipo_estrazione'] == 'filtri':
         lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
@@ -430,6 +431,8 @@ def dati_estratti(request):
                'res_elenco_doc': elenco_doc,
                'res_lavoratori': lavoratori,
                'scadenza': views_util.Date_Scadenza(),
+               'tipo_estrazione': tipo_estrazione,
+               'nome_file_xlsx': xlsx,
                }
 
     return HttpResponse(template.render(context, request))

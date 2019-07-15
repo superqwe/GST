@@ -1,6 +1,6 @@
 [estrazione]
-tipo = filtri
-nome_file_xlsx = 
+tipo = excel
+nome_file_xlsx = 190513 Tenova.xlsx
 
 [filtro_impresa]
 modomec = 0
