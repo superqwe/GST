@@ -1,12 +1,12 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 190513 Tenova.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 0
-building = 1
+building = 0
 rimec = 0
-welding = 0
+welding = 1
 
 [filtro_cantiere]
 - = 0

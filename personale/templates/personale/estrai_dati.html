@@ -6,10 +6,10 @@
     <div class="container">
 
         {% if not post %}
-        <form action="/personale/estrai_dati2/" method="post">{% csrf_token %}
+        <form action="/personale/estrai_dati2/estratti/" method="post">{% csrf_token %}
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Estrai</button>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
             {% endfor %}
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Estrai</button>
         </form>
 
         {% else %}
@@ -169,12 +169,12 @@
                         <tbody>
                             {% for lavoratore in res_lavoratori %}
                                 <tr>
-                                    <td>{{lavoratore.azienda}}</td>
+                                    <td {% if lavoratore.non_esiste%} class="alert alert-danger" role="alert"{% endif %}>{{lavoratore.azienda}}</td>
                                     <td class="text-left {% if lavoratore.non_esiste%} alert alert-danger" role="alert {% endif %}">{{lavoratore.cognome}}</td>
                                     <td class="text-left {% if lavoratore.non_esiste%} alert alert-danger" role="alert {% endif %}">{{lavoratore.nome}}</td>
                                     {% if lavoratore.non_esiste%}
                                         {% for doc in res_elenco_doc %}
-                                            <td></td>
+                                            <td class="alert alert-danger" role="alert"></td>
                                         {% endfor %}
                                     {% else %}
                                         {% for doc in res_elenco_doc %}

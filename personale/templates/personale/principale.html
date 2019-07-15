@@ -40,6 +40,12 @@
             {% include "personale/estrai_dati.html"%}
         {% endif %}
 
+        {% if dati_estratti %}
+            {% include "personale/dati_estratti/filtro.html"%}
+        {% endif %}
+
+
+
     {% else %}
         {% include "personale/non_loggato.html" %}
     {% endif %}

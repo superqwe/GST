@@ -23,6 +23,9 @@ urlpatterns = [
     # /personale/estri_dati2/
     path('estrai_dati2/', views.estrai_dati, name='estrai_dati'),
 
+    # /personale/estri_dati2/
+    path('estrai_dati2/estratti/', views.dati_estratti, name='estratti'),
+
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),
 
