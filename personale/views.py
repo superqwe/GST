@@ -18,7 +18,7 @@ import personale.views_util
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda, Cantiere
-from personale.views_estrai_dati import estrazione_selettiva2
+from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_util import autorizzato
 
 
@@ -290,7 +290,8 @@ def estrai_dati(request):
     if dati['estrazione']['tipo_estrazione'] == 'filtri':
         lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
     else:
-        lavoratori = None
+        xlsx = dati['estrazione']['nome_file_xlsx']
+        lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
 
     template = loader.get_template('personale/principale.html')
     context = {

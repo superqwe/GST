@@ -227,3 +227,35 @@ def estrazione_selettiva2(aziende=None, cantieri=None, documenti=None):
     os.chdir(PATH_HOME)
 
     return lavoratori
+
+
+def estrazione_da_excel2(fin=None, documenti=None):
+    fin = fin
+
+    try:
+        xls = pd.ExcelFile(os.path.join(PATH2, fin))
+    except FileNotFoundError:
+        return 'Il File "%s" non esiste' % fin
+
+    df = xls.parse(NOME_FOGLIO)
+
+    estrai = Estrai()
+    estrai.resetta()
+
+    lavoratori = []
+    for row in df.iterrows():
+        cognome = row[1]['Cognome']
+        nome = row[1]['Nome']
+        # print(cognome, nome)
+
+        if not pd.isna(cognome):
+            try:
+                lavoratore = Lavoratore.objects.get(cognome=cognome.strip().title(), nome=nome.strip().title())
+                estrai.estrai(cognome, nome, documenti)
+            except Lavoratore.DoesNotExist:
+                lavoratore = {'cognome': cognome, 'nome': nome, 'non_esiste': True}
+
+            lavoratori.append(lavoratore)
+
+    os.chdir(PATH_HOME)
+    return lavoratori
