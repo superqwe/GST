@@ -186,7 +186,7 @@ class Estrai_Dati_Util(object):
         with open('estrai_dati.txt', 'w') as configfile:
             self.parser.write(configfile)
 
-    def estrai_documenti(self, post):
+    def estrai_documenti(self, post=False):
         preferenze = self.organizza_cfg()
 
         if post:

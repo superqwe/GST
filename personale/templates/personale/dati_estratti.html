@@ -1,0 +1,88 @@
+{% load static %}
+
+{% load myapp_tags %}
+
+<div id="table-container" class="table-responsive">
+    <div class="container">
+
+        <a class="btn btn-primary" href="/personale/estrai_dati2/" role="button">Ritorna</a>
+
+        <div class="row">
+            <div class="col">
+                <h2>Imprese</h2>
+                <ul class="list-unstyled">
+                    {% for impresa in res_imprese %}
+                    <li>{{impresa|title}}</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Cantieri</h2>
+                <ul class="list-unstyled">
+                    {% for cantiere in res_cantieri %}
+                    <li>{{cantiere|title}}</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Tipo documento</h2>
+                <ul class="list-unstyled">
+                    {% for doc in res_elenco_doc %}
+                    <li>{{doc|title}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col">
+                <h2>Elenco documenti</h2>
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Azienda</th>
+                            <th scope="col">Cognome</th>
+                            <th scope="col">Nome</th>
+                            {% for doc in res_elenco_doc%}
+                                <th scope="col">{{doc}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lavoratore in res_lavoratori %}
+                            <tr>
+                                <td {% if lavoratore.non_esiste%} class="alert alert-danger" role="alert"{% endif %}>
+                                    {{lavoratore.azienda}}
+                                </td>
+                                <td class="text-left {%if lavoratore.non_esiste%} alert alert-danger" role="alert {%endif%}">
+                                    {{lavoratore.cognome}}
+                                </td>
+                                <td class="text-left {%if lavoratore.non_esiste%} alert alert-danger" role="alert {%endif%}">
+                                    {{lavoratore.nome}}
+                                </td>
+
+                                {% if lavoratore.non_esiste%}
+                                    {% for doc in res_elenco_doc %}
+                                        <td class="alert alert-danger" role="alert"></td>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for doc in res_elenco_doc %}
+                                        {% with documento=lavoratore|get_obj_attr:doc|default_if_none:"" %}
+                                            <td {% if doc == "unilav" and lavoratore.indeterminato or documento == "" %}
+                                                {% elif documento < scadenza.oggi  or not documento %} class="alert alert-danger" role="alert"
+                                                {% elif documento < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                                                {% endif %}>
+                                                {{ documento }}
+                                                {% if doc == "unilav" and lavoratore.indeterminato %}
+                                                    IND
+                                                {% endif %}
+                                            </td>
+                                        {% endwith %}
+                                    {% endfor %}
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>

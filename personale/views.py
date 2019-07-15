@@ -253,45 +253,9 @@ def test(request):
 
 
 def estrai_dati(request):
-    post = False
-
-    # for x in request.POST:
-    #     print(x, '-->', request.POST[x])
-
     opzioni_estrazione = views_util.Estrai_Dati_Util()
 
-    if 'csrfmiddlewaretoken' in request.POST:
-        post = True
-        opzioni_estrazione.scrivi_cfg(request.POST)
-        print('\n\n\nEstrai Dati\n\n\n')
-
-    dati = opzioni_estrazione.estrai_documenti(post)
-
-    # parte per pagina risultati
-    # print('\nDati invio -------------')
-    # pp(dati)
-    #
-    # imprese = [impresa[0] for impresa in dati['filtro_impresa'] if impresa[1]]
-    # cantieri = [cantiere[0] for cantiere in dati['filtro_cantiere'] if cantiere[1]]
-    #
-    # # print('-----------------------------')
-    # elenco_doc = []
-    # for classe_doc in dati['struttura']:
-    #
-    #     for doc in classe_doc[1]:
-    #
-    #         if doc[1]:
-    #             elenco_doc.append(doc[0])
-
-    ###
-
-    # dati = opzioni_estrazione.estrai_documenti(post)
-    #
-    # if dati['estrazione']['tipo_estrazione'] == 'filtri':
-    #     lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
-    # else:
-    #     xlsx = dati['estrazione']['nome_file_xlsx']
-    #     lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
+    dati = opzioni_estrazione.estrai_documenti()
 
     template = loader.get_template('personale/principale.html')
     context = {
@@ -302,12 +266,6 @@ def estrai_dati(request):
         'estrazione': dati['estrazione'],
         'filtro_impresa': dati['filtro_impresa'],
         'cantieri': dati['filtro_cantiere'],
-        # 'post': post,
-        'post': False,
-        # 'res_imprese': imprese,
-        # 'res_cantieri': cantieri,
-        # 'res_elenco_doc': elenco_doc,
-        # 'res_lavoratori': lavoratori,
         'scadenza': views_util.Date_Scadenza(),
     }
 
@@ -416,6 +374,9 @@ def formazione(request):
 
 
 def dati_estratti(request):
+    # for x in request.POST:
+    #     print(x, '-->', request.POST[x])
+
     print('\n' * 5, 'estrazione dati')
     opzioni_estrazione = views_util.Estrai_Dati_Util()
 
@@ -464,12 +425,6 @@ def dati_estratti(request):
     context = {'autorizzato': autorizzato(request.user),
                'data_ultima_modifica': data_ultima_modifica_leggi(),
                'dati_estratti': True,
-               'struttura': dati['struttura'],
-               'estrazione': dati['estrazione'],
-               'filtro_impresa': dati['filtro_impresa'],
-               'cantieri': dati['filtro_cantiere'],
-               # 'post': post,
-               # 'post': True,
                'res_imprese': imprese,
                'res_cantieri': cantieri,
                'res_elenco_doc': elenco_doc,
