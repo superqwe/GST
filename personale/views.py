@@ -9,7 +9,7 @@ from pprint import pprint as pp
 import openpyxl
 import pandas as pd
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
@@ -405,6 +405,9 @@ def dati_estratti(request):
     else:
         lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
         tipo_estrazione = 'excel'
+
+        if not xlsx:
+            return HttpResponseRedirect('/personale/estrai_dati2/')
 
     dati = opzioni_estrazione.estrai_documenti(True)
 
