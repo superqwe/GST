@@ -170,21 +170,27 @@
                             {% for lavoratore in res_lavoratori %}
                                 <tr>
                                     <td>{{lavoratore.azienda}}</td>
-                                    <td class="text-left">{{lavoratore.cognome}}</td>
-                                    <td class="text-left">{{lavoratore.nome}}</td>
-                                    {% for doc in res_elenco_doc %}
-                                        {% with documento=lavoratore|get_obj_attr:doc|default_if_none:"" %}
-                                            <td {% if doc == "unilav" and lavoratore.indeterminato or documento == "" %}
-                                                {% elif documento < scadenza.oggi  or not documento %} class="alert alert-danger" role="alert"
-                                                {% elif documento < scadenza.mesi1 %} class="alert alert-warning" role="alert"
-                                                {% endif %}>
-                                                {{ documento }}
-                                                {% if doc == "unilav" and lavoratore.indeterminato %}
-                                                    IND
-                                                {% endif %}
-                                            </td>
-                                        {% endwith %}
-                                    {% endfor %}
+                                    <td class="text-left {% if lavoratore.non_esiste%} alert alert-danger" role="alert {% endif %}">{{lavoratore.cognome}}</td>
+                                    <td class="text-left {% if lavoratore.non_esiste%} alert alert-danger" role="alert {% endif %}">{{lavoratore.nome}}</td>
+                                    {% if lavoratore.non_esiste%}
+                                        {% for doc in res_elenco_doc %}
+                                            <td></td>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for doc in res_elenco_doc %}
+                                            {% with documento=lavoratore|get_obj_attr:doc|default_if_none:"" %}
+                                                <td {% if doc == "unilav" and lavoratore.indeterminato or documento == "" %}
+                                                    {% elif documento < scadenza.oggi  or not documento %} class="alert alert-danger" role="alert"
+                                                    {% elif documento < scadenza.mesi1 %} class="alert alert-warning" role="alert"
+                                                    {% endif %}>
+                                                    {{ documento }}
+                                                    {% if doc == "unilav" and lavoratore.indeterminato %}
+                                                        IND
+                                                    {% endif %}
+                                                </td>
+                                            {% endwith %}
+                                        {% endfor %}
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>

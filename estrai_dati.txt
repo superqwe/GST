@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = 
+nome_file_xlsx = 190513 Tenova.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -23,7 +23,7 @@ ac boiler = 0
 
 [base]
 unilav = 1
-idoneita = 0
+idoneita = 1
 
 [formazione]
 art37 = 0
