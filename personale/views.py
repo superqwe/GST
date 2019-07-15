@@ -378,22 +378,15 @@ def dati_estratti(request):
     # for x in request.POST:
     #     print(x, '-->', request.POST[x])
 
-    print('\n' * 5, 'estrazione dati')
     opzioni_estrazione = views_util.Estrai_Dati_Util()
 
     opzioni_estrazione.scrivi_cfg(request.POST)
-    print('\n\n\nEstrai Dati\n\n\n')
 
     dati = opzioni_estrazione.estrai_documenti(True)
-
-    # parte per pagina risultati
-    print('\nDati invio -------------')
-    pp(dati)
 
     imprese = [impresa[0] for impresa in dati['filtro_impresa'] if impresa[1]]
     cantieri = [cantiere[0] for cantiere in dati['filtro_cantiere'] if cantiere[1]]
 
-    # print('-----------------------------')
     elenco_doc = []
     for classe_doc in dati['struttura']:
 
@@ -402,15 +395,14 @@ def dati_estratti(request):
             if doc[1]:
                 elenco_doc.append(doc[0])
 
-    ###
-
     dati = opzioni_estrazione.estrai_documenti(True)
+
+    xlsx = dati['estrazione']['nome_file_xlsx']
 
     if dati['estrazione']['tipo_estrazione'] == 'filtri':
         lavoratori = estrazione_selettiva2(aziende=imprese, cantieri=cantieri, documenti=elenco_doc)
         tipo_estrazione = 'filtri'
     else:
-        xlsx = dati['estrazione']['nome_file_xlsx']
         lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
         tipo_estrazione = 'excel'
 
