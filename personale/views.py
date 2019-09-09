@@ -288,6 +288,7 @@ def estrai_dati2(request):
 
 
 def formazione(request):
+    includi_idoneita = False
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
@@ -297,14 +298,17 @@ def formazione(request):
     lavoratori = (modomec, building, rimec, welding)
     aziende = ('modomec', 'building', 'rimec', 'welding')
 
+    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'indeterminato', 'unilav',
+                       'rls', 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso',
+                       'nomina_rls', 'nomina_aspp']
+
+    if includi_idoneita:
+        colonne_escluse.remove('idoneita')
+
     with pd.ExcelWriter('formazione.xlsx', engine='openpyxl') as writer:
         for lav, azienda in zip(lavoratori, aziende):
             dati = read_frame(lav)
-            dati.drop(
-                ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'indeterminato', 'unilav', 'rls',
-                 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
-                 'nomina_aspp'],
-                axis=1, inplace=True)
+            dati.drop(colonne_escluse, axis=1, inplace=True)
             dati.to_excel(writer, azienda)
 
         writer.save()
