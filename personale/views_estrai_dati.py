@@ -36,6 +36,7 @@ class Estrai(object):
         self.antincendio = 0
         self.h2s = 0
         self.dpi3 = 0
+        self.lavori_quota = 0
         self.muletto = 0
         self.ple = 0
         self.gru = 0
@@ -54,15 +55,17 @@ class Estrai(object):
         attestati = filter(lambda x: x != '',
                            ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
                             'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
-                            'carrelli' * self.muletto, 'ple' * self.ple, 'autogru' * self.gru,
-                            'imbracatore' * self.imbracatore, 'spazi.confinati' * self.spazi_confinati,
-                            'ponteggi' * self.ponteggi, 'rir' * self.rir, 'rls' * self.rls)
+                            'lavori.quota' * self.lavori_quota, 'carrelli' * self.muletto, 'ple' * self.ple,
+                            'autogru' * self.gru, 'imbracatore' * self.imbracatore,
+                            'spazi.confinati' * self.spazi_confinati, 'ponteggi' * self.ponteggi, 'rir' * self.rir,
+                            'rls' * self.rls)
                            )
         return attestati
 
     def formazione_tutti(self, scelta=True):
-        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = self.muletto = scelta
-        self.ple = self.gru = self.imbracatore = self.spazi_confinati = self.ponteggi = self.rir = scelta
+        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = scelta
+        self.lavori_quota = self.muletto = self.ple = self.gru = self.imbracatore = self.spazi_confinati = scelta
+        self.ponteggi = self.rir == scelta
         return self.formazione()
 
     def nomine(self):

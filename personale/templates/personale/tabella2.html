@@ -20,6 +20,7 @@
         <th>Preposto</th>
         <th>H2S</th>
         <th>DPI3</th>
+        <th>DPI Anticaduta</th>
         <th>Muletto</th>
         <th>Escavatore</th>
         <th>PLE</th>
@@ -77,7 +78,7 @@
         {% endif %}
     </td>
     <td
-        {% if  lavoratore.primo_soccorso < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% if lavoratore.primo_soccorso < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.primo_soccorso < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.primo_soccorso < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -97,7 +98,7 @@
             <a href="{% static ''%}{{lavoratore}}/nomine/nomina.antincendio {{lavoratore.nomina_antincendio|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.preposto < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.preposto < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.preposto < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -109,7 +110,7 @@
             <a href="{% static ''%}{{lavoratore}}/nomine/nomina.preposto {{lavoratore.nomina_preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.h2s < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.h2s < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -118,16 +119,25 @@
                 {{lavoratore.h2s|default_if_none:""}}
         {% endif %}
     </td>
-    <td {% if  lavoratore.dpi3 < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.dpi3 < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.dpi3 < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.dpi3 < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
-        {% if lavoratore.h2s %}
+        {% if lavoratore.dpi3 %}
             <a href="{% static ''%}{{lavoratore}}/attestati/dpi {{lavoratore.dpi3|date:"dm"}}{{lavoratore.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
                 {{lavoratore.dpi3|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.carrello < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.lavori_quota < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.lavori_quota < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.lavori_quota < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.lavori_quota %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/lavori.quota {{lavoratore.lavori_quota|date:"dm"}}{{lavoratore.lavori_quota|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.lavori_quota|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if lavoratore.carrello < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.carrello < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.carrello < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -136,7 +146,7 @@
             {{lavoratore.carrello|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.escavatore < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.escavatore < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.escavatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.escavatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -145,7 +155,7 @@
             {{lavoratore.escavatore|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.ple < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.ple < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.ple < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.ple < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -154,7 +164,7 @@
             {{lavoratore.ple|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.gru < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.gru < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.gru < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.gru < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -163,7 +173,7 @@
             {{lavoratore.gru|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.imbracatore < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.imbracatore < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.imbracatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.imbracatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -172,7 +182,7 @@
              {{lavoratore.imbracatore|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.spazi_confinati < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.spazi_confinati < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.spazi_confinati < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.spazi_confinati < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -181,7 +191,7 @@
              {{lavoratore.spazi_confinati|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.ponteggi < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.ponteggi < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.ponteggi < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.ponteggi < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -190,7 +200,7 @@
             {{lavoratore.ponteggi|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.rir < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.rir < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.rir < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.rir < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -199,7 +209,7 @@
             {{lavoratore.rir|default_if_none:""}}</a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.rls < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.rls < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.rls < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.rls < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
@@ -211,7 +221,7 @@
             <a href="{% static ''%}{{lavoratore}}/nomine/nomina.rls {{lavoratore.nomina_rls|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
         {% endif %}
     </td>
-    <td {% if  lavoratore.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
+    <td {% if lavoratore.rspp < scadenza.oggi %} class="alert alert-danger" role="alert"
         {% elif  lavoratore.rspp < scadenza.mesi6 %} class="alert alert-warning" role="alert"
         {% elif  lavoratore.rspp < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>

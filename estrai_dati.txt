@@ -1,18 +1,18 @@
 [estrazione]
-tipo = excel
+tipo = filtri
 nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 0
+modomec = 1
 building = 0
 rimec = 0
-welding = 1
+welding = 0
 
 [filtro_cantiere]
 - = 0
 andritz (ch) = 0
 appia = 0
-arcelormittal = 0
+arcelormittal = 1
 distacco = 0
 fincantieri (go) = 0
 macchi (ve) = 0
@@ -22,16 +22,17 @@ massafra = 0
 ac boiler = 0
 
 [base]
-unilav = 1
-idoneita = 1
+unilav = 0
+idoneita = 0
 
 [formazione]
-art37 = 1
+art37 = 0
 preposto = 0
 primo_soccorso = 0
 antincendio = 0
 h2s = 0
 dpi3 = 0
+lavori_quota = 1
 carrello = 0
 ple = 0
 gru = 0
