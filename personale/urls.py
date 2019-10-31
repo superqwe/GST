@@ -10,6 +10,9 @@ urlpatterns = [
     # /personale/azione/
     # path('azione/', views.azione, name='azione'),
 
+    # /personale/aggiorna_unilav/
+    path('aggiorna_unilav/', views.aggiorna_unilav, name='aggiorna_unilav'),
+
     # /personale/completo/
     path('completo/', views.completo, name='completo'),
     # /personale/in_forza/

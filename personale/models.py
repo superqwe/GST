@@ -67,6 +67,7 @@ class Lavoratore(models.Model):
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
     indeterminato = models.BooleanField(default=False, verbose_name='Inderminato')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
+    data_assunzione = models.DateField(null=True, blank=True, verbose_name='Data Assunzione')
 
     # formazione
     art37 = models.DateField(null=True, blank=True, verbose_name='Art.37')

@@ -288,7 +288,7 @@ def estrai_dati2(request):
 
 
 def formazione(request):
-    includi_idoneita = False
+    includi_idoneita = True
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
@@ -432,6 +432,13 @@ def dati_estratti(request):
                'scadenza': views_util.Date_Scadenza(),
                'tipo_estrazione': tipo_estrazione,
                'nome_file_xlsx': xlsx,
+               }
+
+    return HttpResponse(template.render(context, request))
+
+def aggiorna_unilav(request):
+    template = loader.get_template('personale/aggiorna_unilav.html')
+    context = {'autorizzato': autorizzato(request.user),
                }
 
     return HttpResponse(template.render(context, request))
