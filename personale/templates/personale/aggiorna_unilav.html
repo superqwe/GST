@@ -2,16 +2,166 @@
 
 {% load static %}
 
-{% block title %}Elenco Personale{% endblock %}
-
+{% block title %}Aggiorna UNILAV{% endblock %}
 
 {% block menu %}
-    {% include "personale/menu.html" %}
+{% include "personale/menu.html" %}
 {% endblock %}
 
 
 {% block corpo %}
+<!--<p>{{scrivi}}</p>-->
 
-    <p>Aggiorna UNILAV</p>
+<h1>Aggiorna UNILAV</h1>
+
+<form action="">
+    <p>Seleziona Foglio:</p>
+
+    {% for foglio in fogli %}
+    <input type="radio" name="foglio" value="{{foglio}}" {% if forloop.last %}checked{% endif %}> {{foglio}}
+    {% endfor %}
+
+    <input type="submit" value="Submit">
+</form>
+
+<div>
+    <div class="row">
+        <div class="col">
+            <h2>Errori</h2>
+            <table>
+                <thead class="thead-light">
+                <tr>
+                    <th>Problema</th>
+                    <th>Classe</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for problema, categoria in errori %}
+                <tr>
+                    <td>{{problema}}</td>
+                    <td>{{categoria|title}}</td>
+                </tr>
+                {% endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% for proroga, assunzione, cessazione, trasformazione in dati %}
+    <div class="row">
+        <div class="col-3">
+            <h2>Assunzione</h2>
+
+            <table>
+
+                <thead class="thead-light">
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Dal</th>
+                    <th>Al</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for lavoratore in assunzione %}
+                <tr>
+                    <td>{{lavoratore.0}}</td>
+                    <td>{{lavoratore.1}}</td>
+                    <td>{{lavoratore.3}}</td>
+                    <td>{{lavoratore.4}}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="col-3">
+            <h2>Proroga</h2>
+
+            <table>
+
+                <thead class="thead-light">
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Al</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for lavoratore in proroga %}
+                <tr>
+                    <td>{{lavoratore.0}}</td>
+                    <td>{{lavoratore.1}}</td>
+                    <td>{{lavoratore.4}}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="col-3">
+            <h2>Trasformazione</h2>
+
+            <table>
+
+                <thead class="thead-light">
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Il</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for lavoratore in trasformazione %}
+                <tr>
+                    <td>{{lavoratore.0}}</td>
+                    <td>{{lavoratore.1}}</td>
+                    <td>{{lavoratore.4}}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-3">
+            <h2>Cessazione</h2>
+
+            <table>
+
+                <thead class="thead-light">
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Il</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for lavoratore in cessazione %}
+                <tr>
+                    <td>{{lavoratore.0}}</td>
+                    <td>{{lavoratore.1}}</td>
+                    <td>{{lavoratore.4}}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    {% endfor%}
+</div>
+
 
 {% endblock %}

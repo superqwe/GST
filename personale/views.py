@@ -1,8 +1,5 @@
 import datetime
-import glob
 import os
-import shutil
-from configparser import ConfigParser
 from datetime import timedelta
 from pprint import pprint as pp
 
@@ -14,10 +11,9 @@ from django.template import loader
 from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
-import personale.views_util
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore, Azienda, Cantiere
+from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_util import autorizzato
 
@@ -436,9 +432,76 @@ def dati_estratti(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def aggiorna_unilav(request):
-    template = loader.get_template('personale/aggiorna_unilav.html')
+    wb = openpyxl.load_workbook('c:/Users/leonardo.masi/Desktop/UNILAV.xlsx')
+
+    fogli = wb.sheetnames
+
     context = {'autorizzato': autorizzato(request.user),
-               }
+               'fogli': fogli, }
+
+    # get = foglio_selezionato = False
+    if request.GET:
+        get = True
+        foglio_selezionato = request.GET['foglio']
+        foglio = wb.active
+
+        errore = []
+        assunzione = []
+        cessazione = []
+        proroga = []
+        trasformazione = []
+        for colonna in range(1, 11, 3):
+            try:
+                categoria = foglio.cell(row=1, column=colonna).value.split()[0].strip()
+                print('\n' * 2, categoria)
+            except AttributeError:
+                break
+
+            rigo = 2
+            while True:
+                try:
+                    cella = foglio.cell(row=rigo, column=colonna).value
+                    cognome, nome = cella.split()
+                except ValueError:
+                    print('*** Errore -->', cella, '--> procedere a mano')
+                    errore.append((cella, categoria))
+                except AttributeError:
+                    print('-->', cella, '<--')
+                    break
+
+                cf = foglio.cell(row=rigo + 1, column=1).value.split(':')[1]
+
+                print('%-13s %-13s %s' % (cognome, nome, cf))
+
+                data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]
+                data_assunzione = datetime.datetime.strptime(data_assunzione, '%d/%m/%Y').date()
+
+                data_fine = foglio.cell(row=rigo + 2, column=colonna + 1).value.split()[-1]
+                data_fine = datetime.datetime.strptime(data_fine, '%d/%m/%Y').date()
+
+                if categoria == 'proroga':
+                    proroga.append((cognome, nome, cf, data_assunzione, data_fine))
+                elif categoria == 'assunzione':
+                    assunzione.append((cognome, nome, cf, data_assunzione, data_fine))
+                elif categoria == 'cessazione':
+                    cessazione.append((cognome, nome, cf, data_assunzione, data_fine))
+                elif categoria == 'trasformazione':
+                    trasformazione.append((cognome, nome, cf, data_assunzione, data_fine))
+
+                rigo += 3
+
+        #   ##
+        context = {'autorizzato': autorizzato(request.user),
+                   'fogli': fogli,
+                   'foglio_selezionato': foglio_selezionato,
+                   'get': get,
+                   'dati': ((proroga, assunzione, cessazione, trasformazione),),
+                   'errori': errore,
+                   'scrivi': assunzione,
+                   }
+
+    template = loader.get_template('personale/aggiorna_unilav.html')
 
     return HttpResponse(template.render(context, request))
