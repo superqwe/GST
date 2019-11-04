@@ -467,8 +467,10 @@ def aggiorna_unilav(request):
                 except ValueError:
                     print('*** Errore -->', cella, '--> procedere a mano')
                     errore.append((cella, categoria))
+                    rigo += 3
+                    continue
                 except AttributeError:
-                    print('-->', cella, '<--')
+                    # print('-->', cella, '<--')
                     break
 
                 cf = foglio.cell(row=rigo + 1, column=1).value.split(':')[1]
@@ -492,7 +494,12 @@ def aggiorna_unilav(request):
 
                 rigo += 3
 
-        #   ##
+        errore.sort()
+        assunzione.sort()
+        cessazione.sort()
+        proroga.sort()
+        trasformazione.sort()
+
         context = {'autorizzato': autorizzato(request.user),
                    'fogli': fogli,
                    'foglio_selezionato': foglio_selezionato,

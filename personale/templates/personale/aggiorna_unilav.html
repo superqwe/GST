@@ -25,10 +25,11 @@
 </form>
 
 <div>
+    {% if errori %}
     <div class="row">
-        <div class="col">
+        <div class="col-6">
             <h2>Errori</h2>
-            <table>
+            <table class="table table-striped">
                 <thead class="thead-light">
                 <tr>
                     <th>Problema</th>
@@ -46,33 +47,28 @@
             </table>
         </div>
     </div>
+    {% endif %}
 
     {% for proroga, assunzione, cessazione, trasformazione in dati %}
     <div class="row">
         <div class="col-3">
             <h2>Assunzione</h2>
-
-            <table>
-
+            <table class="table table-striped">
                 <thead class="thead-light">
                 <tr>
                     <th>Cognome</th>
                     <th>Nome</th>
-                    <th>Dal</th>
                     <th>Al</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for lavoratore in assunzione %}
                 <tr>
                     <td>{{lavoratore.0}}</td>
                     <td>{{lavoratore.1}}</td>
-                    <td>{{lavoratore.3}}</td>
                     <td>{{lavoratore.4}}</td>
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
@@ -80,9 +76,7 @@
 
         <div class="col-3">
             <h2>Proroga</h2>
-
-            <table>
-
+            <table class="table table-striped">
                 <thead class="thead-light">
                 <tr>
                     <th>Cognome</th>
@@ -90,7 +84,6 @@
                     <th>Al</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for lavoratore in proroga %}
                 <tr>
@@ -99,7 +92,6 @@
                     <td>{{lavoratore.4}}</td>
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
@@ -107,9 +99,7 @@
 
         <div class="col-3">
             <h2>Trasformazione</h2>
-
-            <table>
-
+            <table class="table table-striped">
                 <thead class="thead-light">
                 <tr>
                     <th>Cognome</th>
@@ -117,7 +107,6 @@
                     <th>Il</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for lavoratore in trasformazione %}
                 <tr>
@@ -126,16 +115,13 @@
                     <td>{{lavoratore.4}}</td>
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
 
         <div class="col-3">
             <h2>Cessazione</h2>
-
-            <table>
-
+            <table class="table table-striped">
                 <thead class="thead-light">
                 <tr>
                     <th>Cognome</th>
@@ -143,7 +129,6 @@
                     <th>Il</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for lavoratore in cessazione %}
                 <tr>
@@ -152,7 +137,6 @@
                     <td>{{lavoratore.4}}</td>
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
