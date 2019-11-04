@@ -1,18 +1,52 @@
+import glob
 import os
+import shutil
 from pprint import pprint as pp
 
 from django.core.exceptions import ObjectDoesNotExist
 
 from personale.models import Azienda, Lavoratore, Cantiere
 
+
 def rinomina_unilav(lavoratore):
-    cartella_iniziale = os.getcwd()
-    cartella_personale = 'C:\Users\leonardo.masi\Documents\Personale'
+    # cartella_iniziale = os.getcwd()
+    cartella_personale = r'C:\Users\leonardo.masi\Documents\Personale'
+
+    nominativo = '%s %s' % (lavoratore.cognome, lavoratore.nome)
+
+    cartella_lavoratore = os.path.join(cartella_personale, nominativo)
+    cartella_scaduti = os.path.join(cartella_lavoratore, 'scaduti')
+
+    lista_unilav = glob.glob('%s/u*' % cartella_lavoratore)
+
+    if lista_unilav:
+        for unilav_path in lista_unilav:
+            unilav = os.path.split(unilav_path)[1].split()
+
+            if len(unilav) == 2:
+                data = os.path.splitext(unilav[1])[0]
+
+                if data != lavoratore.unilav.strftime('%d%m%y'):
+
+                    if not os.path.isdir(cartella_scaduti):
+                        os.mkdir(cartella_scaduti)
+
+                    shutil.move(unilav_path, cartella_scaduti)
+                    print('--> unilav spostato in scaduti')
+            else:
+                unilav_rinominato = '%s\\unilav %s.pdf' % (cartella_lavoratore, lavoratore.unilav.strftime('%d%m%y'))
+                os.rename(unilav_path, unilav_rinominato)
+                print('--> unilav rinominato')
+
+
+    else:
+        print('*** ERRORE --> UNILAV NON PRESENTE')
+        return True
 
 
 def assunzione(nominativi):
     errori = []
-    print('\nAssunzione')
+    print('\nASSUNZIONE <--')
     for nominativo in nominativi:
         cognome, nome, cf, data_assunzione, data_scadenza = nominativo
 
@@ -31,6 +65,7 @@ def assunzione(nominativi):
         lavoratore.azienda = Azienda.objects.get(nome='Modomec')
         lavoratore.save()
 
-        rinomina_unilav(lavoratore)
+        if rinomina_unilav(lavoratore):
+            errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
 
     return errori
