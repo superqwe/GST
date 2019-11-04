@@ -27,15 +27,15 @@
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
+                    <th>Nominativo</th>
                     <th>Problema</th>
-                    <th>Classe</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for problema, categoria in errori %}
+                {% for nominativo, problema in errori %}
                 <tr>
+                    <td>{{nominativo|title}}</td>
                     <td>{{problema}}</td>
-                    <td>{{categoria|title}}</td>
                 </tr>
                 {% endfor%}
                 </tbody>

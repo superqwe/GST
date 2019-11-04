@@ -1,7 +1,6 @@
 import datetime
 import os
 from datetime import timedelta
-from pprint import pprint as pp
 
 import openpyxl
 import pandas as pd
@@ -11,11 +10,15 @@ from django.template import loader
 from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
+import personale.views_aggiorna_unilav as views_aggiorna_unilav
 from personale import views_util, views_estrai_dati
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_util import autorizzato
+
+
+# from pprint import pprint as pp
 
 
 def index(request):
@@ -466,13 +469,16 @@ def aggiorna_unilav(request):
                     cognome, nome = cella.split()
                 except ValueError:
                     print('*** Errore -->', cella, '--> procedere a mano')
-                    errore.append((cella, categoria))
+                    errore.append((cella, '%s: procedere a mano' % categoria.title()))
                     rigo += 3
                     continue
                 except AttributeError:
                     # print('-->', cella, '<--')
+                    print()
                     break
 
+                cognome = cognome.title()
+                nome = nome.title()
                 cf = foglio.cell(row=rigo + 1, column=1).value.split(':')[1]
 
                 print('%-13s %-13s %s' % (cognome, nome, cf))
@@ -494,11 +500,15 @@ def aggiorna_unilav(request):
 
                 rigo += 3
 
-        errore.sort()
         assunzione.sort()
         cessazione.sort()
         proroga.sort()
         trasformazione.sort()
+
+        errori_assunzione = views_aggiorna_unilav.assunzione(assunzione)
+
+        errore.extend(errori_assunzione)
+        errore.sort()
 
         context = {'autorizzato': autorizzato(request.user),
                    'data_ultima_modifica': data_ultima_modifica_leggi(),
