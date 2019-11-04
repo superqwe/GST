@@ -12,23 +12,18 @@
 {% block corpo %}
 <!--<p>{{scrivi}}</p>-->
 
+
 <h1>Aggiorna UNILAV</h1>
 
-<form action="">
-    <p>Seleziona Foglio:</p>
 
-    {% for foglio in fogli %}
-    <input type="radio" name="foglio" value="{{foglio}}" {% if forloop.last %}checked{% endif %}> {{foglio}}
-    {% endfor %}
-
-    <input type="submit" value="Submit">
-</form>
-
+{% if get %}
 <div>
+    <h2>Foglio selezionato: </h2>
+
     {% if errori %}
     <div class="row">
         <div class="col-6">
-            <h2>Errori <span class="badge badge-info">{{ errori|length }}</span></h2>
+            <h3>Errori <span class="badge badge-info">{{ errori|length }}</span></h3>
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -52,7 +47,7 @@
     {% for proroga, assunzione, cessazione, trasformazione in dati %}
     <div class="row">
         <div class="col-3">
-            <h2>Assunzione <span class="badge badge-info">{{ assunzione|length }}</span></h2>
+            <h3>Assunzione <span class="badge badge-info">{{ assunzione|length }}</span></h3>
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -75,7 +70,7 @@
 
 
         <div class="col-3">
-            <h2>Proroga <span class="badge badge-info">{{ proroga|length }}</span></h2>
+            <h3>Proroga <span class="badge badge-info">{{ proroga|length }}</span></h3>
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -98,7 +93,7 @@
 
 
         <div class="col-3">
-            <h2>Trasformazione <span class="badge badge-info">{{ trasformazione|length }}</span></h2>
+            <h3>Trasformazione <span class="badge badge-info">{{ trasformazione|length }}</span></h3>
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -120,7 +115,7 @@
         </div>
 
         <div class="col-3">
-            <h2>Cessazione <span class="badge badge-info">{{ cessazione|length }}</span></h2>
+            <h3>Cessazione <span class="badge badge-info">{{ cessazione|length }}</span></h3>
             <table class="table table-striped table-sm">
                 <thead class="thead-light">
                 <tr>
@@ -147,5 +142,18 @@
     {% endfor%}
 </div>
 
+{% else %}
+
+<form action="">
+    <p>Seleziona Foglio:</p>
+
+    {% for foglio in fogli %}
+    <input type="radio" name="foglio" value="{{foglio}}" {% if forloop.last %}checked{% endif %}> {{foglio}}
+    {% endfor %}
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endif %}
 
 {% endblock %}

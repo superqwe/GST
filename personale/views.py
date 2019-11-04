@@ -501,6 +501,7 @@ def aggiorna_unilav(request):
         trasformazione.sort()
 
         context = {'autorizzato': autorizzato(request.user),
+                   'data_ultima_modifica': data_ultima_modifica_leggi(),
                    'fogli': fogli,
                    'foglio_selezionato': foglio_selezionato,
                    'get': get,
