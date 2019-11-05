@@ -71,7 +71,8 @@ def assunzione(nominativi):
 
     return errori
 
-def cessazione (nominativi):
+
+def cessazione(nominativi):
     errori = []
     print('\nCESSAZIONE <--')
 

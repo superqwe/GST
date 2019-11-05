@@ -478,7 +478,7 @@ def aggiorna_unilav(request):
 
                 cognome = cognome.title()
                 nome = nome.title()
-                cf = foglio.cell(row=rigo + 1, column=1).value.split(':')[1]
+                cf = foglio.cell(row=rigo + 1, column=colonna).value.split(':')[1]
 
                 print('%-13s %-13s %s' % (cognome, nome, cf))
 
@@ -504,11 +504,13 @@ def aggiorna_unilav(request):
         proroga.sort()
         trasformazione.sort()
 
-        # todo: da eliminare dalle liste assunzione, proroga e trasformazione i nominativi presenti in cessazione
-        # f_cessazione = [x[:3] for x in cessazione]
-        # assunzione = [x for x in assunzione if x[:3] not in f_cessazione]
+        f_cessazione = [x[:3] for x in cessazione]
+        f_assunzione = [x for x in assunzione if x[:3] not in f_cessazione]
+        proroga = [x for x in proroga if x[:3] not in f_cessazione]
+        trasformazione = [x for x in trasformazione if x[:3] not in f_cessazione]
 
-        errori_assunzione = views_aggiorna_unilav.assunzione(assunzione)
+        #todo: fare proroga e trasformazione
+        errori_assunzione = views_aggiorna_unilav.assunzione(f_assunzione)
         errori_cessazione = views_aggiorna_unilav.cessazione(cessazione)
 
         errore.extend(errori_assunzione)
