@@ -17,8 +17,7 @@ from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_util import autorizzato
 
-
-# from pprint import pprint as pp
+from pprint import pprint as pp
 
 
 def index(request):
@@ -287,7 +286,7 @@ def estrai_dati2(request):
 
 
 def formazione(request):
-    includi_idoneita = True
+    includi_idoneita = False
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
@@ -297,9 +296,9 @@ def formazione(request):
     lavoratori = (modomec, building, rimec, welding)
     aziende = ('modomec', 'building', 'rimec', 'welding')
 
-    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'indeterminato', 'unilav',
-                       'rls', 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso',
-                       'nomina_rls', 'nomina_aspp']
+    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'data_assunzione',
+                       'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio',
+                       'nomina_primo_soccorso', 'nomina_rls', 'nomina_aspp']
 
     if includi_idoneita:
         colonne_escluse.remove('idoneita')
@@ -505,9 +504,15 @@ def aggiorna_unilav(request):
         proroga.sort()
         trasformazione.sort()
 
+        # todo: da eliminare dalle liste assunzione, proroga e trasformazione i nominativi presenti in cessazione
+        # f_cessazione = [x[:3] for x in cessazione]
+        # assunzione = [x for x in assunzione if x[:3] not in f_cessazione]
+
         errori_assunzione = views_aggiorna_unilav.assunzione(assunzione)
+        errori_cessazione = views_aggiorna_unilav.cessazione(cessazione)
 
         errore.extend(errori_assunzione)
+        errore.extend(errori_cessazione)
         errore.sort()
 
         context = {'autorizzato': autorizzato(request.user),

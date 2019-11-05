@@ -5,7 +5,7 @@ from pprint import pprint as pp
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from personale.models import Azienda, Lavoratore, Cantiere
+from personale.models import Azienda, Lavoratore
 
 
 def rinomina_unilav(lavoratore):
@@ -35,7 +35,7 @@ def rinomina_unilav(lavoratore):
                     print('--> unilav spostato in scaduti')
             else:
                 unilav_rinominato = '%s\\unilav %s.pdf' % (cartella_lavoratore, lavoratore.unilav.strftime('%d%m%y'))
-                os.rename(unilav_path, unilav_rinominato)
+                shutil.move(unilav_path, unilav_rinominato)
                 print('--> unilav rinominato')
 
 
@@ -47,6 +47,7 @@ def rinomina_unilav(lavoratore):
 def assunzione(nominativi):
     errori = []
     print('\nASSUNZIONE <--')
+
     for nominativo in nominativi:
         cognome, nome, cf, data_assunzione, data_scadenza = nominativo
 
@@ -67,5 +68,29 @@ def assunzione(nominativi):
 
         if rinomina_unilav(lavoratore):
             errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
+
+    return errori
+
+def cessazione (nominativi):
+    errori = []
+    print('\nCESSAZIONE <--')
+
+    for nominativo in nominativi:
+        cognome, nome, cf, data_assunzione, data_cessazione = nominativo
+
+        try:
+            lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+            print(lavoratore)
+        except ObjectDoesNotExist:
+            lavoratore = Lavoratore(cognome=cognome, nome=nome)
+            lavoratore.save()
+            print(lavoratore, '---> nuovo')
+
+        lavoratore.codice_fiscale = cf
+        lavoratore.data_assunzione = data_assunzione
+        lavoratore.unilav = data_cessazione
+        lavoratore.in_forza = False
+        lavoratore.azienda = Azienda.objects.get(nome='-')
+        lavoratore.save()
 
     return errori
