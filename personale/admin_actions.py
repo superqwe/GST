@@ -199,7 +199,7 @@ def aggiorna_scadenza_documenti():
 
     lavoratori = Lavoratore.objects.filter(in_forza=True).values_list('cognome', 'nome')
 
-    print('\n'*3)
+    print('\n' * 3)
     for root, dirs, files in os.walk(path_base):
         path = root[len(path_base) + 1:].lower()
 
@@ -312,7 +312,7 @@ def aggiorna_scadenza_documenti():
 
             except ValueError:
                 print('*** Errore in ', path)
-    print('\n'*3)
+    print('\n' * 3)
 
 
 def aggiorna_elenco_lavoratori():
@@ -336,7 +336,7 @@ def aggiorna_elenco_lavoratori():
                         Lavoratore.objects.get(cognome=cognome, nome=nome)
                     except Lavoratore.DoesNotExist:
                         lavoratore = Lavoratore(cognome=cognome, nome=nome)
-                        lavoratore.in_forza=True
+                        lavoratore.in_forza = True
                         lavoratore.azienda = Azienda.objects.get(nome='Modomec')
                         lavoratore.save()
                         print('Nuovo Lavoratore: ', lavoratore)
@@ -361,11 +361,14 @@ def esporta_dati():
 
     dati = []
     for lavoratore in lavoratori:
-        rigo = (lavoratore.cognome, lavoratore.nome, lavoratore.mansione, lavoratore.in_forza,
-                lavoratore.azienda, lavoratore.cantiere)
+        rigo = (
+            lavoratore.cognome, lavoratore.nome, lavoratore.codice_fiscale, lavoratore.data_assunzione,
+            lavoratore.mansione,
+            lavoratore.in_forza, lavoratore.azienda, lavoratore.cantiere)
         dati.append(rigo)
 
-    dati = pd.DataFrame(dati, columns=('cognome', 'nome', 'mansione', 'in_forza', 'azienda', 'cantiere'))
+    dati = pd.DataFrame(dati, columns=(
+        'cognome', 'nome', 'cf', 'assunzione', 'mansione', 'in_forza', 'azienda', 'cantiere'))
 
     dati.to_excel(FILE_DATI, sheet_name='dati')
 
@@ -377,10 +380,15 @@ def importa_dati():
     df = pd.read_excel(xlsx, 'dati')
     df = df.where((pd.notnull(df)), None)
 
-    for n, cognome, nome, mansione, in_forza, azienda, cantiere in df.itertuples():
+    for n, cognome, nome, cf, assunzione, mansione, in_forza, azienda, cantiere in df.itertuples():
         if type(mansione) == str:
             lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
             lavoratore.mansione = mansione
+            lavoratore.codice_fiscale = cf
+
+            if not pd.isnull(assunzione):
+                lavoratore.data_assunzione = assunzione
+
             lavoratore.in_forza = in_forza
             lavoratore.azienda = Azienda.objects.get(nome=azienda)
             lavoratore.cantiere = Cantiere.objects.get(nome=cantiere)
