@@ -1,6 +1,5 @@
 from django.urls import path
 
-import personale.views_estrai_dati
 from . import views
 
 urlpatterns = [
@@ -25,8 +24,6 @@ urlpatterns = [
 
     # /personale/estri_dati2/
     path('estrai_dati2/', views.estrai_dati, name='estrai_dati'),
-
-    # /personale/estri_dati2/
     path('estrai_dati2/estratti/', views.dati_estratti, name='estratti'),
 
     # /personale/formazione/
@@ -34,6 +31,10 @@ urlpatterns = [
 
     # /personale/mansioni/
     path('mansioni/', views.mansioni, name='mansioni'),
+
+    # /personale/rait
+    path('rait/', views.rait, name='rait'),
+    path('rait/estratti/', views.rait_estratti, name='rait_estratti'),
 
     # /personale/unilav
     path('unilav/', views.unilav, name='unilav'),

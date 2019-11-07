@@ -509,7 +509,7 @@ def aggiorna_unilav(request):
         proroga = [x for x in proroga if x[:3] not in f_cessazione]
         trasformazione = [x for x in trasformazione if x[:3] not in f_cessazione]
 
-        #todo: fare proroga e trasformazione
+        # todo: fare proroga e trasformazione
         errori_assunzione = views_aggiorna_unilav.assunzione(f_assunzione)
         errori_cessazione = views_aggiorna_unilav.cessazione(cessazione)
 
@@ -529,4 +529,23 @@ def aggiorna_unilav(request):
 
     template = loader.get_template('personale/aggiorna_unilav.html')
 
+    return HttpResponse(template.render(context, request))
+
+
+def rait(request):
+    context = {'autorizzato': autorizzato(request.user),
+               'data_ultima_modifica': data_ultima_modifica_leggi(),
+               }
+
+    template = loader.get_template('personale/rait.html')
+    return HttpResponse(template.render(context, request))
+
+
+def rait_estratti(request):
+    context = {'autorizzato': autorizzato(request.user),
+               'data_ultima_modifica': data_ultima_modifica_leggi(),
+               'estratti': 'True',
+               }
+
+    template = loader.get_template('personale/rait.html')
     return HttpResponse(template.render(context, request))

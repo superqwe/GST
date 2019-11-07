@@ -1,0 +1,36 @@
+{% extends "personale/base.html" %}
+
+{% load static %}
+
+{% block title %}Aggiorna UNILAV{% endblock %}
+
+{% block menu %}
+{% include "personale/menu.html" %}
+{% endblock %}
+
+
+{% block corpo %}
+<p>-->{{estratti}}<--</p>
+
+
+<h1>RAIT</h1>
+
+{% if estratti %}
+<p>lista estratti</p>
+
+{% else %}
+<form action="/personale/rait/estratti/" method="post">{% csrf_token %}
+    <div id="seleziona_file">
+        <div class="form-group">
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="nome_file_xlsx">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Estrai</button>
+        </div>
+    </div>
+</form>
+{% endif %}
+
+{% endblock %}
