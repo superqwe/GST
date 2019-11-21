@@ -57,7 +57,35 @@ def assunzione(nominativi):
         except ObjectDoesNotExist:
             lavoratore = Lavoratore(cognome=cognome, nome=nome)
             lavoratore.save()
-            print(lavoratore, '---> nuovo')
+            print(lavoratore, '\t---> nuovo')
+
+        lavoratore.codice_fiscale = cf
+        lavoratore.data_assunzione = data_assunzione
+        lavoratore.unilav = data_scadenza
+        lavoratore.in_forza = True
+        lavoratore.azienda = Azienda.objects.get(nome='Modomec')
+        lavoratore.save()
+
+        if rinomina_unilav(lavoratore):
+            errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
+
+    return errori
+
+
+def proroga(nominativi):
+    errori = []
+    print('\nPROROGA <--')
+
+    for nominativo in nominativi:
+        cognome, nome, cf, data_assunzione, data_scadenza = nominativo
+
+        try:
+            lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+            print(lavoratore)
+        except ObjectDoesNotExist:
+            lavoratore = Lavoratore(cognome=cognome, nome=nome)
+            lavoratore.save()
+            print(lavoratore, '\t---> nuovo')
 
         lavoratore.codice_fiscale = cf
         lavoratore.data_assunzione = data_assunzione
@@ -85,7 +113,7 @@ def cessazione(nominativi):
         except ObjectDoesNotExist:
             lavoratore = Lavoratore(cognome=cognome, nome=nome)
             lavoratore.save()
-            print(lavoratore, '---> nuovo')
+            print(lavoratore, '\t---> nuovo')
 
         lavoratore.codice_fiscale = cf
         lavoratore.data_assunzione = data_assunzione
@@ -93,5 +121,8 @@ def cessazione(nominativi):
         lavoratore.in_forza = False
         lavoratore.azienda = Azienda.objects.get(nome='-')
         lavoratore.save()
+
+        if rinomina_unilav(lavoratore):
+            errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
 
     return errori

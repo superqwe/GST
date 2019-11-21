@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = Fincosit Aree Esterne personale Aggiuntivo.xlsx
+nome_file_xlsx = 191108 RAIT De Pasquale.xlsx
 
 [filtro_impresa]
 modomec = 1
@@ -23,8 +23,8 @@ ac boiler = 0
 raffineria = 0
 
 [base]
-unilav = 0
-idoneita = 1
+unilav = 1
+idoneita = 0
 
 [formazione]
 art37 = 0

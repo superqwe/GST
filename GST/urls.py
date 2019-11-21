@@ -23,18 +23,19 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('personale/', include('personale.urls')),
     path('admin/', admin.site.urls),
+    # path('admin/doc/', include('django.contrib.admindocs.urls'))
 ]
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
+                      path('__debug__/', include(debug_toolbar.urls)),
 
-        # For django versions before 2.0:
-        # url(r'^__debug__/', include(debug_toolbar.urls)),
+                      # For django versions before 2.0:
+                      # url(r'^__debug__/', include(debug_toolbar.urls)),
 
-    ] + urlpatterns
-
+                  ] + urlpatterns
 
 admin.site.site_header = 'GST MODOMEC'
 admin.site.site_title = 'GST MODOMEC'

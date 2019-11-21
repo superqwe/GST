@@ -286,7 +286,7 @@ def estrai_dati2(request):
 
 
 def formazione(request):
-    includi_idoneita = False
+    includi_idoneita = True
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
@@ -457,7 +457,7 @@ def aggiorna_unilav(request):
         for colonna in range(1, 11, 3):
             try:
                 categoria = foglio.cell(row=1, column=colonna).value.split()[0].strip()
-                print('\n' * 2, categoria)
+                print('\n' * 2, categoria.upper())
             except AttributeError:
                 break
 
@@ -509,11 +509,13 @@ def aggiorna_unilav(request):
         proroga = [x for x in proroga if x[:3] not in f_cessazione]
         trasformazione = [x for x in trasformazione if x[:3] not in f_cessazione]
 
-        # todo: fare proroga e trasformazione
+        # todo: fare trasformazione
         errori_assunzione = views_aggiorna_unilav.assunzione(f_assunzione)
+        errori_proroga = views_aggiorna_unilav.proroga(proroga)
         errori_cessazione = views_aggiorna_unilav.cessazione(cessazione)
 
         errore.extend(errori_assunzione)
+        errore.extend(errori_proroga)
         errore.extend(errori_cessazione)
         errore.sort()
 
