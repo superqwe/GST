@@ -201,9 +201,9 @@ def unilav(request):
     fino_al = oggi + timedelta(7)
 
     lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
-                                           unilav__lte=fino_al, unilav__gte=oggi)
+                                           unilav__lte=fino_al, unilav__gt=oggi)
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
-                                             unilav__lt=oggi)
+                                             unilav__lte=oggi)
 
     n = {'r': len(lavoratori_r), 'g': len(lavoratori)}
     n['t'] = n['g'] + n['r']
@@ -287,6 +287,7 @@ def estrai_dati2(request):
 
 def formazione(request):
     includi_idoneita = True
+    includi_unilav = True
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
@@ -302,6 +303,8 @@ def formazione(request):
 
     if includi_idoneita:
         colonne_escluse.remove('idoneita')
+    if includi_unilav:
+        colonne_escluse.remove('unilav')
 
     with pd.ExcelWriter('formazione.xlsx', engine='openpyxl') as writer:
         for lav, azienda in zip(lavoratori, aziende):
