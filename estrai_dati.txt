@@ -1,18 +1,18 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 191129 FINCOSIT ponteggiatori.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 1
+modomec = 0
 building = 0
-rimec = 0
+rimec = 1
 welding = 0
 
 [filtro_cantiere]
 - = 0
 andritz (ch) = 0
 appia = 0
-arcelormittal = 1
+arcelormittal = 0
 distacco = 0
 fincantieri (go) = 0
 macchi (ve) = 0
@@ -21,10 +21,11 @@ marioff = 0
 massafra = 0
 ac boiler = 0
 raffineria = 0
+andritz (de) = 0
 
 [base]
-unilav = 1
-idoneita = 1
+unilav = 0
+idoneita = 0
 
 [formazione]
 art37 = 1

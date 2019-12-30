@@ -512,13 +512,14 @@ def aggiorna_unilav(request):
         proroga = [x for x in proroga if x[:3] not in f_cessazione]
         trasformazione = [x for x in trasformazione if x[:3] not in f_cessazione]
 
-        # todo: fare trasformazione
         errori_assunzione = views_aggiorna_unilav.assunzione(f_assunzione)
         errori_proroga = views_aggiorna_unilav.proroga(proroga)
+        errori_trasformazione = views_aggiorna_unilav.trasformazione(trasformazione)
         errori_cessazione = views_aggiorna_unilav.cessazione(cessazione)
 
         errore.extend(errori_assunzione)
         errore.extend(errori_proroga)
+        errore.extend(errori_trasformazione)
         errore.extend(errori_cessazione)
         errore.sort()
 
