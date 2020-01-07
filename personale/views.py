@@ -488,8 +488,11 @@ def aggiorna_unilav(request):
                 data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]
                 data_assunzione = datetime.datetime.strptime(data_assunzione, '%d/%m/%Y').date()
 
-                data_fine = foglio.cell(row=rigo + 2, column=colonna + 1).value.split()[-1]
-                data_fine = datetime.datetime.strptime(data_fine, '%d/%m/%Y').date()
+                try:
+                    data_fine = foglio.cell(row=rigo + 2, column=colonna + 1).value.split()[-1]
+                    data_fine = datetime.datetime.strptime(data_fine, '%d/%m/%Y').date()
+                except AttributeError:
+                    data_fine = None
 
                 if categoria == 'proroga':
                     proroga.append((cognome, nome, cf, data_assunzione, data_fine))

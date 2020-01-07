@@ -65,11 +65,15 @@ def assunzione(nominativi):
         lavoratore.codice_fiscale = cf
         lavoratore.data_assunzione = data_assunzione
         lavoratore.unilav = data_scadenza
+
+        if not data_scadenza:
+            lavoratore.indeterminato = True
+
         lavoratore.in_forza = True
         lavoratore.azienda = Azienda.objects.get(nome='Modomec')
         lavoratore.save()
 
-        if rinomina_unilav(lavoratore):
+        if rinomina_unilav(lavoratore, lavoratore.indeterminato):
             errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
 
     return errori
