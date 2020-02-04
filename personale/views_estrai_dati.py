@@ -94,6 +94,7 @@ class Estrai(object):
             setattr(self, doc, 1)
 
         cognome = cognome.strip().replace(' ', '_')
+        nome = nome.strip()
         print(cognome, nome)
 
         path_lavoratore = os.path.join(PATH, "%s %s" % (cognome, nome))

@@ -223,7 +223,11 @@ def aggiorna_scadenza_documenti():
                             documento = documento.lower()
 
                             if documento.endswith('.pdf'):
-                                tipo, scadenza = documento.split()[:2]
+                                try:
+                                    tipo, scadenza = documento.split()[:2]
+                                except ValueError:
+                                    print('\t*** Non ha data')
+                                    continue
 
                                 if tipo == 'doc':
                                     lavoratore.ci = scadenza2date(documento, 0)
