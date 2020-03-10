@@ -1,0 +1,1 @@
+..\env\gst\Scripts\activate

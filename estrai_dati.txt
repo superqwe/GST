@@ -1,10 +1,10 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 200204 RAIT De Pasquale.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
-modomec = 1
-building = 0
+modomec = 0
+building = 1
 rimec = 0
 welding = 0
 
@@ -24,14 +24,14 @@ raffineria = 0
 andritz (de) = 0
 
 [base]
-unilav = 1
+unilav = 0
 idoneita = 0
 
 [formazione]
 art37 = 0
 preposto = 0
 primo_soccorso = 0
-antincendio = 0
+antincendio = 1
 h2s = 0
 dpi3 = 0
 lavori_quota = 0
