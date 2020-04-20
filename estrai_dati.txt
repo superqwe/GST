@@ -1,6 +1,6 @@
 [estrazione]
-tipo = filtri
-nome_file_xlsx = 
+tipo = excel
+nome_file_xlsx = 200331 AMI.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -22,16 +22,17 @@ massafra = 0
 ac boiler = 0
 raffineria = 0
 andritz (de) = 0
+raffineria - porto = 0
 
 [base]
 unilav = 0
-idoneita = 0
+idoneita = 1
 
 [formazione]
 art37 = 0
 preposto = 0
 primo_soccorso = 0
-antincendio = 1
+antincendio = 0
 h2s = 0
 dpi3 = 0
 lavori_quota = 0

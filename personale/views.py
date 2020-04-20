@@ -459,7 +459,7 @@ def aggiorna_unilav(request):
         trasformazione = []
         for colonna in range(1, 11, 3):
             try:
-                categoria = foglio.cell(row=1, column=colonna).value.split()[0].strip()
+                categoria = foglio.cell(row=1, column=colonna).value.split()[0].strip().lower()
                 print('\n' * 2, categoria.upper())
             except AttributeError:
                 break
