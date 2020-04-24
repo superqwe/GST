@@ -18,6 +18,7 @@
         <th>Primo Soccorso</th>
         <th>Antincendio</th>
         <th>Preposto</th>
+        <th>Dirigente</th>
         <th>H2S</th>
         <th>DPI3</th>
         <th>DPI Anticaduta</th>
@@ -108,6 +109,15 @@
         {% endif %}
         {% if lavoratore.nomina_preposto%}
             <a href="{% static ''%}{{lavoratore}}/nomine/nomina.preposto {{lavoratore.nomina_preposto|date:"dmy"}}.pdf" target="_blank"><i class="fas fa-file-signature"></i></a>
+        {% endif %}
+    </td>
+    <td {% if lavoratore.dirigente < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.dirigente < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.dirigente < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.dirigente %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/dirigente {{lavoratore.dirigente|date:"dm"}}{{lavoratore.dirigente|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.dirigente|default_if_none:""}}</a>
         {% endif %}
     </td>
     <td {% if lavoratore.h2s < scadenza.oggi %} class="alert alert-danger" role="alert"

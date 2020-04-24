@@ -76,6 +76,7 @@ class Lavoratore(models.Model):
     primo_soccorso = models.DateField(null=True, blank=True, verbose_name='Primo Soccorso')
     antincendio = models.DateField(null=True, blank=True)
     preposto = models.DateField(null=True, blank=True)
+    dirigente = models.DateField(null=True, blank=True)
 
     h2s = models.DateField(null=True, blank=True, verbose_name='H2S')
     dpi3 = models.DateField(null=True, blank=True, verbose_name='DPI3')

@@ -297,9 +297,9 @@ def formazione(request):
     lavoratori = (modomec, building, rimec, welding)
     aziende = ('modomec', 'building', 'rimec', 'welding')
 
-    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'idoneita', 'data_assunzione',
-                       'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio',
-                       'nomina_primo_soccorso', 'nomina_rls', 'nomina_aspp']
+    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita', 'idoneita',
+                       'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto',
+                       'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls', 'nomina_aspp']
 
     if includi_idoneita:
         colonne_escluse.remove('idoneita')

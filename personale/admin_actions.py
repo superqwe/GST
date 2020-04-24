@@ -254,6 +254,9 @@ def aggiorna_scadenza_documenti():
                                 elif tipo == 'preposto':
                                     lavoratore.preposto = scadenza2date(documento)
 
+                                elif tipo == 'dirigente':
+                                    lavoratore.dirigente = scadenza2date(documento)
+
                                 elif tipo in ('h2s.safety', 'h2s'):
                                     lavoratore.h2s = scadenza2date(documento)
 

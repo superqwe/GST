@@ -105,6 +105,7 @@ def lavoratori_con_nomine():
         lavoratori = Lavoratore.objects \
             .filter(in_forza=True, azienda=azienda) \
             .exclude(preposto__isnull=True,
+                     dirigente__isnull=True,
                      antincendio__isnull=True,
                      primo_soccorso__isnull=True,
                      rls__isnull=True,
