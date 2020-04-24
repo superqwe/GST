@@ -366,13 +366,14 @@ def esporta_dati():
     dati = []
     for lavoratore in lavoratori:
         rigo = (
-            lavoratore.cognome, lavoratore.nome, lavoratore.codice_fiscale, lavoratore.data_assunzione,
-            lavoratore.mansione,
-            lavoratore.in_forza, lavoratore.azienda, lavoratore.cantiere)
+            lavoratore.cognome, lavoratore.nome, lavoratore.codice_fiscale, lavoratore.data_nascita,
+            lavoratore.luogo_nascita, lavoratore.data_assunzione, lavoratore.mansione, lavoratore.in_forza,
+            lavoratore.azienda, lavoratore.cantiere)
         dati.append(rigo)
 
     dati = pd.DataFrame(dati, columns=(
-        'cognome', 'nome', 'cf', 'assunzione', 'mansione', 'in_forza', 'azienda', 'cantiere'))
+        'cognome', 'nome', 'cf', 'data_nascita', 'luogo_nascita', 'assunzione', 'mansione', 'in_forza', 'azienda',
+        'cantiere'))
 
     dati.to_excel(FILE_DATI, sheet_name='dati')
 
@@ -384,11 +385,16 @@ def importa_dati():
     df = pd.read_excel(xlsx, 'dati')
     df = df.where((pd.notnull(df)), None)
 
-    for n, cognome, nome, cf, assunzione, mansione, in_forza, azienda, cantiere in df.itertuples():
+    for n, cognome, nome, cf, data_nascita, luogo_nascita, assunzione, mansione, in_forza, azienda, cantiere in df.itertuples():
         if type(mansione) == str:
             lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
             lavoratore.mansione = mansione
             lavoratore.codice_fiscale = cf
+
+            if not pd.isnull(data_nascita):
+                lavoratore.data_nascita = data_nascita
+
+            lavoratore.luogo_nascita = luogo_nascita
 
             if not pd.isnull(assunzione):
                 lavoratore.data_assunzione = assunzione

@@ -68,6 +68,8 @@ class Lavoratore(models.Model):
     indeterminato = models.BooleanField(default=False, verbose_name='Inderminato')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')
     data_assunzione = models.DateField(null=True, blank=True, verbose_name='Data Assunzione')
+    data_nascita = models.DateField(null=True, blank=True, verbose_name='Data Nascita')
+    luogo_nascita = models.CharField(max_length=100, null=True, blank=True, verbose_name='Luogo Nascita')
 
     # formazione
     art37 = models.DateField(null=True, blank=True, verbose_name='Art.37')
