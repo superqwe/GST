@@ -574,10 +574,17 @@ def programma_officina(request):
     lavoratori = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='lavoratori', na_values=1).fillna('').values.tolist()
     # print(lavoratori)
     for cognome, nome, scheda, cs in lavoratori:
+        res = Lavoratore.objects.get(cognome=cognome.strip(), nome=nome.strip())
+        lavoratore = {'nome': '%s %s' % (res.cognome, res.nome), 'azienda': res.azienda.nome[0],
+                      'idoneita': res.idoneita}
+        # elenco_lavoratori.append(lavoratore)
+
         if cs:
-            schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
+            # schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
+            schede[scheda]['cs'] = lavoratore
         else:
-            schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
+            # schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
+            schede[scheda]['lavoratori'].append(lavoratore)
 
     pp(schede)
 

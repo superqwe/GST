@@ -1,6 +1,9 @@
+{% for scheda in schede %}
+
+
 <div class="card">
     <div class="card-header">
-        N_COMMESSE
+        a{{ scheda.commesse }}b
     </div>
     <div class="card-body">
         <div class="card-text">
@@ -12,3 +15,5 @@
         </div>
     </div>
 </div>
+
+{% endfor %}
