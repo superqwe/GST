@@ -1,0 +1,22 @@
+body {
+font-size: 10px;
+}
+
+
+
+
+.cs {
+  font-weight: bold;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding:  1rem 0 0 0;
+  }
+
+hr {
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}

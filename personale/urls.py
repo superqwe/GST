@@ -32,6 +32,9 @@ urlpatterns = [
     # /personale/mansioni/
     path('mansioni/', views.mansioni, name='mansioni'),
 
+    # /personale/programma_officina
+    path('programma_officina/', views.programma_officina, name='programma_officina'),
+
     # /personale/rait
     path('rait/', views.rait, name='rait'),
     path('rait/estratti/', views.rait_estratti, name='rait_estratti'),

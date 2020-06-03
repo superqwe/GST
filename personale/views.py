@@ -19,6 +19,8 @@ from personale.views_util import autorizzato
 
 from pprint import pprint as pp
 
+PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -422,7 +424,7 @@ def dati_estratti(request):
         xlsx = dati['estrazione']['nome_file_xlsx']
         lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
 
-    template = loader.get_template('personale/principale.html')
+    template = loader.get_template('personale/programma_officina.html')
     context = {'autorizzato': autorizzato(request.user),
                'data_ultima_modifica': data_ultima_modifica_leggi(),
                'dati_estratti': True,
@@ -557,4 +559,31 @@ def rait_estratti(request):
                }
 
     template = loader.get_template('personale/rait.html')
+    return HttpResponse(template.render(context, request))
+
+
+def programma_officina(request):
+    schede = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='schede').values.tolist()
+    schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None} for x in schede}
+    # print(schede)
+
+    commesse = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='commesse').values.tolist()
+    # print(commesse)
+    dummy = {schede[scheda]['commesse'].append(commessa) for (commessa, scheda) in commesse}
+
+    lavoratori = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='lavoratori', na_values=1).fillna('').values.tolist()
+    # print(lavoratori)
+    for cognome, nome, scheda, cs in lavoratori:
+        if cs:
+            schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
+        else:
+            schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
+
+    pp(schede)
+
+    context = {'autorizzato': autorizzato(request.user),
+               'schede': schede,
+               }
+
+    template = loader.get_template('personale/programma_officina/programma_officina.html')
     return HttpResponse(template.render(context, request))

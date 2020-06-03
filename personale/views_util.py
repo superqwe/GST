@@ -60,6 +60,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
                 | Q(cantiere=Cantiere.objects.get(nome='-')) \
@@ -75,6 +77,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)')) \
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \

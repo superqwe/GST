@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = 200331 AMI.xlsx
+nome_file_xlsx = 200514 AMI Tramoggia.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -23,23 +23,25 @@ ac boiler = 0
 raffineria = 0
 andritz (de) = 0
 raffineria - porto = 0
+andritz (nl) = 0
+arcelormittal - porto = 0
 
 [base]
 unilav = 0
 idoneita = 1
 
 [formazione]
-art37 = 0
-preposto = 0
-primo_soccorso = 0
-antincendio = 0
+art37 = 1
+preposto = 1
+primo_soccorso = 1
+antincendio = 1
 h2s = 0
-dpi3 = 0
-lavori_quota = 0
-carrello = 0
-ple = 0
-gru = 0
-imbracatore = 0
+dpi3 = 1
+lavori_quota = 1
+carrello = 1
+ple = 1
+gru = 1
+imbracatore = 1
 spazi_confinati = 0
 ponteggi = 0
 rir = 0
