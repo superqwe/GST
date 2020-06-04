@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-8">
+        <div class="col-9">
             <div class="card-group">
 
                 {% block elenco_card %}
@@ -25,10 +25,10 @@
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
 
             {% block elencolavoratori %}
-                    {% include "personale/programma_officina/card.html" %}
+                    {% include "personale/programma_officina/elenco_personale.html" %}
             {% endblock %}
 
         </div>

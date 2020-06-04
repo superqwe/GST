@@ -1,0 +1,11 @@
+<table class="table table-sm table-borderless">
+
+    {% for lavoratore in elenco_lavoratori %}
+        <tr class="{{ lavoratore.idoneita }}">
+            <td>{{ forloop.counter}}</td>
+            <td>{{ lavoratore.nome|truncatechars:15 }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+

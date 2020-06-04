@@ -34,13 +34,14 @@ def programma_officina():
     # print(commesse)
     dummy = {schede[scheda]['commesse'].append(commessa) for (commessa, scheda) in commesse}
 
+    elenco_lavoratori =[]
     lavoratori = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='lavoratori', na_values=1).fillna('').values.tolist()
     # print(lavoratori)
     for cognome, nome, scheda, cs in lavoratori:
         res = Lavoratore.objects.get(cognome=cognome.strip(), nome=nome.strip())
         lavoratore = {'nome': '%s %s' % (res.cognome, res.nome), 'azienda': res.azienda.nome[0],
                       'mansione': MANSIONI[res.mansione.lower()], 'idoneita': idoneita(res.idoneita)}
-        # elenco_lavoratori.append(lavoratore)
+        elenco_lavoratori.append(lavoratore)
 
         if cs:
             # schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
@@ -49,4 +50,5 @@ def programma_officina():
             # schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
             schede[scheda]['lavoratori'].append(lavoratore)
 
-    return schede
+
+    return schede, elenco_lavoratori

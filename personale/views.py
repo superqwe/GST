@@ -561,10 +561,11 @@ def rait_estratti(request):
 
 
 def programma_officina(request):
-    schede = views_programma_officina.programma_officina()
+    schede, elenco_lavoratori = views_programma_officina.programma_officina()
     pp(schede)
 
     context = {'autorizzato': autorizzato(request.user),
+               'elenco_lavoratori': elenco_lavoratori,
                'schede': schede,
                }
 
