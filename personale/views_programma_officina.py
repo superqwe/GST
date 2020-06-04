@@ -4,19 +4,43 @@ import datetime
 from personale.models import Lavoratore
 
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
-
 MANSIONI = {
     'a. carpentiere in ferro': 'A.CARP',
+    'a. alesatore': 'OP MAC',
     'a. tubista': 'A.TUB',
+    'a. verniciatore': 'A.VERN',
+    'addetto alle pulizie': 'MANU',
+    'addetto ufficio qualità': 'TEC',
     'aiutante': 'AIUT',
+    'autista': 'AUT',
     'capo squadra': 'CS',
     'carpentiere in ferro': 'CARP',
+    'carpentiere montatore': 'CARP',
+    'centralinista telefonico': 'AMM',
+    'conduttore macchine utensili': 'OP MAC',
+    'elettricista': 'ELE',
+    'elettrauto': 'ELE',
+    'gruista': 'GRU',
+    'impiegato tecnico': 'TEC',
+    'impiegato tecnico supervisore': 'TEC',
+    'impiegato amministrativo': 'AMM',
+    'magazziniere': 'MAG',
+    'manutentore meccanico': 'MEC',
+    'meccanico': 'MEC',
+    'operatore macchine utensili': 'OP MAC',
+    'sabbiatore': 'SABB',
+    'saldatore': 'SALD',
+    'tornitore': 'OP MAC',
     'tubista': 'TUB',
+    'verniciatore': 'VERN',
 }
 
 
 def idoneita(data):
-    dt = (data - datetime.date.today()).days
+    try:
+        dt = (data - datetime.date.today()).days
+    except TypeError:
+        return 'table-danger'
 
     if dt < 0:
         return 'table-danger'
@@ -34,14 +58,14 @@ def programma_officina():
     # print(commesse)
     dummy = {schede[scheda]['commesse'].append(commessa) for (commessa, scheda) in commesse}
 
-    elenco_lavoratori =[]
+    elenco_lavoratori = []
     lavoratori = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='lavoratori', na_values=1).fillna('').values.tolist()
     # print(lavoratori)
     for cognome, nome, scheda, cs in lavoratori:
         res = Lavoratore.objects.get(cognome=cognome.strip(), nome=nome.strip())
         lavoratore = {'nome': '%s %s' % (res.cognome, res.nome), 'azienda': res.azienda.nome[0],
                       'mansione': MANSIONI[res.mansione.lower()], 'idoneita': idoneita(res.idoneita)}
-        elenco_lavoratori.append(lavoratore)
+        elenco_lavoratori.append(('%s %s' % (res.cognome, res.nome), lavoratore))
 
         if cs:
             # schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
@@ -50,5 +74,7 @@ def programma_officina():
             # schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
             schede[scheda]['lavoratori'].append(lavoratore)
 
+    elenco_lavoratori.sort()
+    elenco_lavoratori = [lavoratore for nome, lavoratore in elenco_lavoratori]
 
     return schede, elenco_lavoratori
