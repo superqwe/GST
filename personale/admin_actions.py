@@ -432,7 +432,7 @@ def aggiorna_stato_lavoratori():
 
                     try:
                         if getattr(lavoratore, campo) < OGGI:
-                            print(campo, getattr(lavoratore, campo))
+                            print('%-20s %-15s %s' % (lavoratore, campo, getattr(lavoratore, campo)))
                             stato = 'r'
                             break
                         elif getattr(lavoratore, campo) < AVVISO_SCADENZA_ATTESTATI:

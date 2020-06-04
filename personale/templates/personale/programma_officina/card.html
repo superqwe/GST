@@ -1,15 +1,33 @@
-{% for scheda in schede %}
+{% for nome_scheda, scheda in schede.items %}
 
 
 <div class="card">
     <div class="card-header">
-        a{{ scheda.commesse }}b
+        {{ scheda.commesse|join:" - " }}
     </div>
     <div class="card-body">
         <div class="card-text">
 
             <table class="table table-sm table-borderless">
-                RIGO_LAVORATORE
+                {% if scheda.cs %}
+                    <tr class="{{ scheda.cs.idoneita }}">
+                        <th>{{ scheda.cs.nome|truncatechars:15 }}</th>
+                        <th>{{ scheda.cs.azienda}}</th>
+                        <th>{{ scheda.cs.mansione}}</th>
+                    </tr>
+
+                {% endif %}
+
+
+                {% for lavoratore in scheda.lavoratori %}
+                    <tr class="{{ lavoratore.idoneita }}">
+                        <td>{{ lavoratore.nome|truncatechars:15 }}</td>
+                        <td>{{ lavoratore.azienda}}</td>
+                        <td>{{ lavoratore.mansione}}</td>
+                    </tr>
+
+                {% endfor %}
+
             </table>
 
         </div>

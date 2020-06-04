@@ -11,15 +11,13 @@ from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
 import personale.views_aggiorna_unilav as views_aggiorna_unilav
-from personale import views_util, views_estrai_dati
+from personale import views_util, views_estrai_dati, views_programma_officina
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_util import autorizzato
 
 from pprint import pprint as pp
-
-PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 
 
 def index(request):
@@ -563,29 +561,7 @@ def rait_estratti(request):
 
 
 def programma_officina(request):
-    schede = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='schede').values.tolist()
-    schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None} for x in schede}
-    # print(schede)
-
-    commesse = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='commesse').values.tolist()
-    # print(commesse)
-    dummy = {schede[scheda]['commesse'].append(commessa) for (commessa, scheda) in commesse}
-
-    lavoratori = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='lavoratori', na_values=1).fillna('').values.tolist()
-    # print(lavoratori)
-    for cognome, nome, scheda, cs in lavoratori:
-        res = Lavoratore.objects.get(cognome=cognome.strip(), nome=nome.strip())
-        lavoratore = {'nome': '%s %s' % (res.cognome, res.nome), 'azienda': res.azienda.nome[0],
-                      'idoneita': res.idoneita}
-        # elenco_lavoratori.append(lavoratore)
-
-        if cs:
-            # schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
-            schede[scheda]['cs'] = lavoratore
-        else:
-            # schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
-            schede[scheda]['lavoratori'].append(lavoratore)
-
+    schede = views_programma_officina.programma_officina()
     pp(schede)
 
     context = {'autorizzato': autorizzato(request.user),
