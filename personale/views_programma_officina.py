@@ -76,5 +76,8 @@ def programma_officina():
 
     elenco_lavoratori.sort()
     elenco_lavoratori = [lavoratore for nome, lavoratore in elenco_lavoratori]
-
-    return schede, elenco_lavoratori
+    n_lav = len(elenco_lavoratori)
+    n = n_lav // 2 + n_lav % 2
+    elenco_lavoratori_1=elenco_lavoratori[:n]
+    elenco_lavoratori_2=elenco_lavoratori[n:]
+    return schede, (elenco_lavoratori_1,elenco_lavoratori_2)
