@@ -1,8 +1,9 @@
 <div class="row">
+{% for elenco in elenco_lavoratori %}
 
     <div class="col">
         <table class="table table-sm table-borderless">
-            {% for lavoratore in elenco_lavoratori_1 %}
+            {% for lavoratore in elenco %}
             <tr class="{{ lavoratore.idoneita }}">
                 <td>{{ contatore_lavoratori }}</td>
                 <td>{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
@@ -11,17 +12,9 @@
         </table>
     </div>
 
-    <div class="col">
-        <table class="table table-sm table-borderless">
 
-            {% for lavoratore in elenco_lavoratori_2 %}
-            <tr class="{{ lavoratore.idoneita }}">
-                <td>{{ contatore_lavoratori }}</td>
-                <td>{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    
+
+
+{% endfor %}
 </div>
 

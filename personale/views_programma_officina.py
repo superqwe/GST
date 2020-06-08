@@ -1,12 +1,14 @@
 import datetime
 
 import pandas as pd
+import numpy as np
 
 from pprint import pprint as pp
 from personale.models import Lavoratore
 
 N_CARD_PER_RIGO = 7
-TRONCA_NOME = 25
+N_COLONNE_ELENCO_LAVORATORI = 3
+TRONCA_NOME = 15
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 MANSIONI = {
     'a. carpentiere in ferro': 'A.CARP',
@@ -78,10 +80,12 @@ def programma_officina():
 
     elenco_lavoratori.sort()
     elenco_lavoratori = [lavoratore for nome, lavoratore in elenco_lavoratori]
-    n_lav = len(elenco_lavoratori)
-    n = n_lav // 2 + n_lav % 2
-    elenco_lavoratori_1 = elenco_lavoratori[:n]
-    elenco_lavoratori_2 = elenco_lavoratori[n:]
+    # n_lav = len(elenco_lavoratori)
+    # n = n_lav // N_COLONNE_ELENCO_LAVORATORI + n_lav % N_COLONNE_ELENCO_LAVORATORI
+    # elenco_lavoratori_1 = elenco_lavoratori[:n]
+    # elenco_lavoratori_2 = elenco_lavoratori[n:]
+
+    elenco_lavoratori = np.array_split(elenco_lavoratori, N_COLONNE_ELENCO_LAVORATORI)
 
     # suddivisione schede in righi
     righe = []
@@ -98,9 +102,11 @@ def programma_officina():
         rigo[scheda] = schede[scheda]
 
     # inserimento caselle vuote per riempimento ultimo rigo
-    for x in range(N_CARD_PER_RIGO - n % N_CARD_PER_RIGO-1):
+    for x in range(N_CARD_PER_RIGO - n % N_CARD_PER_RIGO - 1):
         rigo[x] = {}
 
     righe.append(rigo)
 
-    return schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe
+    # TODO rimuovere shede dal return
+    # return schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe
+    return elenco_lavoratori, righe

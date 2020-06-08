@@ -23,7 +23,6 @@ from personale.views_util import autorizzato
 from pprint import pprint as pp
 
 
-
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
@@ -565,14 +564,16 @@ def rait_estratti(request):
 
 
 def programma_officina(request):
-    schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe = views_programma_officina.programma_officina()
+    # schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe = views_programma_officina.programma_officina()
+    elenco_lavoratori, righe = views_programma_officina.programma_officina()
     # pp(schede)
 
     max_width_card = 100 // N_CARD_PER_RIGO
     context = {'autorizzato': autorizzato(request.user),
-               'elenco_lavoratori_1': elenco_lavoratori_1,
-               'elenco_lavoratori_2': elenco_lavoratori_2,
-               'schede': schede,
+               'elenco_lavoratori': elenco_lavoratori,
+               # 'elenco_lavoratori_1': elenco_lavoratori_1,
+               # 'elenco_lavoratori_2': elenco_lavoratori_2,
+               # 'schede': schede,
                'righe': righe,
                'contatore_lavoratori': functools.partial(next, itertools.count(1)),
                'tronca_nome': TRONCA_NOME,
