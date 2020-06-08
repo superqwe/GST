@@ -561,13 +561,14 @@ def rait_estratti(request):
 
 
 def programma_officina(request):
-    schede, (elenco_lavoratori_1, elenco_lavoratori_2) = views_programma_officina.programma_officina()
-    pp(schede)
+    schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe = views_programma_officina.programma_officina()
+    # pp(schede)
 
     context = {'autorizzato': autorizzato(request.user),
                'elenco_lavoratori_1': elenco_lavoratori_1,
                'elenco_lavoratori_2': elenco_lavoratori_2,
                'schede': schede,
+               'righe': righe,
                }
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')

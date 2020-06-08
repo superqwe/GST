@@ -1,8 +1,10 @@
 import pandas as pd
 import datetime
 
+from pprint import pprint as pp
 from personale.models import Lavoratore
 
+N_CARD_PER_RIGO = 5
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 MANSIONI = {
     'a. carpentiere in ferro': 'A.CARP',
@@ -78,6 +80,22 @@ def programma_officina():
     elenco_lavoratori = [lavoratore for nome, lavoratore in elenco_lavoratori]
     n_lav = len(elenco_lavoratori)
     n = n_lav // 2 + n_lav % 2
-    elenco_lavoratori_1=elenco_lavoratori[:n]
-    elenco_lavoratori_2=elenco_lavoratori[n:]
-    return schede, (elenco_lavoratori_1,elenco_lavoratori_2)
+    elenco_lavoratori_1 = elenco_lavoratori[:n]
+    elenco_lavoratori_2 = elenco_lavoratori[n:]
+
+    righe = []
+    rigo = {}
+    for n, scheda in enumerate(schede):
+
+        if n % N_CARD_PER_RIGO == 0:
+
+            if rigo:
+                righe.append(rigo)
+
+            rigo = {}
+
+        rigo[scheda] = schede[scheda]
+
+    righe.append(rigo)
+    # pp(righe)
+    return schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe
