@@ -1,4 +1,6 @@
 import datetime
+import functools
+import itertools
 import os
 from datetime import timedelta
 
@@ -569,6 +571,7 @@ def programma_officina(request):
                'elenco_lavoratori_2': elenco_lavoratori_2,
                'schede': schede,
                'righe': righe,
+               'contatore_lavoratori': functools.partial(next, itertools.count(1)),
                }
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')

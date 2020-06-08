@@ -4,7 +4,7 @@
         <table class="table table-sm table-borderless">
             {% for lavoratore in elenco_lavoratori_1 %}
             <tr class="{{ lavoratore.idoneita }}">
-                <td>{{ forloop.counter}}</td>
+                <td>{{ contatore_lavoratori }}</td>
                 <td>{{ lavoratore.nome|truncatechars:15 }}</td>
             </tr>
             {% endfor %}
@@ -16,7 +16,7 @@
 
             {% for lavoratore in elenco_lavoratori_2 %}
             <tr class="{{ lavoratore.idoneita }}">
-                <td>{{ forloop.counter}}</td>
+                <td>{{ contatore_lavoratori }}</td>
                 <td>{{ lavoratore.nome|truncatechars:15 }}</td>
             </tr>
             {% endfor %}

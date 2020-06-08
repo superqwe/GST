@@ -1,5 +1,6 @@
-import pandas as pd
 import datetime
+
+import pandas as pd
 
 from pprint import pprint as pp
 from personale.models import Lavoratore
