@@ -17,7 +17,7 @@
                 <table class="table table-sm table-borderless">
                     {% if scheda.cs %}
                     <tr class="{{ scheda.cs.idoneita }}">
-                        <th>{{ scheda.cs.nome|truncatechars:15 }}</th>
+                        <th>{{ scheda.cs.nome|truncatechars:tronca_nome }}</th>
                         <th>{{ scheda.cs.azienda}}</th>
                         <th>{{ scheda.cs.mansione}}</th>
                     </tr>
@@ -27,7 +27,7 @@
 
                     {% for lavoratore in scheda.lavoratori %}
                     <tr class="{{ lavoratore.idoneita }}">
-                        <td>{{ lavoratore.nome|truncatechars:15 }}</td>
+                        <td>{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
                         <td>{{ lavoratore.azienda}}</td>
                         <td>{{ lavoratore.mansione}}</td>
                     </tr>

@@ -5,7 +5,8 @@ import pandas as pd
 from pprint import pprint as pp
 from personale.models import Lavoratore
 
-N_CARD_PER_RIGO = 5
+N_CARD_PER_RIGO = 7
+TRONCA_NOME = 25
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 MANSIONI = {
     'a. carpentiere in ferro': 'A.CARP',
@@ -71,10 +72,8 @@ def programma_officina():
         elenco_lavoratori.append(('%s %s' % (res.cognome, res.nome), lavoratore))
 
         if cs:
-            # schede[scheda]['cs'] = '%s %s' % (cognome.strip(), nome[:3])
             schede[scheda]['cs'] = lavoratore
         else:
-            # schede[scheda]['lavoratori'].append('%s %s' % (cognome.strip(), nome[:3]))
             schede[scheda]['lavoratori'].append(lavoratore)
 
     elenco_lavoratori.sort()
@@ -84,6 +83,7 @@ def programma_officina():
     elenco_lavoratori_1 = elenco_lavoratori[:n]
     elenco_lavoratori_2 = elenco_lavoratori[n:]
 
+    # suddivisione schede in righi
     righe = []
     rigo = {}
     for n, scheda in enumerate(schede):
@@ -97,6 +97,10 @@ def programma_officina():
 
         rigo[scheda] = schede[scheda]
 
+    # inserimento caselle vuote per riempimento ultimo rigo
+    for x in range(N_CARD_PER_RIGO - n % N_CARD_PER_RIGO-1):
+        rigo[x] = {}
+
     righe.append(rigo)
-    # pp(righe)
+
     return schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe

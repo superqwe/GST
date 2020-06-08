@@ -17,9 +17,11 @@ from personale import views_util, views_estrai_dati, views_programma_officina
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
+from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
 from personale.views_util import autorizzato
 
 from pprint import pprint as pp
+
 
 
 def index(request):
@@ -566,12 +568,15 @@ def programma_officina(request):
     schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe = views_programma_officina.programma_officina()
     # pp(schede)
 
+    max_width_card = 100 // N_CARD_PER_RIGO
     context = {'autorizzato': autorizzato(request.user),
                'elenco_lavoratori_1': elenco_lavoratori_1,
                'elenco_lavoratori_2': elenco_lavoratori_2,
                'schede': schede,
                'righe': righe,
                'contatore_lavoratori': functools.partial(next, itertools.count(1)),
+               'tronca_nome': TRONCA_NOME,
+               'mw': max_width_card,
                }
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')
