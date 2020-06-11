@@ -7,7 +7,7 @@
 
     <div class="card m-1">
 
-        <div class="card-header">
+        <div class="card-header {{ scheda.tipo_scheda }} hmin">
             {{ scheda.commesse|join:" - " }}
         </div>
 
@@ -16,24 +16,21 @@
 
                 <table class="table table-sm table-borderless">
                     {% if scheda.cs %}
-                    <tr class="{{ scheda.cs.idoneita }}">
+                    <tr class="{{ scheda.cs.idoneita }} text-truncate">
                         <th>{{ scheda.cs.nome|truncatechars:tronca_nome }}</th>
                         <th>{{ scheda.cs.azienda}}</th>
                         <th>{{ scheda.cs.mansione}}</th>
                     </tr>
-
                     {% endif %}
 
 
                     {% for lavoratore in scheda.lavoratori %}
-                    <tr class="{{ lavoratore.idoneita }}">
+                    <tr class="{{ lavoratore.idoneita }} text-truncate">
                         <td>{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
                         <td>{{ lavoratore.azienda}}</td>
                         <td>{{ lavoratore.mansione}}</td>
                     </tr>
-
                     {% endfor %}
-
                 </table>
 
             </div>

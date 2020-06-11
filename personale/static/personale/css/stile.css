@@ -14,3 +14,7 @@ font-size: 10px;
     min-height: 1px;
     padding:  1rem 0 0 0;
   }
+
+  .hmin{
+    min-height: 55px;
+  }

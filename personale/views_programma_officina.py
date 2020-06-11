@@ -57,8 +57,8 @@ def idoneita(data):
 
 def programma_officina():
     schede = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='schede').values.tolist()
-    schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None} for x in schede}
-    # print(schede)
+    schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None, 'tipo_scheda': x[1]} for x in schede}
+    pp(schede)
 
     commesse = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='commesse').values.tolist()
     # print(commesse)
