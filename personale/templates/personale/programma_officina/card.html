@@ -16,16 +16,15 @@
 
                 <table class="table table-sm table-borderless">
                     {% if scheda.cs %}
-                    <tr class="{{ scheda.cs.idoneita }} text-truncate">
+                    <tr class="{{ scheda.cs.idoneita }} text-truncate mio">
                         <th>{{ scheda.cs.nome|truncatechars:tronca_nome }}</th>
                         <th>{{ scheda.cs.azienda}}</th>
                         <th>{{ scheda.cs.mansione}}</th>
                     </tr>
                     {% endif %}
 
-
                     {% for lavoratore in scheda.lavoratori %}
-                    <tr class="{{ lavoratore.idoneita }} text-truncate">
+                    <tr class="{{ lavoratore.idoneita }} text-truncate mio">
                         <td>{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
                         <td>{{ lavoratore.azienda}}</td>
                         <td>{{ lavoratore.mansione}}</td>

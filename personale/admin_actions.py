@@ -1,3 +1,4 @@
+import calendar
 import datetime
 import os
 import re
@@ -61,7 +62,12 @@ def scadenza2date(documento, durata=5):
 
             giorno, mese, anno = int(data[:2]), int(data[2:4]), int(data[4:])
             anno = anno if anno > 2000 else anno + 2000
-            scadenza = datetime.date(anno + durata, mese, giorno)
+            anno_scadenza = anno + durata
+
+            if mese == 2 and giorno == 29 and not calendar.isleap(anno_scadenza):
+                giorno -= 1
+
+            scadenza = datetime.date(anno_scadenza, mese, giorno)
             return scadenza
         except IndexError:
             print('+++', documento)

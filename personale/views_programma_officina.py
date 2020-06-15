@@ -58,7 +58,7 @@ def idoneita(data):
 def programma_officina():
     schede = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='schede').values.tolist()
     schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None, 'tipo_scheda': x[1]} for x in schede}
-    pp(schede)
+    # pp(schede)
 
     commesse = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='commesse').values.tolist()
     # print(commesse)
@@ -80,11 +80,6 @@ def programma_officina():
 
     elenco_lavoratori.sort()
     elenco_lavoratori = [lavoratore for nome, lavoratore in elenco_lavoratori]
-    # n_lav = len(elenco_lavoratori)
-    # n = n_lav // N_COLONNE_ELENCO_LAVORATORI + n_lav % N_COLONNE_ELENCO_LAVORATORI
-    # elenco_lavoratori_1 = elenco_lavoratori[:n]
-    # elenco_lavoratori_2 = elenco_lavoratori[n:]
-
     elenco_lavoratori = np.array_split(elenco_lavoratori, N_COLONNE_ELENCO_LAVORATORI)
 
     # suddivisione schede in righi
