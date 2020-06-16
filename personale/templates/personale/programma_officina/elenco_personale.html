@@ -5,7 +5,7 @@
         <table class="table table-sm table-borderless">
             {% for lavoratore in elenco %}
             <tr class="{{ lavoratore.idoneita }}">
-                <td>{{ contatore_lavoratori }}</td>
+                <td class="text-right">{{ contatore_lavoratori }}</td>
                 <td class="text-truncate">{{ lavoratore.nome|truncatechars:tronca_nome }}</td>
             </tr>
             {% endfor %}
