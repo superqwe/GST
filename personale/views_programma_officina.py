@@ -56,6 +56,9 @@ def idoneita(data):
 
 
 def programma_officina():
+    intestazione = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='intestazione').values.tolist()[0]
+    # pp(intestazione)
+
     schede = pd.read_excel(PROGRAMMA_OFFICINA, sheet_name='schede').values.tolist()
     schede = {x[0]: {'commesse': [], 'lavoratori': [], 'cs': None, 'tipo_scheda': x[1]} for x in schede}
     # pp(schede)
@@ -102,6 +105,4 @@ def programma_officina():
 
     righe.append(rigo)
 
-    # TODO rimuovere shede dal return
-    # return schede, (elenco_lavoratori_1, elenco_lavoratori_2), righe
-    return elenco_lavoratori, righe
+    return elenco_lavoratori, righe, intestazione

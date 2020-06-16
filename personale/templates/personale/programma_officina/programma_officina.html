@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{% static 'personale/css/bootstrap2.css' %}">
     <link rel="stylesheet" href="{% static 'personale/css/stile.css' %}">
 
-    <title>Programma Officina dal 15/06/20 al 20/06/20</title>
+    <title>Programma Officina dal {{programma_dal|date:"d/m/y"}} al {{programma_al|date:"d/m/y"}} rev
+        {{programma_rev}}</title>
 </head>
 
 <body class="text-monospace">
@@ -18,13 +19,13 @@
     <div class="row">
         <div class="col-9">
             {% block elenco_card %}
-                {% include "personale/programma_officina/card.html" %}
+            {% include "personale/programma_officina/card.html" %}
             {% endblock %}
         </div>
 
         <div class="col-3">
             {% block elencolavoratori %}
-                    {% include "personale/programma_officina/elenco_personale.html" %}
+            {% include "personale/programma_officina/elenco_personale.html" %}
             {% endblock %}
         </div>
     </div>
