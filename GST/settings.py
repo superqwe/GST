@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217', 'modomec.pythonanywhere.com']
 INSTALLED_APPS = [
     'personale.apps.PersonaleConfig',
     'django.contrib.admin',
-    # ' django.contrib.admindocs',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

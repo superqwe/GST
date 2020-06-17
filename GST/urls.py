@@ -23,7 +23,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('personale/', include('personale.urls')),
     path('admin/', admin.site.urls),
-    # path('admin/doc/', include('django.contrib.admindocs.urls'))
+    path('admin/doc/', include('django.contrib.admindocs.urls'))
 ]
 
 if settings.DEBUG:

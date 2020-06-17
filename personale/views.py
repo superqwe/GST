@@ -425,7 +425,7 @@ def dati_estratti(request):
         xlsx = dati['estrazione']['nome_file_xlsx']
         lavoratori = estrazione_da_excel2(xlsx, documenti=elenco_doc)
 
-    template = loader.get_template('personale/programma_officina.html')
+    template = loader.get_template('personale/principale.html')
     context = {'autorizzato': autorizzato(request.user),
                'data_ultima_modifica': data_ultima_modifica_leggi(),
                'dati_estratti': True,
