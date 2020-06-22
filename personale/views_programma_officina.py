@@ -11,6 +11,7 @@ N_COLONNE_ELENCO_LAVORATORI = 3
 TRONCA_NOME = 16  # non scendere sotto 15
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 MANSIONI = {
+    '-': '-',
     'a. carpentiere in ferro': 'A.CARP',
     'a. alesatore': 'OP MAC',
     'a. tubista': 'A.TUB',
@@ -72,6 +73,7 @@ def programma_officina():
     # print(lavoratori)
     for cognome, nome, scheda, cs in lavoratori:
         res = Lavoratore.objects.get(cognome=cognome.strip(), nome=nome.strip())
+        if not res.mansione: res.mansione = '-'
         lavoratore = {'nome': '%s %s' % (res.cognome, res.nome), 'azienda': res.azienda.nome[0],
                       'mansione': MANSIONI[res.mansione.lower()], 'idoneita': idoneita(res.idoneita)}
         elenco_lavoratori.append(('%s %s' % (res.cognome, res.nome), lavoratore))
