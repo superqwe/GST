@@ -488,7 +488,14 @@ def aggiorna_unilav(request):
 
                 print('%-13s %-13s %s' % (cognome, nome, cf))
 
-                data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]
+                try:
+                    data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]
+                except AttributeError:
+                    print('*** Errore -->', cella, '--> comunicazione annullata')
+                    errore.append((cella, '%s: comunicazione annullata' % categoria.title()))
+                    rigo += 3
+                    continue
+
                 data_assunzione = datetime.datetime.strptime(data_assunzione, '%d/%m/%Y').date()
 
                 try:

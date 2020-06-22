@@ -1,10 +1,10 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 200514 AMI Tramoggia.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 0
-building = 1
+building = 0
 rimec = 0
 welding = 0
 
@@ -19,7 +19,7 @@ macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 0
-ac boiler = 0
+ac boiler = 1
 raffineria = 0
 andritz (de) = 0
 raffineria - porto = 0
@@ -32,16 +32,16 @@ idoneita = 1
 
 [formazione]
 art37 = 1
-preposto = 1
-primo_soccorso = 1
-antincendio = 1
+preposto = 0
+primo_soccorso = 0
+antincendio = 0
 h2s = 0
-dpi3 = 1
-lavori_quota = 1
-carrello = 1
-ple = 1
-gru = 1
-imbracatore = 1
+dpi3 = 0
+lavori_quota = 0
+carrello = 0
+ple = 0
+gru = 0
+imbracatore = 0
 spazi_confinati = 0
 ponteggi = 0
 rir = 0
