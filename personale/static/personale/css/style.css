@@ -1,28 +1,35 @@
-.r  {
+.r {
     color: red;
 }
 
-.v  {
+.v {
     color: green;
 }
 
-.g  {
+.g {
     color: orange;
 }
 
-.c  {
+.c {
     color: grey;
 }
 
-body { height: 1000px; }
-thead{
-    background-color:white;
+body {
+    height: 1000px;
+}
+
+thead {
+    background-color: white;
 }
 
 .n {
-  color: #212529;
- }
+    color: #212529;
+}
 
-.no-auth{color: red;}
+.no-auth {
+    color: red;
+}
 
-.nascosto { display: none;}
+.nascosto {
+    display: none;
+}

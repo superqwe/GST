@@ -1,10 +1,10 @@
 body {
-font-size: 10px;
+    font-size: 10px;
 }
 
 
 .cs {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 
@@ -12,13 +12,13 @@ font-size: 10px;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     min-height: 1px;
-    padding:  0;
-  }
+    padding: 0;
+}
 
-  .hmin{
+.hmin {
     min-height: 55px;
-  }
+}
 
-.mio{
-  font-family: "Arial Narrow"
+.mio {
+    font-family: "Arial Narrow"
 }
