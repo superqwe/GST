@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'personale/css/bootstrap2.css' %}">
     <link rel="stylesheet" href="{% static 'personale/css/stile.css' %}">
 
-    <title>Programma Officina
+    <title>{{settimana}} Programma Officina 
         {% if programma_dal != "-" %} dal {{programma_dal|date:"d/m/y"}} {% endif %}
         {% if programma_al != "-" %} al {{programma_al|date:"d/m/y"}} {% endif%}
         rev {{programma_rev}}</title>

@@ -571,7 +571,7 @@ def rait_estratti(request):
 
 
 def programma_officina(request):
-    elenco_lavoratori, righe, (dal, al, rev) = views_programma_officina.programma_officina()
+    elenco_lavoratori, righe, (settimana, dal, al, rev) = views_programma_officina.programma_officina()
 
     max_width_card = 100 // N_CARD_PER_RIGO
     context = {'autorizzato': autorizzato(request.user),
@@ -583,6 +583,7 @@ def programma_officina(request):
                'programma_dal': dal,
                'programma_al': al,
                'programma_rev': rev,
+               'settimana': settimana,
                }
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')
