@@ -33,8 +33,13 @@ def rinomina_unilav(lavoratore, indeterminato=None):
                     if not os.path.isdir(cartella_scaduti):
                         os.mkdir(cartella_scaduti)
 
-                    shutil.move(unilav_path, cartella_scaduti)
-                    print('--> unilav spostato in scaduti')
+                    try:
+                        shutil.move(unilav_path, cartella_scaduti)
+                        print('--> unilav spostato in scaduti')
+                    except:
+                        os.remove(unilav_path)
+                        print('--> unilav vecchio esistente in scaduti')
+
             else:
                 data = 'ind' if indeterminato else lavoratore.unilav.strftime('%d%m%y')
                 unilav_rinominato = '%s\\unilav %s.pdf' % (cartella_lavoratore, data)
