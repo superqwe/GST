@@ -1,6 +1,6 @@
 [estrazione]
-tipo = filtri
-nome_file_xlsx = 
+tipo = excel
+nome_file_xlsx = 200701 ENI Priolo.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -19,7 +19,7 @@ macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 0
-ac boiler = 1
+ac boiler = 0
 raffineria = 0
 andritz (de) = 0
 raffineria - porto = 0
@@ -28,10 +28,10 @@ arcelormittal - porto = 0
 
 [base]
 unilav = 0
-idoneita = 1
+idoneita = 0
 
 [formazione]
-art37 = 1
+art37 = 0
 preposto = 0
 primo_soccorso = 0
 antincendio = 0
@@ -42,7 +42,7 @@ carrello = 0
 ple = 0
 gru = 0
 imbracatore = 0
-spazi_confinati = 0
+spazi_confinati = 1
 ponteggi = 0
 rir = 0
 rls = 0

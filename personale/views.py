@@ -298,7 +298,8 @@ def formazione(request):
     welding = Lavoratore.objects.filter(azienda__nome='Welding', in_forza=True).order_by('cognome', 'nome')
 
     lavoratori = (modomec, building, rimec, welding)
-    aziende = ('modomec', 'building', 'rimec', 'welding')
+    # aziende = ('modomec', 'building', 'rimec', 'welding')
+    aziende = ('modomec', 'building', 'welding')
 
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita', 'idoneita',
                        'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto',
@@ -337,12 +338,12 @@ def formazione(request):
         ws.cell(row=1, column=1).value = azienda.upper()
         ws['A1'].font = Font(size=18, color='007e60')
 
-        for cell in ws['A2:U2'][0]:
+        for cell in ws['A2:V2'][0]:
             cell.border = Border(top=Side(border_style='thin', color='007e60'),
                                  bottom=Side(border_style='thin', color='007e60'))
 
         max_row = ws.max_row
-        rows = ws['A3:U%i' % max_row]
+        rows = ws['A3:V%i' % max_row]
         for i, row in enumerate(rows):
 
             for cell in row:
@@ -355,7 +356,7 @@ def formazione(request):
                 if i % 2:
                     cell.fill = PatternFill(start_color='ebfffa', end_color='ebfffa', fill_type='solid')
 
-        for cell in ws['A%i:U%i' % (max_row, max_row)][0]:
+        for cell in ws['A%i:V%i' % (max_row, max_row)][0]:
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
         dims = {}
