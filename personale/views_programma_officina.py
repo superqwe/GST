@@ -21,6 +21,7 @@ MANSIONI = {
     'aiutante': 'AIUT',
     'autista': 'AUT',
     'capo squadra': 'CS',
+    'carpentiere': 'CARP',
     'carpentiere in ferro': 'CARP',
     'carpentiere montatore': 'CARP',
     'centralinista telefonico': 'AMM',

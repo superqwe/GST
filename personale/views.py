@@ -224,6 +224,26 @@ def unilav(request):
     return HttpResponse(template.render(context, request))
 
 
+def unilav_scaduti(request):
+    oggi = datetime.date.today()
+
+    lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                             unilav__lte=oggi)
+    for lavoratore in lavoratori_r:
+        lavoratore.in_forza = False
+        lavoratore.save()
+
+    template = loader.get_template('personale/unilav.html')
+    context = {
+        'autorizzato': autorizzato(request.user),
+        'lavoratori_r': lavoratori_r,
+        'scadenza': views_util.Date_Scadenza(),
+        'scaduti': True,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
 def mansioni(request):
     mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
         totale=Count('mansione')).order_by('-totale')
@@ -298,8 +318,8 @@ def formazione(request):
     welding = Lavoratore.objects.filter(azienda__nome='Welding', in_forza=True).order_by('cognome', 'nome')
 
     lavoratori = (modomec, building, rimec, welding)
-    # aziende = ('modomec', 'building', 'rimec', 'welding')
-    aziende = ('modomec', 'building', 'welding')
+    aziende = ('modomec', 'building', 'rimec', 'welding')
+    # aziende = ('modomec', 'building', 'welding')
 
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita', 'idoneita',
                        'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto',

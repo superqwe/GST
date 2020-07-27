@@ -13,6 +13,10 @@ UNILAV
 
 {% block corpo %}
 <div class="row">
+
+{% if scaduti %}
+    <div class="col">  Personale passato in <em>Non In Forza</em></div>
+{% else %}
     <div class="col-2">  UNILAV fino al: {{fino_al}} </div>
 
     <div class="col-2">
@@ -27,6 +31,13 @@ UNILAV
         =
         <span class="badge badge-dark">{{n.t}}</span>
     </div>
+
+    <div class="col">
+        <form action="/personale/unilav/scaduti/" method="post">{% csrf_token %}
+            <button type="submit" class="btn btn-danger">Scaduti --> Non in Forza</button>
+        </form>
+    </div>
+{% endif %}
 </div>
 
 <div class="table-responsive">

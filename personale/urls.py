@@ -41,6 +41,8 @@ urlpatterns = [
 
     # /personale/unilav
     path('unilav/', views.unilav, name='unilav'),
+    # /personale/unilav_scaduti
+    path('unilav/scaduti/', views.unilav_scaduti, name='unilav_scaduti'),
 
     # /personale/test/
     path('test/', views.test, name='test'),
