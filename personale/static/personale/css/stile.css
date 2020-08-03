@@ -2,11 +2,9 @@ body {
     font-size: 10px;
 }
 
-
 .cs {
     font-weight: bold;
 }
-
 
 .card-body {
     -ms-flex: 1 1 auto;

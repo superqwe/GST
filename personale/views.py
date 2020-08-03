@@ -228,10 +228,14 @@ def unilav_scaduti(request):
     oggi = datetime.date.today()
 
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
-                                             unilav__lte=oggi)
+                                             unilav__lt=oggi)
+    
+    print('\nLavoratori passati in non in forza:')
     for lavoratore in lavoratori_r:
+        print('\t', lavoratore.cognome, lavoratore.nome)
         lavoratore.in_forza = False
         lavoratore.save()
+    print()
 
     template = loader.get_template('personale/unilav.html')
     context = {
