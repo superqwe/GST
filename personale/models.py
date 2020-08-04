@@ -70,6 +70,7 @@ class Lavoratore(models.Model):
     data_assunzione = models.DateField(null=True, blank=True, verbose_name='Data Assunzione')
     data_nascita = models.DateField(null=True, blank=True, verbose_name='Data Nascita')
     luogo_nascita = models.CharField(max_length=100, null=True, blank=True, verbose_name='Luogo Nascita')
+    luogo_residenza = models.CharField(max_length=100, null=True, blank=True, verbose_name='Luogo Residenza')
 
     # formazione
     art37 = models.DateField(null=True, blank=True, verbose_name='Art.37')
