@@ -8,7 +8,7 @@ from personale.models import Lavoratore
 
 N_CARD_PER_RIGO = 7
 N_COLONNE_ELENCO_LAVORATORI = 3
-TRONCA_NOME = 16  # non scendere sotto 15
+TRONCA_NOME = 15  # non scendere sotto 15
 PROGRAMMA_OFFICINA = 'Programma Officina.xlsx'
 MANSIONI = {
     '-': '-',

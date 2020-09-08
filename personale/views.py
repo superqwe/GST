@@ -18,6 +18,7 @@ from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
+from personale.views_tesserini import genera_tesserini
 from personale.views_util import autorizzato
 
 from pprint import pprint as pp
@@ -613,3 +614,9 @@ def programma_officina(request):
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')
     return HttpResponse(template.render(context, request))
+
+def tesserini(request):
+    genera_tesserini()
+    ora = datetime.datetime.now()
+    return HttpResponse("""<h1 style="text-align:center">tesserini creato</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)

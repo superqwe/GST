@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = dati.xlsx
+nome_file_xlsx = 200825 FINCOSIT.xlsx
 
 [filtro_impresa]
 modomec = 1
@@ -28,23 +28,23 @@ arcelormittal - porto = 0
 avetrana = 0
 
 [base]
-unilav = 1
-idoneita = 0
+unilav = 0
+idoneita = 1
 
 [formazione]
-art37 = 0
-preposto = 0
-primo_soccorso = 0
-antincendio = 0
+art37 = 1
+preposto = 1
+primo_soccorso = 1
+antincendio = 1
 h2s = 0
-dpi3 = 0
-lavori_quota = 0
+dpi3 = 1
+lavori_quota = 1
 carrello = 0
 ple = 0
 gru = 0
 imbracatore = 0
 spazi_confinati = 0
-ponteggi = 0
+ponteggi = 1
 rir = 0
 rls = 0
 

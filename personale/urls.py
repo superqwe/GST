@@ -39,6 +39,9 @@ urlpatterns = [
     path('rait/', views.rait, name='rait'),
     path('rait/estratti/', views.rait_estratti, name='rait_estratti'),
 
+    # /personale/tesserini
+    path('tesserini/', views.tesserini, name='tesserini'),
+
     # /personale/unilav
     path('unilav/', views.unilav, name='unilav'),
     # /personale/unilav_scaduti
