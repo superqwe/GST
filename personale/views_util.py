@@ -84,8 +84,8 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
                 | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                | Q(cantiere=Cantiere.objects.get(nome='-')) \
-                )
+                | Q(cantiere=Cantiere.objects.get(nome='-'))
+            )
 
 
         else:

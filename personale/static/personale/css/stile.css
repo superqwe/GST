@@ -15,9 +15,9 @@ body {
 
 .hmin {
     /*n.2 righi*/
-    min-height: 55px;
+    /* min-height: 55px; */
     /*n.3 righi*/
-    /* min-height: 71px; */
+    min-height: 71px;
 }
 
 .mio {

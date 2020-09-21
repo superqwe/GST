@@ -230,7 +230,7 @@ def unilav_scaduti(request):
 
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
                                              unilav__lt=oggi)
-    
+
     print('\nLavoratori passati in non in forza:')
     for lavoratore in lavoratori_r:
         print('\t', lavoratore.cognome, lavoratore.nome)
@@ -326,9 +326,10 @@ def formazione(request):
     aziende = ('modomec', 'building', 'rimec', 'welding')
     # aziende = ('modomec', 'building', 'welding')
 
-    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita', 'idoneita',
-                       'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato', 'rspp', 'nomina_preposto',
-                       'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls', 'nomina_aspp']
+    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
+                       'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato',
+                       'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
+                       'nomina_aspp']
 
     if includi_idoneita:
         colonne_escluse.remove('idoneita')
@@ -614,6 +615,7 @@ def programma_officina(request):
 
     template = loader.get_template('personale/programma_officina/programma_officina.html')
     return HttpResponse(template.render(context, request))
+
 
 def tesserini(request):
     genera_tesserini()
