@@ -28,7 +28,8 @@ def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
 
-def completo(request, ordinamento=None):
+def completo(request, filtro=False, ordinamento=None):
+    # pagina_attiva = 'in_forza' if filtro == 'in_forza' else 'tutti'
     tabella_completa = False
 
     if ordinamento == 'a':
