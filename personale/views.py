@@ -327,8 +327,8 @@ def formazione(request):
     # aziende = ('modomec', 'building', 'welding')
 
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
-                       'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'rls', 'stato',
-                       'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
+                       'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'escavatore', 'rls',
+                       'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
                        'nomina_aspp']
 
     if includi_idoneita:
@@ -364,12 +364,12 @@ def formazione(request):
         ws.cell(row=1, column=1).value = azienda.upper()
         ws['A1'].font = Font(size=18, color='007e60')
 
-        for cell in ws['A2:V2'][0]:
+        for cell in ws['A2:U2'][0]:
             cell.border = Border(top=Side(border_style='thin', color='007e60'),
                                  bottom=Side(border_style='thin', color='007e60'))
 
         max_row = ws.max_row
-        rows = ws['A3:V%i' % max_row]
+        rows = ws['A3:U%i' % max_row]
         for i, row in enumerate(rows):
 
             for cell in row:

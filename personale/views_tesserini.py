@@ -36,13 +36,13 @@ def griglia(c, x, y):
     c.drawString(x + 31 * mm, y + 6 * mm, 'Data di assunzione:')
 
     y += 1.0 * cm
-    c.line(x, y , x + width - 2.5 * cm, y )
+    c.line(x, y, x + width - 2.5 * cm, y)
     c.setFillColorRGB(grigio, grigio, grigio)
     c.drawString(x + 1 * mm, y + 6 * mm, 'Cognome:')
     c.drawString(x + 1 * mm, y + 1 * mm, 'Nome:')
 
     y += 1.0 * cm
-    c.line(x, y , x + width - 2.5 * cm, y )
+    c.line(x, y, x + width - 2.5 * cm, y)
 
     c.line(x + 3.0 * cm, y0 + 1.0 * cm, x + 3.0 * cm, y0 + 2.0 * cm)
     c.line(x + 6.0 * cm, y0 + 1.0 * cm, x + 6.0 * cm, y0 + 4.5 * cm)
