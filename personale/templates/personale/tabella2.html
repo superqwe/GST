@@ -134,7 +134,7 @@
         {% elif  lavoratore.dpi3 < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
         {% if lavoratore.dpi3 %}
-            <a href="{% static ''%}{{lavoratore}}/attestati/dpi {{lavoratore.dpi3|date:"dm"}}{{lavoratore.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
+            <a href="{% static ''%}{{lavoratore}}/attestati/dpi3 {{lavoratore.dpi3|date:"dm"}}{{lavoratore.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
                 {{lavoratore.dpi3|default_if_none:""}}</a>
         {% endif %}
     </td>

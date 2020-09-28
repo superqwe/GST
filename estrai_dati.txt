@@ -1,6 +1,6 @@
 [estrazione]
-tipo = filtri
-nome_file_xlsx = 
+tipo = excel
+nome_file_xlsx = 200925 ISAB.xlsx
 
 [filtro_impresa]
 modomec = 1
@@ -38,13 +38,13 @@ preposto = 0
 primo_soccorso = 0
 antincendio = 0
 h2s = 0
-dpi3 = 0
+dpi3 = 1
 lavori_quota = 0
 carrello = 0
 ple = 0
 gru = 0
 imbracatore = 0
-spazi_confinati = 1
+spazi_confinati = 0
 ponteggi = 0
 rir = 0
 rls = 0
