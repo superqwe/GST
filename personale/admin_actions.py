@@ -266,7 +266,7 @@ def aggiorna_scadenza_documenti():
                                 elif tipo in ('h2s.safety', 'h2s'):
                                     lavoratore.h2s = scadenza2date(documento)
 
-                                elif tipo == 'dpi':
+                                elif tipo == 'dpi3':
                                     lavoratore.dpi3 = scadenza2date(documento)
 
                                 elif tipo in ('carrelli', 'carrello', 'sollevatore'):
