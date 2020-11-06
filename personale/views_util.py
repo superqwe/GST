@@ -29,7 +29,7 @@ def date_scadenza():
             }
 
 
-class Date_Scadenza():
+class DateScadenza:
     def __init__(self):
         self.oggi = datetime.date.today()
         self.mesi1 = self.oggi + datetime.timedelta(days=30)
@@ -40,7 +40,7 @@ class Date_Scadenza():
 
 def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
     dati = []
-    scadenza = Date_Scadenza()
+    scadenza = DateScadenza()
 
     for azienda in AZIENDE:
         azienda = Azienda.objects.get(nome=azienda)
@@ -56,37 +56,35 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
             lavoratori = Lavoratore.objects \
                 .filter(in_forza=in_forza, azienda=azienda) \
                 .filter(Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome') \
-                .exclude(
-                Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                | Q(cantiere=Cantiere.objects.get(nome='-')) \
-                | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
-            )
+                .exclude(Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Marioff'))
+                         | Q(cantiere=Cantiere.objects.get(nome='-'))
+                         | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                         )
 
         elif ordine == 'idoneita':
             lavoratori = Lavoratore.objects \
                 .filter(in_forza=in_forza, azienda=azienda) \
                 .filter(Q(idoneita__lte=scadenza.mesi2) | Q(idoneita=None)) \
                 .order_by('idoneita', 'cognome', 'nome') \
-                .exclude(
-                Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)')) \
-                | Q(cantiere=Cantiere.objects.get(nome='Marioff')) \
-                | Q(cantiere=Cantiere.objects.get(nome='-'))
-            )
-
+                .exclude(Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Distacco'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Marioff'))
+                         | Q(cantiere=Cantiere.objects.get(nome='-'))
+                         )
 
         else:
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda)
@@ -131,7 +129,7 @@ def lavoratori_con_nomine():
     return dati
 
 
-class Estrai_Dati_Util(object):
+class EstraiDatiUtil(object):
     def __init__(self):
         self.parser = ConfigParser()
         self.parser.read('estrai_dati.txt')

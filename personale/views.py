@@ -59,7 +59,7 @@ def completo(request, filtro=False, ordinamento=None):
         'autorizzato': autorizzato(request.user),
         'dati': dati,
         'pagina_attiva': pagina_attiva,
-        'scadenza': views_util.Date_Scadenza(),
+        'scadenza': views_util.DateScadenza(),
         'tabella_completa': tabella_completa,
         'data_ultima_modifica': data_ultima_modifica_leggi(),
     }
@@ -84,7 +84,7 @@ def unilav(request):
         'fino_al': fino_al,
         'lavoratori': lavoratori,
         'lavoratori_r': lavoratori_r,
-        'scadenza': views_util.Date_Scadenza(),
+        'scadenza': views_util.DateScadenza(),
         'n': n
     }
 
@@ -108,7 +108,7 @@ def unilav_scaduti(request):
     context = {
         'autorizzato': autorizzato(request.user),
         'lavoratori_r': lavoratori_r,
-        'scadenza': views_util.Date_Scadenza(),
+        'scadenza': views_util.DateScadenza(),
         'scaduti': True,
     }
 
@@ -145,7 +145,7 @@ def test(request):
 
 
 def estrai_dati(request):
-    opzioni_estrazione = views_util.Estrai_Dati_Util()
+    opzioni_estrazione = views_util.EstraiDatiUtil()
 
     dati = opzioni_estrazione.estrai_documenti()
 
@@ -158,7 +158,7 @@ def estrai_dati(request):
         'estrazione': dati['estrazione'],
         'filtro_impresa': dati['filtro_impresa'],
         'cantieri': dati['filtro_cantiere'],
-        'scadenza': views_util.Date_Scadenza(),
+        'scadenza': views_util.DateScadenza(),
     }
 
     return HttpResponse(template.render(context, request))
@@ -279,7 +279,7 @@ def dati_estratti(request):
     # for x in request.POST:
     #     print(x, '-->', request.POST[x])
 
-    opzioni_estrazione = views_util.Estrai_Dati_Util()
+    opzioni_estrazione = views_util.EstraiDatiUtil()
 
     opzioni_estrazione.scrivi_cfg(request.POST)
 
@@ -326,7 +326,7 @@ def dati_estratti(request):
                'res_cantieri': cantieri,
                'res_elenco_doc': elenco_doc,
                'res_lavoratori': lavoratori,
-               'scadenza': views_util.Date_Scadenza(),
+               'scadenza': views_util.DateScadenza(),
                'tipo_estrazione': tipo_estrazione,
                'nome_file_xlsx': xlsx,
                }
