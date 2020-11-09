@@ -3,7 +3,7 @@ import datetime
 from django.contrib import admin
 
 from personale import admin_actions
-from personale.models import Lavoratore, Cantiere, Azienda
+from personale.models import Lavoratore, Cantiere, Azienda, Simulazione_Emergenza
 
 OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
@@ -92,3 +92,8 @@ class LavoratoreAdmin(admin.ModelAdmin):
     ordering = ['cognome', 'nome']
     save_on_top = True
     search_fields = ['cognome', 'nome']
+
+
+@admin.register(Simulazione_Emergenza)
+class Simulazione_EmergenzaAdmin(admin.ModelAdmin):
+    filter_horizontal = ('partecipanti',)

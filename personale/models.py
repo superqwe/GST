@@ -110,3 +110,14 @@ class Lavoratore(models.Model):
         ordering = ['cognome', 'nome']
         verbose_name = 'Lavoratore'
         verbose_name_plural = 'Lavoratori'
+
+
+class Simulazione_Emergenza(models.Model):
+    data = models.DateField(null=True, blank=True, verbose_name='Data Esercitazione')
+    emergenza = models.CharField(max_length=100)
+    partecipanti = models.ManyToManyField(Lavoratore)
+
+    class Meta:
+        ordering = ['data', ]
+        verbose_name = 'Simulazione Emergenza'
+        verbose_name_plural = 'Simulazioni Emergenza'
