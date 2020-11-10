@@ -15,7 +15,7 @@ from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 import personale.views_aggiorna_unilav as views_aggiorna_unilav
 from personale import views_util, views_estrai_dati, views_programma_officina
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore, Azienda
+from personale.models import Lavoratore, Azienda, Simulazione_Emergenza
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
 from personale.views_tesserini import genera_tesserini
@@ -488,3 +488,37 @@ def tesserini(request):
     ora = datetime.datetime.now()
     return HttpResponse("""<h1 style="text-align:center">tesserini creato</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def simulazione_emergenze(request):
+    simulazioni = Simulazione_Emergenza.objects.all()
+
+    presenze = [len(Lavoratore.objects.filter(simulazione_emergenza__data=simulazione.data)) for simulazione in
+                simulazioni]
+
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'))
+
+    matrice_simulazioni = []
+    stato_lavoratore = []
+    for lavoratore in lavoratori:
+        simulazioni_lavoratore = lavoratore.simulazione_emergenza_set.all()
+
+        rigo = [simulazione in simulazioni_lavoratore for simulazione in simulazioni]
+        matrice_simulazioni.append(rigo)
+
+        stato_lavoratore.append(any(rigo))
+
+    totali_lavoratori = stato_lavoratore.count(True), \
+                        stato_lavoratore.count(False), \
+                        '%.0f' % (stato_lavoratore.count(True) / (
+                                stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
+
+    context = {'lavoratori': lavoratori,
+               'matrice_simulazioni': zip(lavoratori, matrice_simulazioni, stato_lavoratore),
+               'presenze': presenze,
+               'simulazioni': zip(simulazioni, presenze),
+               'totali_lavoratori': totali_lavoratori,
+               }
+
+    template = loader.get_template('personale/simulazioni_emergenze/simulazioni_emergenze.html')
+    return HttpResponse(template.render(context, request))

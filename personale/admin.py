@@ -97,3 +97,6 @@ class LavoratoreAdmin(admin.ModelAdmin):
 @admin.register(Simulazione_Emergenza)
 class Simulazione_EmergenzaAdmin(admin.ModelAdmin):
     filter_horizontal = ('partecipanti',)
+    list_display = ('data', 'emergenza', 'area')
+    ordering = ['data', ]
+    list_filter = ['data', 'emergenza', 'area']

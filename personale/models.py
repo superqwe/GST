@@ -114,10 +114,14 @@ class Lavoratore(models.Model):
 
 class Simulazione_Emergenza(models.Model):
     data = models.DateField(null=True, blank=True, verbose_name='Data Esercitazione')
-    emergenza = models.CharField(max_length=100)
+    emergenza = models.CharField(max_length=100, null=True, blank=True, )
+    area = models.CharField(max_length=100, null=True, blank=True, )
     partecipanti = models.ManyToManyField(Lavoratore)
 
     class Meta:
         ordering = ['data', ]
         verbose_name = 'Simulazione Emergenza'
         verbose_name_plural = 'Simulazioni Emergenza'
+
+    def __str__(self):
+        return '%s | %s | %s' % (self.data, self.emergenza, self.area)
