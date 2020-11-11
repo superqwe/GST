@@ -23,3 +23,7 @@ body {
 .mio {
     font-family: "Arial Narrow"
 }
+
+.ruota {
+    transform: rotate(-90deg);
+}

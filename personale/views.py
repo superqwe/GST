@@ -116,11 +116,11 @@ def unilav_scaduti(request):
 
 
 def mansioni(request):
-    mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
-        totale=Count('mansione')).order_by('-totale')
+    elenco_mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values(
+        'mansione').annotate(totale=Count('mansione')).order_by('-totale')
 
     dati = []
-    for mansione in mansioni:
+    for mansione in elenco_mansioni:
         dati.append((mansione['totale'], mansione['mansione']))
         print('%2i' % mansione['totale'], mansione['mansione'])
 
@@ -133,10 +133,10 @@ def mansioni(request):
 
 
 def test(request):
-    mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values('mansione').annotate(
-        totale=Count('mansione')).order_by('-totale')
+    elenco_mansioni = Lavoratore.objects.filter(azienda=Azienda.objects.get(nome='Modomec')).values(
+        'mansione').annotate(totale=Count('mansione')).order_by('-totale')
 
-    for mansione in mansioni:
+    for mansione in elenco_mansioni:
         print('%2i' % mansione['totale'], mansione['mansione'])
 
     ora = datetime.datetime.now()
@@ -508,10 +508,8 @@ def simulazione_emergenze(request):
 
         stato_lavoratore.append(any(rigo))
 
-    totali_lavoratori = stato_lavoratore.count(True), \
-                        stato_lavoratore.count(False), \
-                        '%.0f' % (stato_lavoratore.count(True) / (
-                                stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
+    totali_lavoratori = stato_lavoratore.count(True), stato_lavoratore.count(False), '%.0f' % (
+                stato_lavoratore.count(True) / (stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
 
     context = {'lavoratori': lavoratori,
                'matrice_simulazioni': zip(lavoratori, matrice_simulazioni, stato_lavoratore),
