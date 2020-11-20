@@ -2,27 +2,27 @@
 
 <nav class="nav nav-pills justify-content-end">
 
-    <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}"
-       data-toggle="tooltip" data-placement="top" title="Alfabetico"
-    href="/personale/completo/in_forza/a"><i class="fas fa-warehouse fa-2x"></i></a>
-
     <a class="nav-link {% if pagina_attiva == 'cantiere' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Per Cantiere"
-    href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
+       href="/personale/completo/in_forza/c"><i class="fas fa-industry fa-2x"></i></a>
+
+    <a class="nav-link {% if pagina_attiva == 'azienda' %}active{% endif %}"
+       data-toggle="tooltip" data-placement="top" title="Alfabetico"
+       href="/personale/completo/in_forza/a"><i class="fas fa-user-friends fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'scadenza' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Scaduto/In Scadenza"
-    href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
+       href="/personale/completo/in_forza/s"><i class="fas fa-exclamation-triangle fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'idoneita' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Idoneità Sanitaria"
-    href="/personale/completo/in_forza/v"><i class="fas fa-notes-medical fa-2x"></i></a>
+       href="/personale/completo/in_forza/v"><i class="fas fa-notes-medical fa-2x"></i></a>
 
     <a class="nav-link {% if pagina_attiva == 'nomine' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Nomine"
-    href="/personale/completo/in_forza/n"><i class="fas fa-hard-hat fa-2x"></i></a>
+       href="/personale/completo/in_forza/n"><i class="fas fa-hard-hat fa-2x"></i></a>
 
-     <a class="nav-link {% if pagina_attiva == 'unilav' %}active{% endif %}"
+    <a class="nav-link {% if pagina_attiva == 'unilav' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="UNILAV in Scadenza/Scaduti"
        href="/personale/unilav"><i class="fas fa-calendar-check fa-2x"></i></a>
 
@@ -30,7 +30,7 @@
        data-toggle="tooltip" data-placement="top" title="Personale Non In Forza"
        href="/personale/completo/"><i class="fas fa-user-minus fa-2x"></i></a>
 
-     <a class="nav-link {% if pagina_attiva == 'arcelormittal' %}active{% endif %}"
+    <a class="nav-link {% if pagina_attiva == 'arcelormittal' %}active{% endif %}"
        data-toggle="tooltip" data-placement="top" title="Arcelot Mittal"
        href="/personale/completo/in_forza/am"><img src="{% static 'personale/img/am-logo.png' %}" height="32px"></a>
 </nav>
