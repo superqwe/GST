@@ -496,7 +496,8 @@ def simulazione_emergenze(request):
     presenze = [len(Lavoratore.objects.filter(simulazione_emergenza__data=simulazione.data)) for simulazione in
                 simulazioni]
 
-    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'))
+    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec')).order_by(
+        'cantiere', 'cognome')
 
     matrice_simulazioni = []
     stato_lavoratore = []
@@ -509,7 +510,7 @@ def simulazione_emergenze(request):
         stato_lavoratore.append(any(rigo))
 
     totali_lavoratori = stato_lavoratore.count(True), stato_lavoratore.count(False), '%.0f' % (
-                stato_lavoratore.count(True) / (stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
+            stato_lavoratore.count(True) / (stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
 
     context = {'lavoratori': lavoratori,
                'matrice_simulazioni': zip(lavoratori, matrice_simulazioni, stato_lavoratore),
