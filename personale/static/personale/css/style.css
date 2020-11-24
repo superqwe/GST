@@ -33,3 +33,7 @@ thead {
 .nascosto {
     display: none;
 }
+
+.nascosto2 {
+    font-size: 0%;
+}

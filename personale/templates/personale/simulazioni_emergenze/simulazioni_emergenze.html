@@ -33,6 +33,7 @@
                 <th scope="col">Effettuata</th>
                 <th scope="col">Cognome</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Cantiere</th>
                 {% for simulazione, presenze in simulazioni %}
                 <th scope="col" class="ruota">
                     {{ simulazione.data }}<br>
@@ -45,31 +46,27 @@
             </thead>
 
             <tbody>
+
             {% for lavoratore, elenco_simulazioni, stato_lavoratore in matrice_simulazioni %}
             <tr scope="row">
-                <td>{% if stato_lavoratore %}<i class="fas fa-check-circle v"></i>{% endif %}</td>
+                <td>{% if stato_lavoratore %}
+                    <i class="fas fa-check-circle v"></i>
+                    <span class="nascosto2">x</span>
+                    {% endif %}
+                </td>
                 <td class="text-left">{{ lavoratore.cognome }}</td>
                 <td class="text-left">{{ lavoratore.nome }}</td>
+                <td class="text-left">{{ lavoratore.cantiere }}</td>
                 {% for simulazione in elenco_simulazioni%}
-                <td>{% if simulazione%} <i class="fas fa-check-circle v"></i> {% endif %}</td>
+                <td>{% if simulazione%}
+                    <i class="fas fa-check-circle v"></i>
+                    <span class="nascosto2">x</span>
+                    {% endif %}
+                </td>
                 {% endfor %}
 
             </tr>
             {% endfor %}
-
-<!--            {% for cantiere, lavoratori in lavoratori_per_cantiere %}-->
-<!--            <tr scope="row">-->
-<!--                <td>{{ cantiere }}</td>-->
-<!--            </tr>-->
-<!--            {% for lavoratore in lavoratori %}-->
-<!--            <tr scope="row">-->
-<!--                <td></td>-->
-<!--                <td>{{ lavoratore.cognome }}</td>-->
-<!--                <td>{{ lavoratore.nome }}</td>-->
-<!--            </tr>-->
-<!--            {% endfor %}-->
-
-<!--            {% endfor %}-->
 
             </tbody>
 
