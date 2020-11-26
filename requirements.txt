@@ -1,4 +1,4 @@
-Django==2.2.13
+Django==2.2.17
 django-debug-toolbar==1.10.1
 django-pandas==0.6.1
 docutils==0.16
@@ -7,7 +7,7 @@ jdcal==1.4.1
 numpy==1.15.2
 openpyxl==2.5.11
 pandas==0.23.4
-Pillow==7.0.0
+Pillow==7.1.0
 python-dateutil==2.8.1
 pytz==2019.3
 reportlab==3.5.51
