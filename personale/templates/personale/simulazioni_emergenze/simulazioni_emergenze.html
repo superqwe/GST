@@ -18,12 +18,9 @@
 
 <div class="container-fluid">
 
-    <h1>Simulazioni Emergenze
-        <span class="badge badge-success">{{ totali_lavoratori.0 }}</span>
-        <span class="badge badge-danger">{{ totali_lavoratori.1 }}</span>
-        <span><i class="fas fa-caret-right"></i></span>
-        <span class="badge badge-primary">{{ totali_lavoratori.2 }}%</span>
-    </h1>
+    <h1>Simulazioni Emergenze</h1>
+
+    <h2> Elenco Personale </h2>
 
     <div id="table-container" class="table-responsive">
 
@@ -73,6 +70,45 @@
         </table>
         <div id="bottom_anchor"></div>
 
+    </div>
+
+    <h2>
+        Elenco Cantieri
+        <span class="badge badge-success">{{ totali_lavoratori.0 }}</span>
+        <span class="badge badge-danger">{{ totali_lavoratori.1 }}</span>
+        <span><i class="fas fa-caret-right"></i></span>
+        <span class="badge badge-primary">{{ totali_lavoratori.2 }}%</span>
+    </h2>
+
+    <div class="table-responsive">
+
+        <table class="table table-striped table-sm text-center ">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Cantiere</th>
+                <th scope="col">Effettuata</th>
+                <th scope="col">Non Effettuata</th>
+                <th scope="col">Percentuale</th>
+            </tr>
+            </thead>
+
+            {% for cantiere, presenze in presenze_per_cantiere.items %}
+            <tr scope="col" class="ruota">
+                <td>{{ cantiere }}</td>
+                {% for valore in presenze%}
+                <td>
+                    {% if valore%}
+                    {{ valore|floatformat:0 }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
 </div>
