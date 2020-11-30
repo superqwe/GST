@@ -188,14 +188,6 @@ def rinomina_attestati():
                         else:
                             print('***', tipo, '+++', documento)
 
-                    # a cosa serve???
-                    # if scadenza:
-                    #     da = os.path.join(PATH_BASE, path, documento)
-                    #     a = os.path.join(PATH_BASE, path, '%s %s.pdf' % (tipo, scadenza))
-                    #     os.rename(da, a)
-                    # else:
-                    #     print(cognome, nome)
-
             except ValueError:
                 print('*** Errore in ', path)
 
