@@ -14,6 +14,7 @@
         <th>Cantiere</th>
         <th>Idoneità</th>
         <th>UNILAV</th>
+        <th>Consegna DPI</th>
         <th>Art.37</th>
         <th>Primo Soccorso</th>
         <th>Antincendio</th>
@@ -67,6 +68,14 @@
         {% if  lavoratore.indeterminato %}
             <a href="{% static ''%}{{lavoratore}}/unilav ind.pdf" target="_blank">
             {{lavoratore.unilav|default_if_none:""}} IND</a>
+        {% endif %}
+    </td>
+    <td {% if lavoratore.consegna_dpi < scadenza.mesi6prima or not lavoratore.consegna_dpi%} class="alert alert-danger" role="alert"
+        {% elif lavoratore.consegna_dpi > scadenza.mesi1prima %} class="alert alert-warning" role="alert"
+        {% endif %}>
+        {% if lavoratore.consegna_dpi %}
+            <a href="{% static ''%}{{lavoratore}}/dpi/consegna.dpi {{lavoratore.consegna_dpi|date:"dmy"}}.pdf" target="_blank">
+                {{lavoratore.consegna_dpi|default_if_none:""}}</a>
         {% endif %}
     </td>
     <td {% if lavoratore.art37 < scadenza.oggi  or not lavoratore.art37 %} class="alert alert-danger" role="alert"

@@ -36,6 +36,8 @@ class DateScadenza:
         self.mesi2 = self.oggi + datetime.timedelta(days=60)
         self.mesi6 = self.oggi + datetime.timedelta(days=366 / 2)
         self.mesi12 = self.oggi + datetime.timedelta(days=365)
+        self.mesi1prima = self.oggi - datetime.timedelta(days=30)
+        self.mesi6prima = self.oggi - datetime.timedelta(days=366 / 2)
 
 
 def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
