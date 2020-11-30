@@ -248,6 +248,9 @@ def aggiorna_scadenza_documenti():
                                     else:
                                         lavoratore.unilav = scadenza2date(documento, 0)
 
+                                elif tipo == 'consegna.dpi':
+                                    lavoratore.consegna_dpi = scadenza2date(documento, 0)
+
                                 elif tipo in ('art37', 'art.37'):
                                     lavoratore.art37 = scadenza2date(documento)
 
