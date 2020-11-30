@@ -23,11 +23,21 @@ PATH2 = r'C:\Users\leonardo.masi\Documents\Programmi\Richiesta_Dati'
 ESTRAI_TUTTO = False
 
 
+def indice_data_piu_recente_ggmmaa(elenco_date):
+    """restituisce l'indice dell'elenco documenti contenente la data più recente"""
+    elenco_date = [x.split()[-1].split('.')[0] for x in elenco_date]
+    elenco_date = [('%s%s%s' % (x[-2:], x[2:-2], x[:2]), i) for i, x in enumerate(elenco_date)]
+    elenco_date.sort(reverse=True)
+
+    return (elenco_date[0][1])
+
+
 class Estrai(object):
     def __init__(self):
-        # base
+        # base/vari
         self.unilav = 0
         self.idoneita = 0
+        self.consegna_dpi = 0
 
         # formazione
         self.art37 = 0
@@ -49,7 +59,7 @@ class Estrai(object):
         # nomine
         self.nomina_preposto = 0
         self.nomina_primo_soccorso = 0
-        self.nomina_antincendio = 1
+        self.nomina_antincendio = 0
 
     def formazione(self):
         attestati = filter(lambda x: x != '',
@@ -82,6 +92,7 @@ class Estrai(object):
     def resetta(self):
         self.unilav = False
         self.idoneita = False
+        self.consegna_dpi = False
         self.formazione_tutti(False)
         self.nomine_tutte(False)
 
@@ -119,6 +130,17 @@ class Estrai(object):
 
             if idoneita:
                 copia(path_lavoratore, idoneita[0], cognome, nome, 'idoneità')
+
+        if self.consegna_dpi:
+            consegna_dpi = glob.glob('dpi\consegna.dpi*.pdf')
+
+            if consegna_dpi:
+                indice = 0
+
+                if len(consegna_dpi) > 1:
+                    indice = indice_data_piu_recente_ggmmaa(consegna_dpi)
+
+                copia(path_lavoratore, consegna_dpi[indice], cognome, nome, 'consegna_dpi')
 
         # attestati corsi formazione
         if os.path.isdir(path_attestati):

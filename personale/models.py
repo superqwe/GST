@@ -103,6 +103,9 @@ class Lavoratore(models.Model):
     nomina_rls = models.DateField(null=True, blank=True, verbose_name='Nomina RLS')
     nomina_aspp = models.DateField(null=True, blank=True, verbose_name='Nomina ASPP')
 
+    # varie
+    consegna_dpi = models.DateField(null=True, blank=True, verbose_name="Consegna DPI")
+
     def __str__(self):
         return '%s %s' % (self.cognome, self.nome)
 

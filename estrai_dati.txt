@@ -1,6 +1,6 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = dati.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 1
@@ -18,7 +18,7 @@ fincantieri (go) = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
-massafra = 0
+massafra = 1
 ac boiler = 0
 raffineria = 0
 andritz (de) = 0
@@ -31,8 +31,9 @@ isab = 0
 isab (sr) = 0
 
 [base]
-unilav = 1
+unilav = 0
 idoneita = 0
+consegna_dpi = 1
 
 [formazione]
 art37 = 0

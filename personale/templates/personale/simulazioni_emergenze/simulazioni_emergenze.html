@@ -45,7 +45,7 @@
             <tbody>
 
             {% for lavoratore, elenco_simulazioni, stato_lavoratore in matrice_simulazioni %}
-            <tr scope="row">
+            <tr>
                 <td>{% if stato_lavoratore %}
                     <i class="fas fa-check-circle v"></i>
                     <span class="nascosto2">x</span>
@@ -93,7 +93,7 @@
             </thead>
 
             {% for cantiere, presenze in presenze_per_cantiere.items %}
-            <tr scope="col" class="ruota">
+            <tr class="ruota">
                 <td>{{ cantiere }}</td>
                 {% for valore in presenze%}
                 <td>
