@@ -25,7 +25,7 @@ SECRET_KEY = 'm7pc=48vv%gxxr_%7&!s09e3%nme%jsxsu$8ff$2jzb2oysl3g'
 DEBUG = True
 
 # da commentare per togliere la barra di debug
-# INTERNAL_IPS = '127.0.0.1'
+INTERNAL_IPS = '127.0.0.1'
 
 ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.217', 'modomec.pythonanywhere.com']
 

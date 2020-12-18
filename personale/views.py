@@ -74,9 +74,15 @@ def unilav(request):
                                            unilav__lte=fino_al, unilav__gt=oggi)
     lavoratori_r = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
                                              unilav__lte=oggi)
+    rossi = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                      unilav__lt=oggi)
+    gialli = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                       unilav=oggi)
+    verdi = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec'),
+                                      unilav__lte=fino_al, unilav__gt=oggi)
 
-    n = {'r': len(lavoratori_r), 'g': len(lavoratori)}
-    n['t'] = n['g'] + n['r']
+    n = {'r': rossi.count(), 'g': gialli.count(), 'v': verdi.count()}
+    n['t'] = n['v'] + n['g'] + n['r']
 
     template = loader.get_template('personale/unilav.html')
     context = {
@@ -364,7 +370,7 @@ def aggiorna_unilav(request):
             while True:
                 try:
                     cella = foglio.cell(row=rigo, column=colonna).value
-                    cognome, nome = cella.split()
+                    cognome, nome = cella.split(maxsplit=1)
                 except ValueError:
                     print('*** Errore -->', cella, '--> procedere a mano')
                     errore.append((cella, '%s: procedere a mano' % categoria.title()))
@@ -490,7 +496,9 @@ def tesserini(request):
                         <h2 style="text-align:center"> %s </h2>""" % ora)
 
 
-def simulazione_emergenze(request):
+def simulazione_emergenze(request, filtro=None):
+    pp(dir(request))
+    print(request.POST)
     simulazioni = Simulazione_Emergenza.objects.all()
 
     presenze_totali = [len(Lavoratore.objects.filter(simulazione_emergenza__data=simulazione.data)) for simulazione in

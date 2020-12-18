@@ -41,6 +41,7 @@ urlpatterns = [
 
     # /personale/simulazione_emergenze
     path('simulazione_emergenze/', views.simulazione_emergenze, name='simulazione_emergenze'),
+    path('simulazione_emergenze/<str:filtro>', views.simulazione_emergenze, name='simulazione_emergenze'),
 
     # /personale/tesserini
     path('tesserini/', views.tesserini, name='tesserini'),
