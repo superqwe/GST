@@ -13,7 +13,7 @@ from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
 import personale.views_aggiorna_unilav as views_aggiorna_unilav
-from personale import views_util, views_estrai_dati, views_programma_officina
+from personale import views_util, views_estrai_dati, views_programma_officina, views_simulazione_emergenze
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda, Simulazione_Emergenza
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
@@ -497,49 +497,7 @@ def tesserini(request):
 
 
 def simulazione_emergenze(request, filtro=None):
-    pp(dir(request))
-    print(request.POST)
-    simulazioni = Simulazione_Emergenza.objects.all()
-
-    presenze_totali = [len(Lavoratore.objects.filter(simulazione_emergenza__data=simulazione.data)) for simulazione in
-                       simulazioni]
-
-    lavoratori = Lavoratore.objects.filter(in_forza=True, azienda=Azienda.objects.get(nome='Modomec')).order_by(
-        'cantiere', 'cognome')
-
-    matrice_simulazioni = []
-    stato_lavoratore = []
-    presenze_per_cantiere = {}
-    for lavoratore in lavoratori:
-        simulazioni_lavoratore = lavoratore.simulazione_emergenza_set.all()
-
-        rigo = [simulazione in simulazioni_lavoratore for simulazione in simulazioni]
-        matrice_simulazioni.append(rigo)
-
-        stato = any(rigo)
-        stato_lavoratore.append(stato)
-
-        if lavoratore.cantiere not in presenze_per_cantiere:
-            presenze_per_cantiere[lavoratore.cantiere] = [0, 0]
-
-        if stato:
-            presenze_per_cantiere[lavoratore.cantiere][0] += 1
-        else:
-            presenze_per_cantiere[lavoratore.cantiere][1] += 1
-
-    for cantiere, presenza_cantiere in presenze_per_cantiere.items():
-        percentuale_presenza = 100 * presenza_cantiere[0] / sum(presenza_cantiere)
-        presenze_per_cantiere[cantiere].append(percentuale_presenza)
-
-    totali_lavoratori = stato_lavoratore.count(True), stato_lavoratore.count(False), '%.0f' % (
-            stato_lavoratore.count(True) / (stato_lavoratore.count(True) + stato_lavoratore.count(False)) * 100)
-
-    context = {'lavoratori': lavoratori,
-               'matrice_simulazioni': zip(lavoratori, matrice_simulazioni, stato_lavoratore),
-               'presenze_per_cantiere': presenze_per_cantiere,
-               'simulazioni': zip(simulazioni, presenze_totali),
-               'totali_lavoratori': totali_lavoratori,
-               }
+    context = views_simulazione_emergenze.simulazione_emergenze(request)
 
     template = loader.get_template('personale/simulazioni_emergenze/simulazioni_emergenze.html')
     return HttpResponse(template.render(context, request))

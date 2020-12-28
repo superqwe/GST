@@ -29,6 +29,7 @@ avetrana = 0
 fincantieri (an) = 0
 isab = 0
 isab (sr) = 0
+ansaldo (ve) = 0
 
 [base]
 unilav = 0

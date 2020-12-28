@@ -18,20 +18,26 @@
 
 <div class="container-fluid">
 
-    <h1>Simulazioni Emergenze</h1>
+    <h1>Simulazioni Emergenze
+        {% if periodo.0 == 'tutto' %}
+        {% elif periodo.0 == 'mesi12' %} dal {{periodo.1}} ad oggi
+        {% else %} nel {{periodo.1}}
+        {% endif %}
+    </h1>
 
-    <h2> Elenco Personale </h2>
+    <h2>Elenco Personale</h2>
 
     <form action="/personale/simulazione_emergenze/" method="post"> {% csrf_token %}
         <div class="input-group">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-outline-primary">Aggiorna</button>
             </div>
-            <select class="custom-select" id="periodo_simulazioni_emergenza">
+            <select class="custom-select" id="periodo_simulazioni_emergenza" name="periodo">
                 <option value="tutto">Tutto</option>
-                <option value="mesi12">Ultimi 12 mesi</option>
-                <option value="2021" selected>2021</option>
-                <option value="2020">2020</option>
+                <option value="mesi12" selected>Ultimi 12 mesi</option>
+                {% for anno in anni %}
+                <option value="{{anno}}">{{anno}}</option>
+                {% endfor %}
             </select>
         </div>
     </form>
