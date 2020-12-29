@@ -34,6 +34,7 @@ urlpatterns = [
 
     # /personale/programma_officina
     path('programma_officina/', views.programma_officina, name='programma_officina'),
+    path('programma_visite_mediche/', views.programma_visite_mediche, name='programma_visite_mediche'),
 
     # /personale/rait
     path('rait/', views.rait, name='rait'),

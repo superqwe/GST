@@ -13,7 +13,8 @@ from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
 import personale.views_aggiorna_unilav as views_aggiorna_unilav
-from personale import views_util, views_estrai_dati, views_programma_officina, views_simulazione_emergenze
+from personale import views_util, views_estrai_dati, views_programma_officina, views_simulazione_emergenze, \
+    views_programma_visite_mediche
 from personale.admin_actions import data_ultima_modifica_leggi
 from personale.models import Lavoratore, Azienda, Simulazione_Emergenza
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
@@ -501,3 +502,18 @@ def simulazione_emergenze(request, filtro=None):
 
     template = loader.get_template('personale/simulazioni_emergenze/simulazioni_emergenze.html')
     return HttpResponse(template.render(context, request))
+
+def programma_visite_mediche(request):
+    ora = datetime.datetime.now()
+    fout = views_programma_visite_mediche.programma_visite_mediche()
+
+    if os.path.exists(fout):
+        with open(fout, "rb") as excel:
+            data = excel.read()
+
+        response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=%s_Report.xlsx' % id
+        return response
+
+    return HttpResponse("""<h1 style="text-align:center">Programma Visite Mediche</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
