@@ -19,9 +19,6 @@ urlpatterns = [
     # /personale/in_forza/[a/s/c]/ a: None  s: azienda  c: cantiere
     path('completo/<str:filtro>/<str:ordinamento>', views.completo, name='completo'),
 
-    # /personale/estrai_dati/
-    path('estrai_dati/', views.estrai_dati2, name='estrai_dati2'),
-
     # /personale/estrai_dati2/
     path('estrai_dati2/', views.estrai_dati, name='estrai_dati'),
     path('estrai_dati2/estratti/', views.dati_estratti, name='estratti'),

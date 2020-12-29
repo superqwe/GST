@@ -171,21 +171,6 @@ def estrai_dati(request):
     return HttpResponse(template.render(context, request))
 
 
-def estrai_dati2(request):
-    # todo obsoleto
-    ora = datetime.datetime.now()
-    errore = views_estrai_dati.estrai_principale(request)
-    print(errore)
-
-    if errore:
-        return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
-                                <h2 style="text-align:center">%s</h2> 
-                                <p style="text-align:center">%s</p>""" % (ora, errore))
-
-    return HttpResponse("""<h1 style="text-align:center">dati estratti</h1>
-                        <h2 style="text-align:center"> %s </h2>""" % ora)
-
-
 def formazione(request):
     includi_idoneita = True
     includi_unilav = True
@@ -502,6 +487,7 @@ def simulazione_emergenze(request, filtro=None):
 
     template = loader.get_template('personale/simulazioni_emergenze/simulazioni_emergenze.html')
     return HttpResponse(template.render(context, request))
+
 
 def programma_visite_mediche(request):
     ora = datetime.datetime.now()

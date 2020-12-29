@@ -37,6 +37,9 @@ class Estrai(object):
         # base/vari
         self.unilav = 0
         self.idoneita = 0
+        self.ci = 0
+        self.codice_fiscale = 0
+        self.foto = 0
         self.consegna_dpi = 0
 
         # formazione
@@ -141,6 +144,24 @@ class Estrai(object):
                     indice = indice_data_piu_recente_ggmmaa(consegna_dpi)
 
                 copia(path_lavoratore, consegna_dpi[indice], cognome, nome, 'consegna_dpi')
+
+        if self.ci:
+            ci = glob.glob('doc*.pdf')
+
+            if ci:
+                copia(path_lavoratore, ci[0], cognome, nome, 'doc')
+
+        if self.codice_fiscale:
+            codice_fiscale = glob.glob('cf*.pdf')
+
+            if codice_fiscale:
+                copia(path_lavoratore, codice_fiscale[0], cognome, nome, 'cf')
+
+        # if self.foto:
+        #     foto = glob.glob('foto*.*')
+        #
+        #     if foto:
+        #         copia(path_lavoratore, foto[0], cognome, nome, 'foto')
 
         # attestati corsi formazione
         if os.path.isdir(path_attestati):

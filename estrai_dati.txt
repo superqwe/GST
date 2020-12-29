@@ -5,52 +5,54 @@ nome_file_xlsx = 201229 ANSALDO Marghera LEvante.xlsx
 [filtro_impresa]
 modomec = 0
 building = 0
-rimec = 0
+rimec = 1
 welding = 0
 
 [filtro_cantiere]
 - = 0
+ac boiler = 0
 andritz (ch) = 0
+andritz (de) = 0
+andritz (nl) = 0
+ansaldo (ve) = 0
 appia = 0
+arcelormittal - porto = 0
 arcelormittal = 0
+avetrana = 0
 distacco = 0
+fincantieri (an) = 0
 fincantieri (go) = 0
+isab (sr) = 0
+isab = 0
 macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 1
-ac boiler = 0
-raffineria = 0
-andritz (de) = 0
 raffineria - porto = 0
-andritz (nl) = 0
-arcelormittal - porto = 0
-avetrana = 0
-fincantieri (an) = 0
-isab = 0
-isab (sr) = 0
-ansaldo (ve) = 0
+raffineria = 0
 
 [base]
-unilav = 0
+unilav = 1
 idoneita = 1
-consegna_dpi = 0
+ci = 1
+codice_fiscale = 1
+consegna_dpi = 1
 
 [formazione]
-art37 = 1
-preposto = 1
-primo_soccorso = 1
-antincendio = 1
-h2s = 1
-dpi3 = 1
-lavori_quota = 1
-carrello = 1
-ple = 1
-gru = 1
-imbracatore = 1
-spazi_confinati = 1
-ponteggi = 1
-rir = 1
+art37 = 0
+preposto = 0
+primo_soccorso = 0
+antincendio = 0
+h2s = 0
+dpi3 = 0
+lavori_quota = 0
+carrello = 0
+ple = 0
+gru = 0
+imbracatore = 0
+spazi_confinati = 0
+ponteggi = 0
+rir = 0
 rls = 0
 
 [nomine]
