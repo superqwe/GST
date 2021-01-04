@@ -157,11 +157,11 @@ class Estrai(object):
             if codice_fiscale:
                 copia(path_lavoratore, codice_fiscale[0], cognome, nome, 'cf')
 
-        # if self.foto:
-        #     foto = glob.glob('foto*.*')
-        #
-        #     if foto:
-        #         copia(path_lavoratore, foto[0], cognome, nome, 'foto')
+        if self.foto:
+            foto = glob.glob('foto*.*')
+
+            if foto:
+                copia(path_lavoratore, foto[0], cognome, nome, 'foto')
 
         # attestati corsi formazione
         if os.path.isdir(path_attestati):
@@ -185,7 +185,12 @@ class Estrai(object):
 
 def copia(path_da, nome_pdf, cognome, nome, nome_documento):
     da = os.path.join(path_da, nome_pdf)
-    a = os.path.join(PATH2, '%s %s - %s.pdf' % (cognome, nome, nome_documento))
+
+    if nome_documento != 'foto':
+        a = os.path.join(PATH2, '%s %s - %s.pdf' % (cognome, nome, nome_documento))
+    else:
+        a = os.path.join(PATH2, '%s %s - %s.jpg' % (cognome, nome, nome_documento))
+
     # print(da, '-->', a)
     print('  ', nome_documento)
     shutil.copy(da, a)

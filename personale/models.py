@@ -48,6 +48,10 @@ class Lavoratore(models.Model):
                ('w', 'W'),
                (None, '-')
                )
+    FOTO = (('v', 'Variabile'),
+            ('640x480', 'ENI TA'),
+            (None, '-'),
+            )
 
     # anagrafica
     cognome = models.CharField(max_length=50)
@@ -64,6 +68,7 @@ class Lavoratore(models.Model):
 
     ci = models.DateField(null=True, blank=True, verbose_name="CI")
     codice_fiscale = models.CharField(max_length=16, null=True, blank=True, verbose_name='Codice Fiscale')
+    foto = models.CharField(max_length=10, default=None, null=True, blank=True, choices=FOTO, verbose_name='Foto')
     idoneita = models.DateField(null=True, blank=True, verbose_name='Idoneità')
     indeterminato = models.BooleanField(default=False, verbose_name='Inderminato')
     unilav = models.DateField(null=True, blank=True, verbose_name='UNILAV')

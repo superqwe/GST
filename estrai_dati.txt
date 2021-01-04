@@ -33,10 +33,11 @@ raffineria = 0
 
 [base]
 unilav = 1
-idoneita = 1
-ci = 1
-codice_fiscale = 1
-consegna_dpi = 1
+idoneita = 0
+ci = 0
+codice_fiscale = 0
+foto = 1
+consegna_dpi = 0
 
 [formazione]
 art37 = 0
