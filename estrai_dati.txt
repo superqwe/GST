@@ -32,7 +32,7 @@ raffineria - porto = 0
 raffineria = 0
 
 [base]
-unilav = 1
+unilav = 0
 idoneita = 0
 ci = 0
 codice_fiscale = 0

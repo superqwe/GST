@@ -42,6 +42,10 @@ def importa_dati(modeladmin, request, queryset):
     admin_actions.importa_dati()
 
 
+def popola_foto_lavoratore(modeladmin, request, queryset):
+    admin_actions.popola_lavoratore_foto()
+
+
 def aaa(modeladmin, request, queryset):
     Lavoratore.objects.filter(in_forza=True, azienda='m').update(azienda2=Azienda.objects.get(nome='Modomec'))
     Lavoratore.objects.filter(in_forza=True, azienda='b').update(azienda2=Azienda.objects.get(nome='Building'))
@@ -64,6 +68,7 @@ aggiorna_scadenza_documenti.short_description = "Aggiorna Documenti"
 aggiorna_elenco_lavoratori.short_description = "Aggiorna Elenco"
 esporta_dati.short_description = "Esporta Dati"
 importa_dati.short_description = "Importa Dati"
+popola_foto_lavoratore.short_description = "Popola Foto Lavoratori"
 
 
 @admin.register(Azienda)
@@ -82,6 +87,7 @@ class LavoratoreAdmin(admin.ModelAdmin):
                aggiorna_scadenza_documenti,
                aggiorna_stato_lavoratori,
                rinomina_attestati,
+               popola_foto_lavoratore,
                esporta_dati,
                importa_dati,
                ]

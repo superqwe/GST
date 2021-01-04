@@ -1,10 +1,14 @@
 import calendar
 import datetime
+import glob
 import os
 import re
 import time
+from pprint import pprint as pp
 
 import pandas as pd
+from PIL import Image
+from django.core.exceptions import ObjectDoesNotExist
 
 from personale.models import Lavoratore, Azienda, Cantiere
 
@@ -193,6 +197,7 @@ def rinomina_attestati():
 
 
 def aggiorna_scadenza_documenti():
+    # todo: aggiungere controllo foto
     path_base = PATH_BASE
 
     lavoratori = Lavoratore.objects.filter(in_forza=True).values_list('cognome', 'nome')
@@ -446,3 +451,49 @@ def aggiorna_stato_lavoratori():
         lavoratore.save()
 
     Lavoratore.objects.filter(in_forza=False).update(stato=None, azienda=Azienda.objects.get(nome='-'))
+
+
+def analizza_foto(foto):
+    with Image.open(foto) as img:
+        dimensione = '%sx%s' % img.size
+
+        if dimensione != '640x480':
+            dimensione = 'v'
+
+        return dimensione
+
+
+def popola_lavoratore_foto():
+    cartelle = [(x, os.path.join(PATH_BASE, x)) for x in os.listdir(PATH_BASE) if
+                os.path.isdir(os.path.join(PATH_BASE, x))]
+
+    for lavoratore, cartella in cartelle:
+        os.chdir(cartella)
+        foto = glob.glob('*.jp*g')
+
+        if foto:
+            formati = []
+            for img in foto:
+                formato_foto = analizza_foto(img)
+                formati.append(formato_foto)
+
+            if len(formati) == 1:
+                formato = formati[0]
+            elif '640x480' in formati:
+                formato = '640x480'
+            else:
+                print(lavoratore)
+                pp(formati)
+                print('*' * 10, 'ERRORE FORMATO FOTO')
+                continue
+
+            cognome, nome = lavoratore.split(maxsplit=1)
+
+            try:
+                lavoratore = Lavoratore.objects.get(cognome__iexact=cognome.title(), nome__iexact=nome)
+                lavoratore.foto = formato
+                lavoratore.save()
+            except ObjectDoesNotExist:
+                print('*' * 10, 'errore foto - %s %s\n' % (cognome, nome))
+
+    os.chdir(PATH_BASE)

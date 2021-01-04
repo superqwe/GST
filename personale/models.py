@@ -32,7 +32,7 @@ class Cantiere(models.Model):
 
 class Lavoratore(models.Model):
     FOTO = (('v', 'Variabile'),
-            ('640x480', 'ENI TA'),
+            ('640x480', 'ENI_TA'),
             (None, '-'),
             )
 
