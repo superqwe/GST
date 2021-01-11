@@ -59,7 +59,7 @@ def programma_visite_mediche():
     for col, value in dims.items():
         ws.column_dimensions[col].width = value
 
-    for cell in ws['A%i:E%i' % (max_row, max_row)][0]:
+    for cell in ws['A%i:F%i' % (max_row, max_row)][0]:
         cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
     wb.save(FOUT)

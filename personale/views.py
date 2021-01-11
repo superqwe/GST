@@ -498,7 +498,7 @@ def programma_visite_mediche(request):
             data = excel.read()
 
         response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename=%s_Report.xlsx' % id
+        response['Content-Disposition'] = 'attachment; filename=%s_Visite.xlsx' % id
         return response
 
     return HttpResponse("""<h1 style="text-align:center">Programma Visite Mediche</h1>
