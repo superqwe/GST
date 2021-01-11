@@ -27,14 +27,9 @@ def programma_visite_mediche():
                  ) \
         .order_by('azienda', 'cantiere', 'cognome', 'nome')
 
-    colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
-                       'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'escavatore', 'rls',
-                       'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
-                       'nomina_aspp', ]
-
     with pd.ExcelWriter(FOUT, engine='openpyxl') as writer:
         pd_dati = read_frame(lavoratori)
-        dati = pd_dati[['azienda', 'cantiere', 'cognome', 'nome', 'idoneita']]
+        dati = pd_dati[['azienda', 'cantiere', 'cognome', 'nome', 'mansione', 'idoneita']]
         dati.to_excel(writer)
         writer.save()
 
@@ -45,13 +40,13 @@ def programma_visite_mediche():
     ws.delete_cols(1, 1)
 
     max_row = ws.max_row
-    rows = ws['A2:E%i' % max_row]
+    rows = ws['A2:F%i' % max_row]
     for row in rows:
 
         for cell in row:
             cell.border = Border(bottom=Side(border_style='thin', color='91ffe3'))
 
-            if cell.column == 'E':
+            if cell.column == 'F':
                 cell.number_format = 'DD/MM/YY'
                 cell.alignment = Alignment(horizontal='center')
 

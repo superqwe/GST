@@ -80,6 +80,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Ansaldo (VE)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Distacco'))
                          | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))

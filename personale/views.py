@@ -187,7 +187,7 @@ def formazione(request):
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
                        'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'escavatore', 'rls',
                        'stato', 'rspp', 'nomina_preposto', 'nomina_antincendio', 'nomina_primo_soccorso', 'nomina_rls',
-                       'nomina_aspp']
+                       'nomina_aspp', 'foto', 'consegna_dpi']
 
     if includi_idoneita:
         colonne_escluse.remove('idoneita')

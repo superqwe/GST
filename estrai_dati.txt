@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = 201229 ANSALDO Marghera LEvante.xlsx
+nome_file_xlsx = 210107 ANSALDO Marghera Levante.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -33,10 +33,10 @@ raffineria = 0
 
 [base]
 unilav = 0
-idoneita = 0
+idoneita = 1
 ci = 0
 codice_fiscale = 0
-foto = 1
+foto = 0
 consegna_dpi = 0
 
 [formazione]
