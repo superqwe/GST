@@ -425,27 +425,28 @@ def aggiorna_stato_lavoratori():
     for lavoratore in lavoratori:
         stato = 'v'
 
-        if lavoratore.idoneita and lavoratore.idoneita < AVVISO_SCADENZA or lavoratore.unilav and lavoratore.unilav < AVVISO_SCADENZA:
-            stato = 'g'
+        # togliere commento per tenere conto dell'idoneità e dell'unilav
+        # if lavoratore.idoneita and lavoratore.idoneita < AVVISO_SCADENZA or lavoratore.unilav and lavoratore.unilav < AVVISO_SCADENZA:
+        #     stato = 'g'
+        #
+        # if not lavoratore.idoneita or lavoratore.idoneita and lavoratore.idoneita < OGGI or lavoratore.unilav and lavoratore.unilav < OGGI:
+        #     stato = 'r'
+        # else:
 
-        if not lavoratore.idoneita or lavoratore.idoneita and lavoratore.idoneita < OGGI or lavoratore.unilav and lavoratore.unilav < OGGI:
-            stato = 'r'
-        else:
+        for campo in campi_formazione:
 
-            for campo in campi_formazione:
+            if campo != 'antincendio':
 
-                if campo != 'antincendio':
+                try:
+                    if getattr(lavoratore, campo) < OGGI:
+                        print('%-30s %-15s %s' % (lavoratore, campo, getattr(lavoratore, campo)))
+                        stato = 'r'
+                        break
+                    elif getattr(lavoratore, campo) < AVVISO_SCADENZA_ATTESTATI:
+                        stato = 'g'
 
-                    try:
-                        if getattr(lavoratore, campo) < OGGI:
-                            print('%-20s %-15s %s' % (lavoratore, campo, getattr(lavoratore, campo)))
-                            stato = 'r'
-                            break
-                        elif getattr(lavoratore, campo) < AVVISO_SCADENZA_ATTESTATI:
-                            stato = 'g'
-
-                    except TypeError:
-                        pass
+                except TypeError:
+                    pass
 
         lavoratore.stato = stato
         lavoratore.save()
