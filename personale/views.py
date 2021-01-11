@@ -12,17 +12,14 @@ from django.template import loader
 from django_pandas.io import read_frame
 from openpyxl.styles import Side, Border, PatternFill, Font, Alignment
 
-import personale.views_aggiorna_unilav as views_aggiorna_unilav
-from personale import views_util, views_estrai_dati, views_programma_officina, views_simulazione_emergenze, \
-    views_programma_visite_mediche
+import personale.viste.views_aggiorna_unilav as views_aggiorna_unilav
+from personale import views_simulazione_emergenze, views_programma_visite_mediche, views_util, views_programma_officina
 from personale.admin_actions import data_ultima_modifica_leggi
-from personale.models import Lavoratore, Azienda, Simulazione_Emergenza
+from personale.models import Lavoratore, Azienda
 from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_excel2
 from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
 from personale.views_tesserini import genera_tesserini
 from personale.views_util import autorizzato
-
-from pprint import pprint as pp
 
 
 def index(request):

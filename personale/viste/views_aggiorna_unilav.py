@@ -6,10 +6,11 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from personale.models import Azienda, Lavoratore
 
+CARTELLA_PERSONALE = r'C:\Users\leonardo.masi\Documents\Personale'
+
 
 def rinomina_unilav(lavoratore, indeterminato=None):
-    # cartella_iniziale = os.getcwd()
-    cartella_personale = r'C:\Users\leonardo.masi\Documents\Personale'
+    cartella_personale = CARTELLA_PERSONALE
 
     nominativo = '%s %s' % (lavoratore.cognome, lavoratore.nome)
 
@@ -121,10 +122,12 @@ def cessazione(nominativi):
 
         try:
             lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+            indeterminato = Lavoratore.indeterminato
             print(lavoratore)
         except ObjectDoesNotExist:
             lavoratore = Lavoratore(cognome=cognome, nome=nome)
             lavoratore.save()
+            indeterminato = False
             print(lavoratore, '\t---> nuovo')
 
         lavoratore.codice_fiscale = cf
@@ -137,6 +140,21 @@ def cessazione(nominativi):
 
         if rinomina_unilav(lavoratore):
             errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
+
+        if indeterminato:
+            cartella_personale = CARTELLA_PERSONALE
+
+            nominativo = '%s %s' % (lavoratore.cognome, lavoratore.nome)
+
+            cartella_lavoratore = os.path.join(cartella_personale, nominativo)
+            path_unilav_ind = os.path.join(cartella_lavoratore, 'unilav ind.pdf')
+            path_scaduti = os.path.join(cartella_lavoratore, 'scaduti')
+
+            if not os.path.isdir(path_scaduti):
+                os.mkdir(path_scaduti)
+
+            shutil.move(path_unilav_ind, path_scaduti)
+            print('--> unilav ind spostato in scaduti')
 
     return errori
 
