@@ -50,14 +50,15 @@ def programma_visite_mediche():
                 cell.number_format = 'DD/MM/YY'
                 cell.alignment = Alignment(horizontal='center')
 
+    # todo: da sistemare larghezza automantica colonna
     dims = {}
     for row in ws.rows:
         for cell in row:
             if cell.value:
                 dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
-
-    for col, value in dims.items():
-        ws.column_dimensions[col].width = value
+    # for col, value in dims.items():
+    #     ws.column_dimensions[col].width = value
+    ####
 
     for cell in ws['A%i:F%i' % (max_row, max_row)][0]:
         cell.border = Border(bottom=Side(border_style='thin', color='000000'), )

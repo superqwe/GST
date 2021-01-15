@@ -21,6 +21,7 @@ from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
 from personale.views_tesserini import genera_tesserini
 from personale.views_util import autorizzato
 
+from pprint import pprint as pp
 
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
@@ -231,7 +232,7 @@ def formazione(request):
                 cell.border = Border(bottom=Side(border_style='thin', color='91ffe3'))
                 cell.number_format = 'DD/MM/YY'
 
-                if cell.column >= 'E':
+                if cell.column >= 5:  # colonna E
                     cell.alignment = Alignment(horizontal='center')
 
                 if i % 2:
@@ -240,6 +241,7 @@ def formazione(request):
         for cell in ws['A%i:V%i' % (max_row, max_row)][0]:
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
+        # todo: da sistemare larghezza automantica colonna
         dims = {}
         for row in ws.rows:
             for cell in row:
@@ -247,6 +249,7 @@ def formazione(request):
                     dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
         for col, value in dims.items():
             ws.column_dimensions[col].width = value
+        ### fine todo
 
         wb.save('formazione.xlsx')
 
