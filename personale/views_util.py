@@ -206,6 +206,7 @@ class EstraiDatiUtil(object):
             estrai = Estrai()
 
             for doc in cfg:
+                print('*' * 5, doc)
                 setattr(estrai, doc, cfg[doc])
 
             # esegue l'estrazione dei documenti

@@ -22,6 +22,7 @@
         <th>Dirigente</th>
         <th>H2S</th>
         <th>DPI3</th>
+        <th>APVR</th>
         <th>DPI Anticaduta</th>
         <th>Muletto</th>
         <th>Escavatore</th>
@@ -145,6 +146,15 @@
         {% if lavoratore.dpi3 %}
             <a href="{% static ''%}{{lavoratore}}/attestati/dpi3 {{lavoratore.dpi3|date:"dm"}}{{lavoratore.dpi3|date:"y"|add:-5}}.pdf" target="_blank">
                 {{lavoratore.dpi3|default_if_none:""}}</a>
+        {% endif %}
+    </td>
+    <td {% if lavoratore.apvr < scadenza.oggi %} class="alert alert-danger" role="alert"
+        {% elif  lavoratore.apvr < scadenza.mesi6 %} class="alert alert-warning" role="alert"
+        {% elif  lavoratore.apvr < scadenza.mesi12 %} class="alert alert-info" role="alert"
+        {% endif %}>
+        {% if lavoratore.apvr %}
+            <a href="{% static ''%}{{lavoratore}}/attestati/apvr {{lavoratore.apvr|date:"dm"}}{{lavoratore.apvr|date:"y"|add:-5}}.pdf" target="_blank">
+                {{lavoratore.apvr|default_if_none:""}}</a>
         {% endif %}
     </td>
     <td {% if lavoratore.lavori_quota < scadenza.oggi %} class="alert alert-danger" role="alert"

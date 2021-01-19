@@ -31,7 +31,8 @@ def indice_data_piu_recente_ggmmaa(elenco_date):
 
     return (elenco_date[0][1])
 
-
+#todo: ponteggi viene sempre estratto
+#todo: apvr non viene estratto
 class Estrai(object):
     def __init__(self):
         # base/vari
@@ -49,6 +50,7 @@ class Estrai(object):
         self.antincendio = 0
         self.h2s = 0
         self.dpi3 = 0
+        self.apvr = 0
         self.lavori_quota = 0
         self.muletto = 0
         self.ple = 0
@@ -67,7 +69,7 @@ class Estrai(object):
     def formazione(self):
         attestati = filter(lambda x: x != '',
                            ('art37' * self.art37, 'preposto' * self.preposto, 'primo.soccorso' * self.primo_soccorso,
-                            'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3,
+                            'antincendio' * self.antincendio, 'h2s' * self.h2s, 'dpi3' * self.dpi3, 'avpr' * self.apvr,
                             'lavori.quota' * self.lavori_quota, 'carrelli' * self.muletto, 'ple' * self.ple,
                             'autogru' * self.gru, 'imbracatore' * self.imbracatore,
                             'spazi.confinati' * self.spazi_confinati, 'ponteggi' * self.ponteggi, 'rir' * self.rir,
@@ -76,7 +78,7 @@ class Estrai(object):
         return attestati
 
     def formazione_tutti(self, scelta=True):
-        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = scelta
+        self.art37 = self.preposto = self.primo_soccorso = self.antincendio = self.h2s = self.dpi3 = self.apvr = scelta
         self.lavori_quota = self.muletto = self.ple = self.gru = self.imbracatore = self.spazi_confinati = scelta
         self.ponteggi = self.rir == scelta
         return self.formazione()

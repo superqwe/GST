@@ -269,6 +269,9 @@ def aggiorna_scadenza_documenti():
                                 elif tipo == 'dpi3':
                                     lavoratore.dpi3 = scadenza2date(documento)
 
+                                elif tipo == 'apvr':
+                                    lavoratore.apvr = scadenza2date(documento)
+
                                 elif tipo in ('carrelli', 'carrello', 'sollevatore'):
                                     lavoratore.carrello = scadenza2date(documento)
 
