@@ -171,7 +171,7 @@
         {% elif  lavoratore.carrello < scadenza.mesi12 %} class="alert alert-info" role="alert"
         {% endif %}>
         {% if lavoratore.carrello %}
-        <a href="{% static ''%}{{lavoratore}}/attestati/carrelli {{lavoratore.carrello|date:"dm"}}{{lavoratore.carrello|date:"y"|add:-5}}.pdf" target="_blank">
+        <a href="{% static ''%}{{lavoratore}}/attestati/carrello {{lavoratore.carrello|date:"dm"}}{{lavoratore.carrello|date:"y"|add:-5}}.pdf" target="_blank">
             {{lavoratore.carrello|default_if_none:""}}</a>
         {% endif %}
     </td>

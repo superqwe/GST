@@ -151,7 +151,7 @@ def rinomina_attestati():
 
                         elif tipo in ('carrelli', 'carrello', 'sollevatore'):
                             scadenza = m_d_y2mdy(documento)
-                            tipo = 'carrelli'
+                            tipo = 'carrello'
 
                         elif tipo == 'ple':
                             scadenza = m_d_y2mdy(documento)

@@ -242,13 +242,13 @@ def formazione(request):
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
         # todo: da sistemare larghezza automantica colonna
-        dims = {}
-        for row in ws.rows:
-            for cell in row:
-                if cell.value:
-                    dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
-        for col, value in dims.items():
-            ws.column_dimensions[col].width = value
+        # dims = {}
+        # for row in ws.rows:
+        #     for cell in row:
+        #         if cell.value:
+        #             dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
+        # for col, value in dims.items():
+        #     ws.column_dimensions[col].width = value
         ### fine todo
 
         wb.save('formazione.xlsx')
