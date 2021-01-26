@@ -1,6 +1,6 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = 210125 ANSALDO Marghera Levante.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 1
@@ -10,7 +10,7 @@ welding = 0
 
 [filtro_cantiere]
 - = 0
-ac boiler = 1
+ac boiler = 0
 andritz (ch) = 0
 andritz (de) = 0
 andritz (nl) = 0
@@ -46,9 +46,9 @@ primo_soccorso = 0
 antincendio = 0
 h2s = 0
 dpi3 = 0
-apvr = 0
+apvr = 1
 lavori_quota = 0
-carrello = 1
+carrello = 0
 ple = 0
 gru = 0
 imbracatore = 0
