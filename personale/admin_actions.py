@@ -407,6 +407,7 @@ def importa_dati():
                 lavoratore.data_nascita = data_nascita
 
             lavoratore.luogo_nascita = luogo_nascita
+            lavoratore.luogo_residenza = luogo_residenza
 
             if not pd.isnull(assunzione):
                 lavoratore.data_assunzione = assunzione
