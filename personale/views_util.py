@@ -54,6 +54,21 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
                 nome='ArcelorMittal')).filter().order_by('cognome', 'nome')
 
+        elif ordine == 'andritz':
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
+                Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
+                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))).order_by('cantiere', 'cognome', 'nome')
+
+        elif ordine == 'eni':
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
+                Q(cantiere=Cantiere.objects.get(nome='Raffineria'))
+                | Q(cantiere=Cantiere.objects.get(nome='Raffineria - Porto'))).order_by('cantiere', 'cognome', 'nome')
+
+        elif ordine == 'edison':
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
+                nome='Edison (VE)')).filter().order_by('cognome', 'nome')
+
         elif ordine == 'stato':
             lavoratori = Lavoratore.objects \
                 .filter(in_forza=in_forza, azienda=azienda) \
@@ -80,7 +95,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Ansaldo (VE)'))
+                         | Q(cantiere=Cantiere.objects.get(nome='Edison (VE)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Distacco'))
                          | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
                          | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))

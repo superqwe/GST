@@ -19,11 +19,12 @@ def programma_visite_mediche():
         .exclude(Q(azienda__nome='-')
                  | Q(cantiere__nome='Andritz (DE)')
                  | Q(cantiere__nome='Andritz (NL)')
-                 | Q(cantiere__nome='Ansaldo (VE)')
+                 | Q(cantiere__nome='Edison (VE)')
                  | Q(cantiere__nome='ArcelorMittal')
                  | Q(cantiere__nome='Fincantieri (AN)')
                  | Q(cantiere__nome='Fincantieri (GO)')
                  | Q(cantiere__nome='ISAB (SR)')
+                 | Q(cantiere__nome='-')
                  ) \
         .order_by('azienda', 'cantiere', 'cognome', 'nome')
 

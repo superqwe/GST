@@ -37,6 +37,15 @@ def completo(request, filtro=False, ordinamento=None):
     elif ordinamento == 'am':
         dati = views_util.lavoratori_suddivisi_per_azienda('arcelormittal')
         pagina_attiva = 'arcelormittal'
+    elif ordinamento == 'andritz':
+        dati = views_util.lavoratori_suddivisi_per_azienda('andritz')
+        pagina_attiva = 'andritz'
+    elif ordinamento == 'eni':
+        dati = views_util.lavoratori_suddivisi_per_azienda('eni')
+        pagina_attiva = 'eni'
+    elif ordinamento == 'edison':
+        dati = views_util.lavoratori_suddivisi_per_azienda('edison')
+        pagina_attiva = 'edison'
     elif ordinamento == 'c':
         dati = views_util.lavoratori_suddivisi_per_azienda('cantiere')
         pagina_attiva = 'cantiere'
@@ -371,7 +380,7 @@ def aggiorna_unilav(request):
                 nome = nome.title()
                 cf = foglio.cell(row=rigo + 1, column=colonna).value.split(':')[1]
 
-                print('%-13s %-13s %s' % (cognome, nome, cf))
+                print('%-15s %-15s %s' % (cognome, nome, cf))
 
                 try:
                     data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]

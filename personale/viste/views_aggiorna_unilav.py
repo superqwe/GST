@@ -153,7 +153,11 @@ def cessazione(nominativi):
             if not os.path.isdir(path_scaduti):
                 os.mkdir(path_scaduti)
 
-            shutil.move(path_unilav_ind, path_scaduti)
+            try:
+                shutil.move(path_unilav_ind, path_scaduti)
+            except (shutil.Error, FileNotFoundError):
+                errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
+
             print('--> unilav ind spostato in scaduti')
 
     return errori
