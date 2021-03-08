@@ -120,15 +120,7 @@ def cessazione(nominativi):
     for nominativo in nominativi:
         cognome, nome, cf, data_assunzione, data_cessazione = nominativo
 
-        try:
-            lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
-            indeterminato = Lavoratore.indeterminato
-            print(lavoratore)
-        except ObjectDoesNotExist:
-            lavoratore = Lavoratore(cognome=cognome, nome=nome)
-            lavoratore.save()
-            indeterminato = False
-            print(lavoratore, '\t---> nuovo')
+        lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
 
         lavoratore.codice_fiscale = cf
         lavoratore.data_assunzione = data_assunzione
@@ -141,7 +133,7 @@ def cessazione(nominativi):
         if rinomina_unilav(lavoratore):
             errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
 
-        if indeterminato:
+        if lavoratore.indeterminato:
             cartella_personale = CARTELLA_PERSONALE
 
             nominativo = '%s %s' % (lavoratore.cognome, lavoratore.nome)
@@ -155,10 +147,9 @@ def cessazione(nominativi):
 
             try:
                 shutil.move(path_unilav_ind, path_scaduti)
+                print('--> unilav ind spostato in scaduti')
             except (shutil.Error, FileNotFoundError):
                 errori.append(('%s %s' % (lavoratore.cognome, lavoratore.nome), 'UNILAV non presente'))
-
-            print('--> unilav ind spostato in scaduti')
 
     return errori
 
