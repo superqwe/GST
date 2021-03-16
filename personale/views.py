@@ -23,6 +23,9 @@ from personale.views_util import autorizzato
 
 from pprint import pprint as pp
 
+from personale.viste import views_dimp
+
+
 def index(request):
     return HttpResponse("Hello, world. You're at the ''personale'' index.")
 
@@ -511,4 +514,13 @@ def programma_visite_mediche(request):
         return response
 
     return HttpResponse("""<h1 style="text-align:center">Programma Visite Mediche</h1>
+                        <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def dimp(request):
+    ora = datetime.datetime.now()
+
+    canc = views_dimp.dimp()
+
+    return HttpResponse("""<h1 style="text-align:center">DIMP</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
