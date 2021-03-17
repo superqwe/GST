@@ -7,7 +7,7 @@ from django.db.models import Q
 from personale.models import Lavoratore, Azienda, Cantiere
 from personale.views_estrai_dati import Estrai
 
-AZIENDE = ('Modomec', 'Building', 'Rimec', 'Welding', '-')
+AZIENDE = ('Modomec', 'Building', 'Welding', '-')
 
 
 def autorizzato(user):

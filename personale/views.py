@@ -187,12 +187,10 @@ def formazione(request):
     ora = datetime.datetime.now()
     modomec = Lavoratore.objects.filter(azienda__nome='Modomec', in_forza=True).order_by('cognome', 'nome')
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
-    rimec = Lavoratore.objects.filter(azienda__nome='Rimec', in_forza=True).order_by('cognome', 'nome')
     welding = Lavoratore.objects.filter(azienda__nome='Welding', in_forza=True).order_by('cognome', 'nome')
 
-    lavoratori = (modomec, building, rimec, welding)
-    aziende = ('modomec', 'building', 'rimec', 'welding')
-    # aziende = ('modomec', 'building', 'welding')
+    lavoratori = (modomec, building,  welding)
+    aziende = ('modomec', 'building', 'welding')
 
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
                        'luogo_residenza', 'idoneita', 'data_assunzione', 'indeterminato', 'unilav', 'escavatore', 'rls',
@@ -232,12 +230,12 @@ def formazione(request):
         ws.cell(row=1, column=1).value = azienda.upper()
         ws['A1'].font = Font(size=18, color='007e60')
 
-        for cell in ws['A2:U2'][0]:
+        for cell in ws['A2:V2'][0]:
             cell.border = Border(top=Side(border_style='thin', color='007e60'),
                                  bottom=Side(border_style='thin', color='007e60'))
 
         max_row = ws.max_row
-        rows = ws['A3:U%i' % max_row]
+        rows = ws['A3:V%i' % max_row]
         for i, row in enumerate(rows):
 
             for cell in row:
@@ -253,7 +251,7 @@ def formazione(request):
         for cell in ws['A%i:V%i' % (max_row, max_row)][0]:
             cell.border = Border(bottom=Side(border_style='thin', color='000000'), )
 
-        # todo: da sistemare larghezza automantica colonna
+        # todo: da sistemare larghezza automatica colonna
         # dims = {}
         # for row in ws.rows:
         #     for cell in row:
@@ -261,7 +259,7 @@ def formazione(request):
         #             dims[cell.column] = max((dims.get(cell.column, 0), len(str(cell.value))))
         # for col, value in dims.items():
         #     ws.column_dimensions[col].width = value
-        ### fine todo
+        # fine todo
 
         wb.save('formazione.xlsx')
 
