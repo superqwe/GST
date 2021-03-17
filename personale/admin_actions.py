@@ -437,20 +437,25 @@ def aggiorna_stato_lavoratori():
         #     stato = 'r'
         # else:
 
-        for campo in campi_formazione:
+        if lavoratore.art37:
+            for campo in campi_formazione:
 
-            if campo != 'antincendio':
+                # print(lavoratore.art37)
 
-                try:
-                    if getattr(lavoratore, campo) < OGGI:
-                        print('%-30s %-15s %s' % (lavoratore, campo, getattr(lavoratore, campo)))
-                        stato = 'r'
-                        break
-                    elif getattr(lavoratore, campo) < AVVISO_SCADENZA_ATTESTATI:
-                        stato = 'g'
+                if campo != 'antincendio':
 
-                except TypeError:
-                    pass
+                    try:
+                        if getattr(lavoratore, campo) < OGGI:
+                            print('%-30s %-15s %s' % (lavoratore, campo, getattr(lavoratore, campo)))
+                            stato = 'r'
+                            break
+                        elif getattr(lavoratore, campo) < AVVISO_SCADENZA_ATTESTATI:
+                            stato = 'g'
+
+                    except TypeError:
+                        pass
+        else:
+            stato = 'r'
 
         lavoratore.stato = stato
         lavoratore.save()
