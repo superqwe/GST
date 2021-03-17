@@ -51,39 +51,38 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).order_by('cantiere', 'cognome',
                                                                                                 'nome')
         elif ordine == 'arcelormittal':
-            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
-                nome='ArcelorMittal')).filter().order_by('cognome', 'nome')
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda,
+                                                   cantiere__nome='ArcelorMittal').filter().order_by('cognome', 'nome')
 
         elif ordine == 'andritz':
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
-                Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
-                | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))).order_by('cantiere', 'cognome', 'nome')
+                Q(cantiere__nome='Andritz (CH)')
+                | Q(cantiere__nome='Andritz (DE)')
+                | Q(cantiere__nome='Andritz (NL)')).order_by('cantiere', 'cognome', 'nome')
 
         elif ordine == 'eni':
             lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda).filter(
-                Q(cantiere=Cantiere.objects.get(nome='Raffineria'))
-                | Q(cantiere=Cantiere.objects.get(nome='Raffineria - Porto'))).order_by('cantiere', 'cognome', 'nome')
+                Q(cantiere__nome='Raffineria') | Q(cantiere__nome='Raffineria - Porto')).order_by('cantiere', 'cognome',
+                                                                                                  'nome')
 
         elif ordine == 'edison':
-            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda, cantiere=Cantiere.objects.get(
-                nome='Edison (VE)')).filter().order_by('cognome', 'nome')
+            lavoratori = Lavoratore.objects.filter(in_forza=in_forza, azienda=azienda,
+                                                   cantiere__nome='Edison (VE)').filter().order_by('cognome', 'nome')
 
         elif ordine == 'stato':
             lavoratori = Lavoratore.objects \
                 .filter(in_forza=in_forza, azienda=azienda) \
                 .filter(Q(stato='r') | Q(stato='g')).order_by('stato', 'cognome', 'nome') \
-                .exclude(Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Marioff'))
-                         | Q(cantiere=Cantiere.objects.get(nome='-'))
-                         | Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
-                         | Q(cantiere=Cantiere.objects.get(nome='ISAB (SR)'))
+                .exclude(Q(cantiere__nome='Marghera (VE)')
+                         | Q(cantiere__nome='Fincantieri (AN)')
+                         | Q(cantiere__nome='Fincantieri (GO)')
+                         | Q(cantiere__nome='Andritz (CH)')
+                         | Q(cantiere__nome='Andritz (DE)')
+                         | Q(cantiere__nome='Andritz (NL)')
+                         | Q(cantiere__nome='Macchi (VE)')
+                         | Q(cantiere__nome='-')
+                         | Q(cantiere__nome='ArcelorMittal')
+                         | Q(cantiere__nome='ISAB (SR)')
                          )
 
         elif ordine == 'idoneita':
@@ -91,19 +90,18 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                 .filter(in_forza=in_forza, azienda=azienda) \
                 .filter(Q(idoneita__lte=scadenza.mesi2) | Q(idoneita=None)) \
                 .order_by('idoneita', 'cognome', 'nome') \
-                .exclude(Q(cantiere=Cantiere.objects.get(nome='ArcelorMittal'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (CH)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (DE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Andritz (NL)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Edison (VE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Distacco'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (AN)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Fincantieri (GO)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='ISAB (SR)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Macchi (VE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Marghera (VE)'))
-                         | Q(cantiere=Cantiere.objects.get(nome='Marioff'))
-                         | Q(cantiere=Cantiere.objects.get(nome='-'))
+                .exclude(Q(cantiere__nome='ArcelorMittal')
+                         | Q(cantiere__nome='Andritz (CH)')
+                         | Q(cantiere__nome='Andritz (DE)')
+                         | Q(cantiere__nome='Andritz (NL)')
+                         | Q(cantiere__nome='Edison (VE)')
+                         | Q(cantiere__nome='Distacco')
+                         | Q(cantiere__nome='Fincantieri (AN)')
+                         | Q(cantiere__nome='Fincantieri (GO)')
+                         | Q(cantiere__nome='ISAB (SR)')
+                         | Q(cantiere__nome='Macchi (VE)')
+                         | Q(cantiere__nome='Marghera (VE)')
+                         | Q(cantiere__nome='-')
                          )
 
         else:
