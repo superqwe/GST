@@ -79,6 +79,7 @@ def lavoratori_suddivisi_per_azienda(ordine=None, in_forza=True):
                          | Q(cantiere__nome='Andritz (CH)')
                          | Q(cantiere__nome='Andritz (DE)')
                          | Q(cantiere__nome='Andritz (NL)')
+                         | Q(cantiere__nome='Edison (VE)')
                          | Q(cantiere__nome='Macchi (VE)')
                          | Q(cantiere__nome='-')
                          | Q(cantiere__nome='ArcelorMittal')

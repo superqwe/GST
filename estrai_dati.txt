@@ -1,6 +1,6 @@
 [estrazione]
-tipo = filtri
-nome_file_xlsx = 
+tipo = excel
+nome_file_xlsx = CPO DEMO.xlsx
 
 [filtro_impresa]
 modomec = 1
@@ -33,33 +33,33 @@ raffineria = 0
 edison (ve) = 1
 
 [base]
-unilav = 0
-idoneita = 0
-ci = 0
-codice_fiscale = 0
-foto = 0
+unilav = 1
+idoneita = 1
+ci = 1
+codice_fiscale = 1
+foto = 1
 consegna_dpi = 0
 
 [formazione]
-art37 = 0
-preposto = 0
+art37 = 1
+preposto = 1
 primo_soccorso = 1
 antincendio = 1
-h2s = 0
-dpi3 = 0
-apvr = 0
-lavori_quota = 0
-carrello = 0
-ple = 0
-gru = 0
-imbracatore = 0
-spazi_confinati = 0
-ponteggi = 0
+h2s = 1
+dpi3 = 1
+apvr = 1
+lavori_quota = 1
+carrello = 1
+ple = 1
+gru = 1
+imbracatore = 1
+spazi_confinati = 1
+ponteggi = 1
 rir = 0
 rls = 0
 
 [nomine]
-nomina_preposto = 0
+nomina_preposto = 1
 nomina_primo_soccorso = 1
 nomina_antincendio = 1
 
