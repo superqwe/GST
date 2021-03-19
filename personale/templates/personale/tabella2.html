@@ -25,7 +25,6 @@
         <th>APVR</th>
         <th>DPI Anticaduta</th>
         <th>Muletto</th>
-        <th>Escavatore</th>
         <th>PLE</th>
         <th>Gru</th>
         <th>Imbracatore</th>
@@ -173,15 +172,6 @@
         {% if lavoratore.carrello %}
         <a href="{% static ''%}{{lavoratore}}/attestati/carrello {{lavoratore.carrello|date:"dm"}}{{lavoratore.carrello|date:"y"|add:-5}}.pdf" target="_blank">
             {{lavoratore.carrello|default_if_none:""}}</a>
-        {% endif %}
-    </td>
-    <td {% if lavoratore.escavatore < scadenza.oggi %} class="alert alert-danger" role="alert"
-        {% elif  lavoratore.escavatore < scadenza.mesi6 %} class="alert alert-warning" role="alert"
-        {% elif  lavoratore.escavatore < scadenza.mesi12 %} class="alert alert-info" role="alert"
-        {% endif %}>
-        {% if lavoratore.escavatore %}
-        <a href="{% static ''%}{{lavoratore}}/attestati/escavatore {{lavoratore.escavatore|date:"dm"}}{{lavoratore.escavatore|date:"y"|add:-5}}.pdf" target="_blank">
-            {{lavoratore.escavatore|default_if_none:""}}</a>
         {% endif %}
     </td>
     <td {% if lavoratore.ple < scadenza.oggi %} class="alert alert-danger" role="alert"
