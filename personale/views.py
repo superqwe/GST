@@ -517,8 +517,7 @@ def programma_visite_mediche(request):
 
 def dimp(request):
     ora = datetime.datetime.now()
-
-    canc = views_dimp.dimp()
+    views_dimp.dimp()
 
     return HttpResponse("""<h1 style="text-align:center">DIMP</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)

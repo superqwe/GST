@@ -17,6 +17,9 @@ OGGI = datetime.date.today()
 DT = datetime.timedelta(30)
 DT_6_MESI = datetime.timedelta(30 * 6)
 
+# gg è il numero di giorni di vecchiaia del documento
+GG = 5
+
 AVVISO_SCADENZA = OGGI + DT
 AVVISO_SCADENZA_ATTESTATI = OGGI + DT_6_MESI
 
@@ -218,9 +221,7 @@ def aggiorna_scadenza_documenti():
                         pth = os.path.join(root, documento)
                         mtime = os.stat(pth).st_mtime
 
-                        # gg è il numero di giorni di vecchiaia del documento
-                        gg = 7
-                        if mtime >= ADESSO - gg * 24 * 60 * 60:
+                        if mtime >= ADESSO - GG * 24 * 60 * 60:
                             print('\n', cognome, nome)
                             print('   ', documento)
                             documento = documento.lower()

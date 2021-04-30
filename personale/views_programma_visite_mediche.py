@@ -9,7 +9,7 @@ from personale.models import Lavoratore
 import pandas as pd
 
 FOUT = 'visite_mediche.xlsx'
-GIORNI_SCADENZA = 30
+GIORNI_SCADENZA = 45
 
 
 def programma_visite_mediche():
@@ -19,8 +19,9 @@ def programma_visite_mediche():
         .exclude(Q(azienda__nome='-')
                  | Q(cantiere__nome='Andritz (DE)')
                  | Q(cantiere__nome='Andritz (NL)')
-                 | Q(cantiere__nome='Edison (VE)')
                  | Q(cantiere__nome='ArcelorMittal')
+                 | Q(cantiere__nome='Edison (VE)')
+                 | Q(cantiere__nome='Distacco')
                  | Q(cantiere__nome='Fincantieri (AN)')
                  | Q(cantiere__nome='Fincantieri (GO)')
                  | Q(cantiere__nome='ISAB (SR)')
