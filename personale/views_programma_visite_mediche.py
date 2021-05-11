@@ -52,7 +52,7 @@ def programma_visite_mediche():
                 cell.number_format = 'DD/MM/YY'
                 cell.alignment = Alignment(horizontal='center')
 
-    # todo: da sistemare larghezza automantica colonna
+    # todo: da sistemare larghezza automatica colonna
     dims = {}
     for row in ws.rows:
         for cell in row:

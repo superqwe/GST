@@ -1,6 +1,6 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = ENI Fermata.xlsx
+nome_file_xlsx = ANSALDO Marghera Levante.xlsx
 
 [filtro_impresa]
 modomec = 0
@@ -34,21 +34,21 @@ edison (ve) = 1
 
 [base]
 unilav = 0
-idoneita = 1
+idoneita = 0
 ci = 0
 codice_fiscale = 0
 foto = 0
 consegna_dpi = 0
 
 [formazione]
-art37 = 0
-preposto = 0
+art37 = 1
+preposto = 1
 primo_soccorso = 0
 antincendio = 0
-h2s = 0
+h2s = 1
 dpi3 = 0
 apvr = 0
-lavori_quota = 0
+lavori_quota = 1
 carrello = 0
 ple = 0
 gru = 0

@@ -121,6 +121,7 @@ def cessazione(nominativi):
         cognome, nome, cf, data_assunzione, data_cessazione = nominativo
 
         lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
+        print(lavoratore)
 
         lavoratore.codice_fiscale = cf
         lavoratore.data_assunzione = data_assunzione
