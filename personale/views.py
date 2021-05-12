@@ -381,7 +381,7 @@ def aggiorna_unilav(request):
                 nome = nome.title()
                 cf = foglio.cell(row=rigo + 1, column=colonna).value.split(':')[1]
 
-                print('%-15s %-15s %s' % (cognome, nome, cf))
+                print('%-19s %-19s %s' % (cognome, nome, cf))
 
                 try:
                     data_assunzione = foglio.cell(row=rigo + 1, column=colonna + 1).value.split()[-1]

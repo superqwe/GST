@@ -70,8 +70,10 @@
             {{lavoratore.unilav|default_if_none:""}} IND</a>
         {% endif %}
     </td>
-    <td {% if lavoratore.consegna_dpi < scadenza.mesi6prima or not lavoratore.consegna_dpi%} class="alert alert-danger" role="alert"
-        {% elif lavoratore.consegna_dpi > scadenza.mesi1prima %} class="alert alert-warning" role="alert"
+    <td {% if not lavoratore.consegna_dpi or lavoratore.consegna_dpi < scadenza.mesi6prima %}
+            class="alert alert-danger" role="alert"
+        {% elif lavoratore.consegna_dpi < scadenza.mesi5prima %}
+            class="alert alert-warning" role="alert"
         {% endif %}>
         {% if lavoratore.consegna_dpi %}
             <a href="{% static ''%}{{lavoratore}}/dpi/consegna.dpi {{lavoratore.consegna_dpi|date:"dmy"}}.pdf" target="_blank">
