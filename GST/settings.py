@@ -131,3 +131,5 @@ try:
 except KeyError:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
     STATIC_ROOT = os.path.join('/home/modomec/GST/static')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
