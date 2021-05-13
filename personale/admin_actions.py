@@ -398,24 +398,24 @@ def importa_dati():
     df = pd.read_excel(xlsx, 'dati')
     df = df.where((pd.notnull(df)), None)
 
-    for n, cognome, nome, cf, data_nascita, luogo_nascita, luogo_residenza, assunzione, mansione, in_forza, azienda, cantiere in df.itertuples():
-        if type(mansione) == str:
-            lavoratore = Lavoratore.objects.get(cognome=cognome, nome=nome)
-            lavoratore.mansione = mansione
-            lavoratore.codice_fiscale = cf
+    for row in df.itertuples():
+        if type(row.mansione) == str:
+            lavoratore = Lavoratore.objects.get(cognome=row.cognome, nome=row.nome)
+            lavoratore.mansione = row.mansione
+            lavoratore.codice_fiscale = row.cf
 
-            if not pd.isnull(data_nascita):
-                lavoratore.data_nascita = data_nascita
+            if not pd.isnull(row.data_nascita):
+                lavoratore.data_nascita = row.data_nascita
 
-            lavoratore.luogo_nascita = luogo_nascita
-            lavoratore.luogo_residenza = luogo_residenza
+            lavoratore.luogo_nascita = row.luogo_nascita
+            lavoratore.luogo_residenza = row.luogo_residenza
 
-            if not pd.isnull(assunzione):
-                lavoratore.data_assunzione = assunzione
+            if not pd.isnull(row.assunzione):
+                lavoratore.data_assunzione = row.assunzione
 
-            lavoratore.in_forza = in_forza
-            lavoratore.azienda = Azienda.objects.get(nome=azienda)
-            lavoratore.cantiere = Cantiere.objects.get(nome=cantiere)
+            lavoratore.in_forza = row.in_forza
+            lavoratore.azienda = Azienda.objects.get(nome=row.azienda)
+            lavoratore.cantiere = Cantiere.objects.get(nome=row.cantiere)
 
             lavoratore.save()
 
