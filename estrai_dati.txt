@@ -1,6 +1,6 @@
 [estrazione]
-tipo = excel
-nome_file_xlsx = ANSALDO Marghera Levante.xlsx
+tipo = filtri
+nome_file_xlsx = 
 
 [filtro_impresa]
 modomec = 0
@@ -28,13 +28,13 @@ macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 0
-raffineria - porto = 0
+raffineria - porto = 1
 raffineria = 0
-edison (ve) = 1
+edison (ve) = 0
 
 [base]
 unilav = 0
-idoneita = 0
+idoneita = 1
 ci = 0
 codice_fiscale = 0
 foto = 0
