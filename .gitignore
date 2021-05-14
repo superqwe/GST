@@ -1,7 +1,7 @@
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+db*.sqlite3
 
 
 # mio
@@ -10,8 +10,9 @@ personale/static/personale/attestati/
 .idea/
 .vs/
 *.exe
-*.sqlite3
 data ultima modifica.txt
 *.xlsx
 mansioni.xlsx
 SyncToy*
+*.svg
+
