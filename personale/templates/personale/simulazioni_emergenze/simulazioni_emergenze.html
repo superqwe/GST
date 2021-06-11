@@ -11,6 +11,7 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'personale/css/style.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'personale/img/emergenza.ico' %}"/>
+
     <title>Simulazione Emergenze</title>
 </head>
 
@@ -42,94 +43,96 @@
         </div>
     </form>
 
-    <div id="table-container" class="table-responsive">
+    <!--    <div id="table-container" class="table-responsive">-->
+    <!--    <div  class="table-responsive">-->
 
-        <table id="maintable" class="table table-striped table-sm text-center ">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Effettuata</th>
-                <th scope="col">Cognome</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Cantiere</th>
-                {% for simulazione, presenze in simulazioni %}
-                <th scope="col" class="ruota">
-                    {{ simulazione.data }}<br>
-                    {{ simulazione.emergenza }}<br>
-                    {{ simulazione.area }}<br>
-                    <span class="badge badge-success">{{presenze}}</span>
-                </th>
-                {% endfor %}
-            </tr>
-            </thead>
+    <!--        <table id="maintable" class="table table-striped table-sm text-center ">-->
+    <table class="table table-striped table-sm text-center">
+        <thead style="position: sticky;top: 0" class="thead-light">
+        <tr>
+            <th scope="col">Effettuata</th>
+            <th scope="col">Cognome</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Cantiere</th>
+            {% for simulazione, presenze in simulazioni %}
+            <th scope="col" class="ruota">
+                {{ simulazione.data }}<br>
+                {{ simulazione.emergenza }}<br>
+                {{ simulazione.area }}<br>
+                <span class="badge badge-success">{{presenze}}</span>
+            </th>
+            {% endfor %}
+        </tr>
+        </thead>
 
-            <tbody>
+        <tbody>
 
-            {% for lavoratore, elenco_simulazioni, stato_lavoratore in matrice_simulazioni %}
-            <tr>
-                <td>{% if stato_lavoratore %}
-                    <i class="fas fa-check-circle v"></i>
-                    <span class="nascosto2">x</span>
-                    {% endif %}
-                </td>
-                <td class="text-left">{{ lavoratore.cognome }}</td>
-                <td class="text-left">{{ lavoratore.nome }}</td>
-                <td class="text-left">{{ lavoratore.cantiere }}</td>
-                {% for simulazione in elenco_simulazioni%}
-                <td>{% if simulazione%}
-                    <i class="fas fa-check-circle v"></i>
-                    <span class="nascosto2">x</span>
-                    {% endif %}
-                </td>
-                {% endfor %}
-
-            </tr>
+        {% for lavoratore, elenco_simulazioni, stato_lavoratore in matrice_simulazioni %}
+        <tr>
+            <td>{% if stato_lavoratore %}
+                <i class="fas fa-check-circle v"></i>
+                <span class="nascosto2">x</span>
+                {% endif %}
+            </td>
+            <td class="text-left">{{ lavoratore.cognome }}</td>
+            <td class="text-left">{{ lavoratore.nome }}</td>
+            <td class="text-left">{{ lavoratore.cantiere }}</td>
+            {% for simulazione in elenco_simulazioni%}
+            <td>{% if simulazione%}
+                <i class="fas fa-check-circle v"></i>
+                <span class="nascosto2">x</span>
+                {% endif %}
+            </td>
             {% endfor %}
 
-            </tbody>
+        </tr>
+        {% endfor %}
 
-        </table>
-        <div id="bottom_anchor"></div>
+        </tbody>
 
-    </div>
+    </table>
+    <div id="bottom_anchor"></div>
 
-    <h2>
-        Elenco Cantieri
-        <span class="badge badge-success">{{ totali_lavoratori.0 }}</span>
-        <span class="badge badge-danger">{{ totali_lavoratori.1 }}</span>
-        <span><i class="fas fa-caret-right"></i></span>
-        <span class="badge badge-primary">{{ totali_lavoratori.2 }}%</span>
-    </h2>
+</div>
 
-    <div class="table-responsive">
+<h2>
+    Elenco Cantieri
+    <span class="badge badge-success">{{ totali_lavoratori.0 }}</span>
+    <span class="badge badge-danger">{{ totali_lavoratori.1 }}</span>
+    <span><i class="fas fa-caret-right"></i></span>
+    <span class="badge badge-primary">{{ totali_lavoratori.2 }}%</span>
+</h2>
 
-        <table class="table table-striped table-sm text-center ">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Cantiere</th>
-                <th scope="col">Effettuata</th>
-                <th scope="col">Non Effettuata</th>
-                <th scope="col">Percentuale</th>
-            </tr>
-            </thead>
+<div class="table-responsive">
 
-            {% for cantiere, presenze in presenze_per_cantiere.items %}
-            <tr class="ruota">
-                <td>{{ cantiere }}</td>
-                {% for valore in presenze%}
-                <td>
-                    {% if valore%}
-                    {{ valore|floatformat:0 }}
-                    {% else %}
-                    -
-                    {% endif %}
-                </td>
-                {% endfor %}
-            </tr>
+    <table class="table table-striped table-sm text-center ">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Cantiere</th>
+            <th scope="col">Effettuata</th>
+            <th scope="col">Non Effettuata</th>
+            <th scope="col">Percentuale</th>
+        </tr>
+        </thead>
+
+        {% for cantiere, presenze in presenze_per_cantiere.items %}
+        <tr class="ruota">
+            <td>{{ cantiere }}</td>
+            {% for valore in presenze%}
+            <td>
+                {% if valore%}
+                {{ valore|floatformat:0 }}
+                {% else %}
+                -
+                {% endif %}
+            </td>
             {% endfor %}
-            <tbody>
-            </tbody>
-        </table>
-    </div>
+        </tr>
+        {% endfor %}
+        <tbody>
+        </tbody>
+    </table>
+    <!--    </div>-->
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
