@@ -1,9 +1,9 @@
 [estrazione]
 tipo = excel
-nome_file_xlsx = CPO DEMO.xlsx
+nome_file_xlsx = ENI Fermata.xlsx
 
 [filtro_impresa]
-modomec = 0
+modomec = 1
 building = 0
 rimec = 0
 welding = 0
@@ -28,27 +28,27 @@ macchi (ve) = 0
 marghera (ve) = 0
 marioff = 0
 massafra = 0
-raffineria - porto = 1
+raffineria - porto = 0
 raffineria = 0
 edison (ve) = 0
 
 [base]
 unilav = 0
 idoneita = 1
-ci = 0
-codice_fiscale = 0
-foto = 0
+ci = 1
+codice_fiscale = 1
+foto = 1
 consegna_dpi = 0
 
 [formazione]
 art37 = 1
-preposto = 1
+preposto = 0
 primo_soccorso = 0
 antincendio = 0
-h2s = 1
+h2s = 0
 dpi3 = 0
 apvr = 0
-lavori_quota = 1
+lavori_quota = 0
 carrello = 0
 ple = 0
 gru = 0

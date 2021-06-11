@@ -3,6 +3,7 @@ import functools
 import itertools
 import os
 from datetime import timedelta
+from pprint import pprint as pp
 
 import openpyxl
 import pandas as pd
@@ -20,10 +21,7 @@ from personale.views_estrai_dati import estrazione_selettiva2, estrazione_da_exc
 from personale.views_programma_officina import N_CARD_PER_RIGO, TRONCA_NOME
 from personale.views_tesserini import genera_tesserini
 from personale.views_util import autorizzato
-
-from pprint import pprint as pp
-
-from personale.viste import views_dimp
+from personale.viste import views_dimp, views_formazione_nell_anno
 
 
 def index(request):
@@ -189,7 +187,7 @@ def formazione(request):
     building = Lavoratore.objects.filter(azienda__nome='Building', in_forza=True).order_by('cognome', 'nome')
     welding = Lavoratore.objects.filter(azienda__nome='Welding', in_forza=True).order_by('cognome', 'nome')
 
-    lavoratori = (modomec, building,  welding)
+    lavoratori = (modomec, building, welding)
     aziende = ('modomec', 'building', 'welding')
 
     colonne_escluse = ['id', 'in_forza', 'azienda', 'ci', 'codice_fiscale', 'data_nascita', 'luogo_nascita',
@@ -521,3 +519,14 @@ def dimp(request):
 
     return HttpResponse("""<h1 style="text-align:center">DIMP</h1>
                         <h2 style="text-align:center"> %s </h2>""" % ora)
+
+
+def formazione_nell_anno(request):
+    ora = datetime.datetime.now()
+    corsi = views_formazione_nell_anno.formazione_nell_anno()
+    corsi = '<br>'.join(corsi)
+
+    return HttpResponse("""<h1 style="text-align:center">formazione nell'anno</h1>
+                        <h2 style="text-align:center"> %s </h2>
+                        <pre>%s</pre>
+                        """ % (ora, corsi))

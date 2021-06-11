@@ -29,6 +29,9 @@ urlpatterns = [
     # /personale/formazione/
     path('formazione/', views.formazione, name='formazione'),
 
+    # /personale/formazione_nell_anno/
+    path('formazione_nell_anno/', views.formazione_nell_anno, name='formazione_nell_anno'),
+
     # /personale/mansioni/
     path('mansioni/', views.mansioni, name='mansioni'),
 
