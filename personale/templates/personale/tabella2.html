@@ -1,10 +1,12 @@
 {% load static %}
 
-<div  id="table-container" class="table-responsive">
+<!--<div  id="table-container" class="table-responsive">-->
+<div  id="table-container" >
 
-<table id="maintable" class="table table-striped table-sm text-center ">
+<!--<table id="maintable" class="table table-striped table-sm text-center ">-->
+<table class="table table-striped table-sm text-center ">
 
-<thead class="thead-light">
+<thead style="position: sticky;top: 0;z-index: 100" class="thead-light">
     <tr>
         <th scope="col">Stato</th>
         {% if tabella_completa %}<th>Azienda</th>{% endif %}
